@@ -76,7 +76,7 @@ class CustomerPage extends Component {
 							<Alert alertType={"Weekly Alert:"} alertMessage={"with most recent transactions"}/>
 						</div>
 					</div>
-    		  <div id="locDiv" className="flexDiv">
+    		  <div className="locDiv">
     		    <LoCApplyCard callback={this.state.callback} />
 						{cardsJSX}
     		  </div>
