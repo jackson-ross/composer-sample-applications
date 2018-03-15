@@ -1,5 +1,4 @@
 .LoCCard {
-  /*width: 20%;*/
   padding: 20px 20px 40px 30px;
   margin-left: 50px;
   border: 1px solid white;
@@ -30,4 +29,5 @@ h3 {
 
 .applyButton {
   background-color: #fc6a66;
+  border-color: #fc6a66;
 }

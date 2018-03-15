@@ -16,6 +16,7 @@
 table {
 	width: 80%;
 	margin: 3vh 0 3vh 6vh;
+	border-collapse: collapse;
 }
 
 th {
@@ -23,17 +24,13 @@ th {
 	height: 5vh;
 }
 
-.row {
-
-}
-
 .row:hover {
 	cursor: pointer;
+	background-color: #f6f8fb;
 }
 
 td {
 	height: 5vh;
-
 }
 
 .blueText {

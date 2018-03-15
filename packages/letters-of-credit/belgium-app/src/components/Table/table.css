@@ -1,7 +1,7 @@
 .headerBar {
-	height: 5vh;
-  border: 1px solid #e8e9eb;
-  background-color: #f6f8fb;
+height: 5vh;
+  border: 1px solid #d9cbed;
+  background-color: #f9f5fc;
   line-height: 2.5;
 }
 
@@ -16,6 +16,7 @@
 table {
 	width: 80%;
 	margin: 3vh 0 3vh 6vh;
+	border-collapse: collapse;
 }
 
 th {
@@ -23,12 +24,9 @@ th {
 	height: 5vh;
 }
 
-.row {
-
-}
-
 .row:hover {
 	cursor: pointer;
+	background-color: #f9f5fc;
 }
 
 td {
@@ -37,14 +35,14 @@ td {
 }
 
 .blueText {
-	color: #4d48da;
+	color: #8357c6;
 }
 
 .viewMoreButton {
 	height: 3vh;
-	border: 1px solid #3b34c4;
+	border: 1px solid #b246a9;
 	border-radius: 20px;
 	margin-left: 6vh;
-	background-color: #3b34c4;
+	background-color: #b246a9;
 	color: white;
 }
