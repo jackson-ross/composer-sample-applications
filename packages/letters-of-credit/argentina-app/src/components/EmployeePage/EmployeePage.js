@@ -37,12 +37,17 @@ class EmployeePage extends Component {
 	}
 
   generateRow(i) {
+    let submitter = "Alice Hamilton";
+    let company = "QuickFix IT";
+    if(this.state.letters[i].applicant === 'resource:org.acme.loc.Customer#bob') {
+      submitter = "Bob Bobbins";
+      company = "Conga Computers"
+    }
     return (
 			<tr className="row" onClick={() => this.props.callback(this.state.letters[i], false)}>
 				<td className="blueText">{this.state.letters[i].letterId}</td>
-				<td>Alice Hamilton</td>
-				<td>QuickFix IT</td>
-				<td>Yesterday</td>
+				<td>{submitter}</td>
+				<td>{company}</td>
 				<td>{this.state.letters[i].status}</td>
 			</tr>
 		);
@@ -50,7 +55,7 @@ class EmployeePage extends Component {
 
   render() {
     if(this.state.userDetails.name) {
-      let username = this.state.userDetails.name + ", Employee at  " + this.state.userDetails.bankName;
+      let username = this.state.userDetails.name + ", Employee at " + this.state.userDetails.bankName;
 
       let rowsJSX = [];
       if(this.state.letters.length) {

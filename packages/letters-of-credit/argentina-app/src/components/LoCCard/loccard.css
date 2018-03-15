@@ -8,6 +8,10 @@
   font-weight: lighter;
 }
 
+.noBorder {
+  border: none;
+}
+
 h3 {
   font-weight: lighter;
 }

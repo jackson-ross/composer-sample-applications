@@ -11,15 +11,15 @@ const sampleLetter = {
   applicant: {
     name: 'Alice',
     companyName: 'QuickFix IT',
-    sortCode: '12-34-56',
-    accNo: '98765432',
+    sortCode: '12-34-57',
+    accNo: '54564351',
     bankName: 'Bank of Argentina'
   },
   beneficiary: {
     name: 'Bob',
-    companyName: 'Bob\'s Company',
-    sortCode: '12-34-56',
-    accNo: '98765432',
+    companyName: 'Conga Computers',
+    sortCode: '98-76-21',
+    accNo: '24689753',
     bankName: 'Central Bank of Belgium'
   },
   productDetails: {
@@ -32,8 +32,8 @@ const sampleLetter = {
 };
 
 const pageContents = {
-  ALICE: "ALICE",
-  MATIAS: "MATIAS",
+  CUSTOMER: "CUSTOMER",
+  EMPLOYEE: "EMPLOYEE",
   LOC: "LOC"
 }
 
@@ -41,12 +41,12 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      currentPage: pageContents.ALICE,
+      currentPage: pageContents.CUSTOMER,
       currentLetter: {},
       currentUser: "Alice"
     };
-    this.goToAliceScreen = this.goToAliceScreen.bind(this);
-    this.goToMatiasScreen = this.goToMatiasScreen.bind(this);
+    this.goToCustomerScreen = this.goToCustomerScreen.bind(this);
+    this.goToEmployeeScreen = this.goToEmployeeScreen.bind(this);
     this.goToLetterScreen = this.goToLetterScreen.bind(this);
     this.backFromLetterScreen = this.backFromLetterScreen.bind(this);
   }
@@ -61,22 +61,22 @@ class App extends Component {
 
   backFromLetterScreen(user) {
     if(user === "Alice") {
-      this.goToAliceScreen();
+      this.goToCustomerScreen();
     } else {
-      this.goToMatiasScreen();
+      this.goToEmployeeScreen();
     }
   }
 
-  goToAliceScreen() {
+  goToCustomerScreen() {
     this.setState({
-      currentPage: pageContents.ALICE,
+      currentPage: pageContents.CUSTOMER,
       currentUser: "Alice"
     })
   }
 
-  goToMatiasScreen() {
+  goToEmployeeScreen() {
     this.setState({
-      currentPage: pageContents.MATIAS,
+      currentPage: pageContents.EMPLOYEE,
       currentUser: "Matias"
     });
   }
@@ -88,13 +88,13 @@ class App extends Component {
 
     let pageToShow;
 
-    if(this.state.currentPage === pageContents.ALICE) {
+    if(this.state.currentPage === pageContents.CUSTOMER) {
       pageToShow = (
-        <CustomerPage switchUser={this.goToMatiasScreen} callback={this.goToLetterScreen}/>
+        <CustomerPage switchUser={this.goToEmployeeScreen} callback={this.goToLetterScreen}/>
       );
-    } else if(this.state.currentPage === pageContents.MATIAS) {
+    } else if(this.state.currentPage === pageContents.EMPLOYEE) {
       pageToShow = (
-        <EmployeePage switchUser={this.goToAliceScreen} callback={this.goToLetterScreen}/>
+        <EmployeePage switchUser={this.goToCustomerScreen} callback={this.goToLetterScreen}/>
       );
     } else {
       pageToShow = (

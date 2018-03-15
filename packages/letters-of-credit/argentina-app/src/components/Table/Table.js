@@ -15,7 +15,6 @@ class Table extends Component {
   						<th>Ref number</th>
   						<th>Submitter Account</th>
   						<th>Business Name</th>
-  						<th>Date and Time</th>
   						<th>Status</th>
   					</tr>
   					{this.props.rows}
