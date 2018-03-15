@@ -26,7 +26,6 @@ class BlockChainDisplay extends React.Component {
   render() {
     let relevantTransactions = ["InitialApplication", "RejectApplication", "SuggestChanges", "ApproveApplication"];
     let blocks = [];
-    let numberOfBlocks = 0;
     let transactionCount = 1;
     for (var i = this.state.transactions.length-1; i >= 0; i--){
       let transaction = this.state.transactions[i];
@@ -34,11 +33,11 @@ class BlockChainDisplay extends React.Component {
         let transactionDescription = transaction.transactionType.split(".");
         let transactionName = transactionDescription[transactionDescription.length-1];
         if (relevantTransactions.includes(transactionName)){
-          numberOfBlocks++;
+          let blockNumber = ("0" + transactionCount).slice(-2);
           let dateTime = transaction.transactionTimestamp.split("T");
           let time = dateTime[0];
           let date = dateTime[1].split(".")[0];
-          blocks.push(<Block transactionDetails = {transactionName} date = {date} time = {time} number = {transactionCount}/>);
+          blocks.push(<Block transactionDetails = {transactionName} date = {date} time = {time} number = {blockNumber}/>);
           transactionCount++;
         }
       }
