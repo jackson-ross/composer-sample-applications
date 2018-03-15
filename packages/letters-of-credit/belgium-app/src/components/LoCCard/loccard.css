@@ -1,0 +1,31 @@
+.LoCCard {
+  width: 20%;
+  padding: 20px 20px 40px 30px;
+  margin-left: 50px;
+  border: 1px solid white;
+  text-align: left;
+  color: white;
+  font-weight: lighter;
+}
+
+.noBorder {
+  border: none;
+}
+
+h3 {
+  font-weight: lighter;
+}
+  
+.viewButton {
+  height: 3vh;
+  margin-top: 5px;
+  margin-left: -5px;
+  border: 1px solid #3b34c4;
+  border-radius: 20px;
+  background-color: #3b34c4;
+  color: white;
+}
+
+.applyButton {
+  background-color: #fc6a66;
+}
