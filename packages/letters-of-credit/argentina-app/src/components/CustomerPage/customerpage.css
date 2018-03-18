@@ -66,4 +66,5 @@
   flex-direction: row;
   width: 100%;
   overflow-x: scroll;
+  padding-bottom: 7%;
 }

@@ -59,22 +59,16 @@ class CustomerPage extends Component {
     		<div id="customerPageContainer" className="cPageContainer">
     		  <div id="cHeaderDiv" className="flexDiv cHeaderDiv">
     		    <span className="cUsername" onClick={this.state.switchUser}> {username} </span>
-    		    <div id="cMenu" className="cMenuItems">
-    		      <span> Change account details </span>
-    		      <span> View Transaction History </span>
-    		      <span> Make Transaction </span>
-    		      <span> Current Balance: £15,670 </span>
-    		    </div>
     		  </div>
+          <div class="cWelcomeDiv">
+            <p id="welcomeMessage">Welcome back {this.state.userDetails.name}</p>
+            <h1 id ="accountBalance">£15,670</h1>
+          </div>
     		  <div id="infoDiv" className="flexDiv infoDiv">
-    		    <div id="cWelcomeDiv" className="cWelcomeDiv">
-    		      <h1> Welcome back {this.state.userDetails.name} </h1>
+    		    <div id="cDetailsDiv" className="cDetailsDiv">
     		      <UserDetails name={this.state.userDetails.name} companyName={this.state.userDetails.companyName} sortCode={'12-34-57'} accountNumber={'54564351'}/>
 						</div>
-						<div id="alertsDiv" className="alertsDiv">
-							<Alert alertType={"Alert when:"} alertMessage={"my account balance falls below £15000"}/>
-							<Alert alertType={"Weekly Alert:"} alertMessage={"with most recent transactions"}/>
-						</div>
+
 					</div>
     		  <div className="locDiv">
     		    <LoCApplyCard callback={this.state.callback} />
