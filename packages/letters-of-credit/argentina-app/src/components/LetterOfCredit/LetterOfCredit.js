@@ -23,8 +23,8 @@ class LetterOfCredit extends Component {
     axios.post('http://localhost:3000/api/InitialApplication', {
       "$class": "org.acme.loc.InitialApplication",
       "letterId": letterId,
-      "applicant": "resource:org.acme.loc.Customer#bob",
-      "beneficiary": "resource:org.acme.loc.Customer#alice",
+      "applicant": "resource:org.acme.loc.Customer#alice",
+      "beneficiary": "resource:org.acme.loc.Customer#bob",
       "rules": rules,
       "productDetails": {
         "$class": "org.acme.loc.ProductDetails",
