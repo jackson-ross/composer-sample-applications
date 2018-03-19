@@ -69,12 +69,6 @@ class EmployeePage extends Component {
         <div id="employeePageContainer" className="ePageContainer">
           <div id="eHeaderDiv" className="flexDiv eHeaderDiv">
             <span className="eUsername" onClick={this.state.switchUser}> {username} </span>
-            <div id="eMenu" className="eMenuItems">
-              <span> Change account details </span>
-              <span> View Transaction History </span>
-              <span> Make Transaction </span>
-              <span> Viewing all Business Acccounts </span>
-            </div>
           </div>
           <div id="eWelcomeDiv" className="eWelcomeDiv">
             <h1> Welcome back {this.state.userDetails.name} </h1>

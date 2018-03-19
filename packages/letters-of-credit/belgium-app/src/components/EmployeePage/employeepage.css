@@ -42,5 +42,7 @@
 }
 
 .eWelcomeDiv > h1 {
+  text-align: center;
   margin-left: 6vh;
+  font-weight: lighter;
 }

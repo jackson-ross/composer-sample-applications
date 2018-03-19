@@ -23,8 +23,8 @@ class LetterOfCredit extends Component {
     axios.post('http://localhost:3000/api/InitialApplication', {
       "$class": "org.acme.loc.InitialApplication",
       "letterId": letterId,
-      "applicant": "resource:org.acme.loc.Customer#alice",
-      "beneficiary": "resource:org.acme.loc.Customer#bob",
+      "applicant": "resource:org.acme.loc.Customer#bob",
+      "beneficiary": "resource:org.acme.loc.Customer#alice",
       "rules": rules,
       "productDetails": {
         "$class": "org.acme.loc.ProductDetails",
@@ -136,7 +136,7 @@ class LetterOfCredit extends Component {
 
   render() {
     let productDetails = this.props.productDetails;
-    let buttonsJSX = (<div/>); 
+    let buttonsJSX = (<div/>);
     if(!this.props.isApply) {
       if(this.props.letter.status === 'APPROVED') {
         buttonsJSX = (
@@ -164,13 +164,16 @@ class LetterOfCredit extends Component {
         </div>
       );
     }
- 
+
     return (
       <div class="LCcontainer">
         <img class="backButton" src={backButtonIcon} alt="image not found" onClick={() => {if(!this.state.disableButtons){this.props.callback(this.props.user)}}}/>
-        <div class="letterDetails">
-          <h2>{this.props.letter.letterId}</h2>
-          <p>{this.props.date}</p>
+        <div class="header">
+          <div class="letterDetails">
+            <h2>{this.props.letter.letterId}</h2>
+            <h2>User logged in: {this.props.user}</h2>
+            <p>{this.props.date}</p>
+          </div>
         </div>
         <div class="letterContent">
           <DetailsCard type="Person" data={["Application Request"].concat(Object.values(this.props.applicant))}/>
@@ -188,7 +191,7 @@ class LetterOfCredit extends Component {
         </div>
       </div>
     );
-  } 
+  }
 }
 
 const mapStateToProps = state => {

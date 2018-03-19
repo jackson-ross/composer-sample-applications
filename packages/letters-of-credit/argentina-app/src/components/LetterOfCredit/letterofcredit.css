@@ -20,6 +20,10 @@
   width: 60%;
 }
 
+.cardContainer > div > span {
+  margin-bottom: 10px;
+}
+
 .letterContent > div {
   display: block;
   float: left;
@@ -78,4 +82,13 @@
 
 .blockChainContainer {
   margin-left: 81%;
+}
+
+.userInfo {
+  display: inline-block;
+  padding: 2% 0 0 2%;
+}
+
+.header {
+  display: flex;
 }
