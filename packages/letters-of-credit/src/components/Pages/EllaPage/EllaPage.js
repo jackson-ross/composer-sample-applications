@@ -33,6 +33,9 @@ class EllaPage extends Component {
 	}
 
   getLetters() {
+    if(!this.state.loading) {
+			this.setState({loading: true});
+		}
 		axios.get('http://localhost:3000/api/LetterOfCredit')
     .then(response => {
       this.setState ({
