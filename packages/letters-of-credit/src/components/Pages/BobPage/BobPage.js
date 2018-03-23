@@ -8,7 +8,7 @@ import LoCApplyCard from '../../LoCCard/LoCApplyCard.js';
 
 class BobPage extends Component {
   constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			userDetails: {},
 			letters: [],
@@ -28,14 +28,40 @@ class BobPage extends Component {
 		.catch(error => {
 			console.log(error);
 		});
-    axios.get('http://localhost:3000/api/LetterOfCredit')
+		this.getLetters();
+		this.openWebSocket();
+	}
+
+	getLetters() {
+		axios.get('http://localhost:3000/api/LetterOfCredit')
     .then(response => {
       this.setState ({
         letters: response.data
-      });
+			});
 		})
 		.catch(error => {
 			console.log(error);
+		});
+	}
+
+	openWebSocket() {
+		let destroyed = false;
+
+		console.log('Connecting to websocket... ');
+		let websocket = new WebSocket('ws://localhost:3000');
+		websocket.onopen = (() => {
+			console.log('Websocket is open');
+		});
+
+		websocket.onclose = (() => {
+			console.log('Websocket is closed');
+			if(!destroyed) {
+				this.openWebSocket();
+			}
+		});
+
+		websocket.onmessage = ((event) => {
+			this.getLetters();
 		});
 	}
 

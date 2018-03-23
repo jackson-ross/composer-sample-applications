@@ -34,16 +34,16 @@ class LetterOfCredit extends Component {
         "id": "string"
       },
       "transactionId": "",
-      "timestamp": "2018-03-13T11:35:00.218Z"
+      "timestamp": "2018-03-13T11:35:00.218Z" // the transactions seem to need this field in; when submitted the correct time will replace this value 
     })
     .then(() => {
       let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId;
-      return axios.post('http://localhost:3000/api/ApproveApplication', {
-        "$class": "org.acme.loc.ApproveApplication",
+      return axios.post('http://localhost:3000/api/Approve', {
+        "$class": "org.acme.loc.Approve",
         "loc": letter,
         "approvingParty": this.props.user,
         "transactionId": "",
-        "timestamp": "2018-03-13T11:25:08.043Z"
+        "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
       });
     })
     .then(() => {
@@ -63,12 +63,12 @@ class LetterOfCredit extends Component {
         disableButtons: true
       });
       let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId
-      axios.post('http://localhost:3000/api/ApproveApplication', {
-        "$class": "org.acme.loc.ApproveApplication",
+      axios.post('http://localhost:3000/api/Approve', {
+        "$class": "org.acme.loc.Approve",
         "loc": letter,
         "approvingParty": approvingParty,
         "transactionId": "",
-        "timestamp": "2018-03-13T11:25:08.043Z"
+        "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
       })
       .then(() => {
         this.setState({
@@ -87,12 +87,12 @@ class LetterOfCredit extends Component {
       disableButtons: true
     });
     let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId
-    axios.post('http://localhost:3000/api/RejectApplication', {
-      "$class": "org.acme.loc.RejectApplication",
+    axios.post('http://localhost:3000/api/Reject', {
+      "$class": "org.acme.loc.Reject",
       "loc": letter,
       "closeReason": "Letter has been rejected",
       "transactionId": "",
-      "timestamp": "2018-03-13T11:35:00.281Z"
+      "timestamp": "2018-03-13T11:35:00.281Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
     })
     .then(() => {
       this.setState({
@@ -115,7 +115,7 @@ class LetterOfCredit extends Component {
       "loc": letter,
       "closeReason": "Letter has been completed.",
       "transactionId": "",
-      "timestamp": "2018-03-13T11:35:00.139Z"
+      "timestamp": "2018-03-13T11:35:00.139Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
     })
     .then(() => {
       this.setState({
@@ -149,6 +149,8 @@ class LetterOfCredit extends Component {
             <button disabled={this.state.disableButtons} onClick={() => this.closeLOC(this.props.letter.letterId)}>Close this Letter of Credit</button>
           </div>
         )
+      } else if(this.props.letter.status === 'CLOSED' || this.props.letter.status === 'REJECTED') {
+        buttonsJSX = (<div/>);
       } else {
         buttonsJSX = (
           <div class="actions">
