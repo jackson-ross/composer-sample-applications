@@ -10,14 +10,13 @@ class EllaPage extends Component {
 		this.state = {
 			userDetails: {},
       letters: [],
-      loading: false,
+      gettingLetters: false,
       switchUser: this.props.switchUser,
       callback: this.props.callback
 		}
 	}
 
 	componentDidMount() {
-    this.setState({loading: true});
     let cURL = 'http://localhost:3000/api/BankEmployee/' + this.props.user;
 		axios.get(cURL)
 		.then(response => {
@@ -33,14 +32,12 @@ class EllaPage extends Component {
 	}
 
   getLetters() {
-    if(!this.state.loading) {
-			this.setState({loading: true});
-		}
+		this.setState({gettingLetters: true});
 		axios.get('http://localhost:3000/api/LetterOfCredit')
     .then(response => {
       this.setState ({
         letters: response.data,
-        loading: false
+        gettingLetters: false
 			});
 		})
 		.catch(error => {
@@ -87,7 +84,7 @@ class EllaPage extends Component {
   }
 
   render() {
-    if(!this.state.loading) {
+    if(this.state.userDetails.name && !this.state.gettingLetters) {
       let username = this.state.userDetails.name + ", Employee at " + this.state.userDetails.bankName;
 
       let rowsJSX = [];
