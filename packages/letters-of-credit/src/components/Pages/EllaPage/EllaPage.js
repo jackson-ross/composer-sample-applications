@@ -17,6 +17,14 @@ class EllaPage extends Component {
 	}
 
 	componentDidMount() {
+    // open a websocket
+    this.connection = new WebSocket('ws://localhost:3000');
+    this.connection.onmessage = ((evt) => {
+      console.log('event on Ella\'s page: ', evt);
+      this.getLetters();
+    });
+
+    // make rest calls
     let cURL = 'http://localhost:3000/api/BankEmployee/' + this.props.user;
 		axios.get(cURL)
 		.then(response => {
@@ -28,8 +36,11 @@ class EllaPage extends Component {
       console.log(error);
     });
     this.getLetters();
-    this.openWebSocket();
 	}
+
+  componentWillUnmount() {
+    this.connection.close();
+  }
 
   getLetters() {
 		this.setState({gettingLetters: true});
@@ -43,28 +54,7 @@ class EllaPage extends Component {
 		.catch(error => {
 			console.log(error);
 		});
-	}
-
-	openWebSocket() {
-		let destroyed = false;
-
-		console.log('Connecting to websocket... ');
-		let websocket = new WebSocket('ws://localhost:3000');
-		websocket.onopen = (() => {
-			console.log('Websocket is open');
-		});
-
-		websocket.onclose = (() => {
-			console.log('Websocket is closed');
-			if(!destroyed) {
-				this.openWebSocket();
-			}
-		});
-
-		websocket.onmessage = ((event) => {
-			this.getLetters();
-		});
-	}
+  }
 
   generateRow(i) {
     let submitter = "Alice Hamilton";

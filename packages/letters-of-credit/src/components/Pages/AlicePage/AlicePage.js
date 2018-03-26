@@ -19,6 +19,13 @@ class AlicePage extends Component {
 	}
 
 	componentDidMount() {
+		// open a websocket
+		this.connection = new WebSocket('ws://localhost:3000');
+		this.connection.onmessage = ((evt) => {
+			this.getLetters();
+		});
+
+		// make rest calls
 		let cURL = 'http://localhost:3000/api/Customer/' + this.props.user;
 		axios.get(cURL)
 		.then(response => {
@@ -30,7 +37,10 @@ class AlicePage extends Component {
 			console.log(error);
 		});
 		this.getLetters();
-		this.openWebSocket();
+	}
+
+	componentWillUnmount() {
+		this.connection.close();
 	}
 
 	getLetters() {
@@ -44,28 +54,6 @@ class AlicePage extends Component {
 		})
 		.catch(error => {
 			console.log(error);
-		});
-	}
-
-	openWebSocket() {
-		let destroyed = false;
-
-		console.log('Connecting to websocket... ');
-		let websocket = new WebSocket('ws://localhost:3000');
-		websocket.onopen = (() => {
-			console.log('Websocket is open');
-		});
-
-		websocket.onclose = (() => {
-			console.log('Websocket is closed');
-			if(!destroyed) {
-				this.openWebSocket();
-			}
-		});
-
-		websocket.onmessage = ((event) => {
-			console.log(event);
-			this.getLetters();
 		});
 	}
 
