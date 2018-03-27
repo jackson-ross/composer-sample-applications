@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import './loccard.css';
+import '../../stylesheets/css/main.css';
 
 class LoCApplyCard extends Component {
     render() {
@@ -13,7 +13,7 @@ class LoCApplyCard extends Component {
       );
     }
   }
-  
+
   LoCApplyCard.propTypes = {
     callback: PropTypes.func
   }

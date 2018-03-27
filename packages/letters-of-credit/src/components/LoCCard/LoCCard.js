@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './loccard.css';
+import '../../stylesheets/css/main.css';
 
 class LoCCard extends Component {
   render() {

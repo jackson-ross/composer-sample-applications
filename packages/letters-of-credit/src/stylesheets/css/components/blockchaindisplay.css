@@ -1,6 +1,5 @@
 .container {
-  overflow: auto;
-}
+  overflow: auto; }
 
 .BlockChainDisplay {
   position: absolute;
@@ -8,8 +7,7 @@
   /*width: 100%;*/
   overflow: scroll;
   height: 100%;
-  padding-right: 7%;
-}
+  padding-right: 7%; }
 
 .greyBlock {
   padding-left: 5px;
@@ -17,18 +15,15 @@
   align-items: center;
   display: flex;
   margin: 0 auto;
-  /*width: 50%;*/
-}
+  /*width: 50%;*/ }
 
 .greyBlockLine {
   background-color: gray;
   width: 4px;
   height: 25px;
   display: inline-block;
-  margin: 0 14px;
-}
+  margin: 0 14px; }
 
 .greyBlockNumber {
   display: inline-block;
-  opacity: 0;
-}
+  opacity: 0; }

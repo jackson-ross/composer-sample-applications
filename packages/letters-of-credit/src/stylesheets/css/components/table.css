@@ -1,0 +1,38 @@
+.headerBar {
+  height: 5vh;
+  border: 1px solid #e8e9eb;
+  background-color: #f6f8fb;
+  line-height: 2.5; }
+
+.locOrdersText {
+  margin-left: 6vh; }
+
+.viewAllText {
+  margin-left: 50%; }
+
+table {
+  width: 80%;
+  margin: 3vh 0 3vh 6vh;
+  border-collapse: collapse; }
+
+th {
+  text-align: left;
+  height: 5vh; }
+
+.row:hover {
+  cursor: pointer;
+  background-color: #f6f8fb; }
+
+td {
+  height: 5vh; }
+
+.blueText {
+  color: #4d48da; }
+
+.viewMoreButton {
+  height: 3vh;
+  border: 1px solid #3b34c4;
+  border-radius: 20px;
+  margin-left: 6vh;
+  background-color: #3b34c4;
+  color: white; }

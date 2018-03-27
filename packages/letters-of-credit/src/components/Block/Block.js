@@ -1,5 +1,5 @@
 import React from 'react';
-import './block.css';
+import '../../stylesheets/css/main.css';
 
 class Block extends React.Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './letterofcredit.css';
+import '../../stylesheets/css/main.css';
 import DetailsCard from '../DetailsCard/DetailsCard.js';
 import BlockChainDisplay from '../BlockChainDisplay/BlockChainDisplay.js';
 import axios from 'axios';
