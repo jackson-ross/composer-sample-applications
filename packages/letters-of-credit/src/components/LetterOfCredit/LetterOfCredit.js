@@ -19,7 +19,7 @@ class LetterOfCredit extends Component {
     this.setState({
       disableButtons: true
     });
-    let letterId = this.generateLetterId();
+    let letterId = "L" + Math.floor((Math.random() * 8999) + 1000);
     axios.post('http://localhost:3000/api/InitialApplication', {
       "$class": "org.acme.loc.InitialApplication",
       "letterId": letterId,
@@ -126,12 +126,6 @@ class LetterOfCredit extends Component {
     .catch(error => {
       console.log(error);
     })
-  }
-
-  generateLetterId() {
-    let id = "L" + Math.floor((Math.random() * 8999) + 1000);
-    console.log(id);
-    return id;
   }
 
   render() {
