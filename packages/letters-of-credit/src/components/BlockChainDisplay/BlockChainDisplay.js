@@ -14,18 +14,18 @@ class BlockChainDisplay extends React.Component {
   componentWillMount() {
 		axios.get('http://localhost:3000/api/system/historian')
 		.then((response) => {
-      let array = [];
-      let relevantTransactions = ["InitialApplication", "Approve", "Reject", "Close"];
+      let relevantTransactions = [];
+      let transactionTypes = ["InitialApplication", "Approve", "Reject", "Close"];
       response.data.map((i) => {
         let longName = i.transactionType.split(".")
         let name = longName[longName.length - 1];
-        if(relevantTransactions.includes(name)) {
-          array.push(i);
+        if(transactionTypes.includes(name)) {
+          relevantTransactions.push(i);
         }
       });
-      array.sort((a,b) => a.transactionTimestamp.localeCompare(b.transactionTimestamp));
+      relevantTransactions.sort((a,b) => a.transactionTimestamp.localeCompare(b.transactionTimestamp));
       this.setState ({
-        transactions: array
+        transactions: relevantTransactions
       });
 		})
 		.catch(error => {
