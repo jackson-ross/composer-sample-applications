@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './ellapage.css';
+import '../../../stylesheets/css/main.css';
 import axios from 'axios';
 import Table from '../../Table/Table.js';
 

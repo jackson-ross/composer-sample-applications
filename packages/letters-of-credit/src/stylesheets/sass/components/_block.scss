@@ -5,17 +5,25 @@
   align-items: center;
   display: flex;
   margin: 0 auto;
-  /*width: 50%;*/ }
+  /*width: 50%;*/
+
+  >p {
+    line-height: normal;
+  }
+}
 
 .BlockLine {
   background-color: #5f7bfd;
   width: 4px;
   height: 50px;
   display: inline-block;
-  margin: 0 5px; }
+  margin: 0 5px;
+}
 
 .BlockText {
-  display: inline-block; }
+  display: inline-block;
+}
 
 .BlockNumber {
-  display: inline-block; }
+  display: inline-block;
+}

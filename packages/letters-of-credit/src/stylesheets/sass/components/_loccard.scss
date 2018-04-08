@@ -1,20 +1,21 @@
 .LoCCard {
   padding: 20px 20px 40px 30px;
-  margin-left: 50px;
+  margin-left: 6vh;
   border: 1px solid white;
   text-align: left;
   color: white;
   font-weight: lighter;
   min-width: 21%;
   max-width: 21%;
+
+  > h3 {
+    font-weight: lighter;
+  }
 }
 
 .noBorder {
   border: none;
-}
-
-h3 {
-  font-weight: lighter;
+  padding-left: 0;
 }
 
 .viewButton {

@@ -7,9 +7,8 @@
   padding-left: 15px;
   border: 1px solid white;
   border-radius: 15px;
-}
-
-.Alert > p {
-  color: white;
-  font-weight: lighter;
+  > p {
+    color: white;
+    font-weight: lighter;
+  }
 }

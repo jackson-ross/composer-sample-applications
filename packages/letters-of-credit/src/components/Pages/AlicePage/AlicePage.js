@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './alicepage.css';
+import '../../../stylesheets/css/main.css';
 import axios from 'axios';
 import UserDetails from '../../UserDetails/UserDetails.js';
 import Alert from '../../Alert/Alert.js';

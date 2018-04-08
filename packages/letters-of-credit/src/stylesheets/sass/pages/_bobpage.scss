@@ -1,7 +1,7 @@
-.alicePageContainer {
+.bobPageContainer {
   width: 100%;
   height: -webkit-fill-available;
-  background-color: #4d48da;
+  background-color: #28293c;
   display: flex;
   flex-direction: column;
 }
@@ -16,12 +16,12 @@
   flex-direction: row;
 }
 
-.aliceHeaderDiv {
+.bobHeaderDiv {
   width: 100%;
   height: 10vh;
 }
 
-.aliceUsername {
+.bobUsername {
   float: left;
   margin: 3vh;
   font-weight: lighter;
@@ -29,16 +29,16 @@
   color: white;
 }
 
-.aliceUsername:hover {
+.bobUsername:hover {
   cursor: pointer;
 }
 
-.aliceMenuItems {
+.bobMenuItems {
   margin-top: 3vh;
   margin-left: 20%;
 }
 
-.aliceMenuItems > span {
+.bobMenuItems > span {
   margin: 3vh;
   color: white;
   font-weight: lighter;
@@ -49,9 +49,15 @@
   height: 50vh;
 }
 
-.aliceWelcomeDiv > h1 {
-  margin-left: 6vh;
-  margin-top: 10vh;
+.bobWelcomeDiv {
+  text-align: center;
+  margin-left: 0;
+  margin-top: 0;
+  color: white;
+}
+
+.bobDetailsDiv  {
+  margin-top: 1vh;
   color: white;
 }
 
@@ -67,4 +73,14 @@
   width: 100%;
   overflow-x: scroll;
   padding-bottom: 7%;
+}
+
+#welcomeMessage {
+  font-size: 16px;
+  font-weight: lighter;
+}
+
+#accountBalance {
+  font-size: 50px;
+  font-weight: lighter;
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './page.css';
+import '../../stylesheets/css/main.css';
 import Modal from '../Modal/Modal.js';
 
 class Page extends Component {
