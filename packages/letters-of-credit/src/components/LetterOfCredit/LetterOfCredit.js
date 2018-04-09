@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import './letterofcredit.css';
 import DetailsCard from '../DetailsCard/DetailsCard.js';
 import BlockChainDisplay from '../BlockChainDisplay/BlockChainDisplay.js';
@@ -11,8 +12,16 @@ class LetterOfCredit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      disableButtons: false
-    }
+      disableButtons: false,
+      redirect: false,
+      redirectTo: ''
+		}
+    this.handleOnClick = this.handleOnClick.bind(this);
+	}
+
+  handleOnClick(user) {
+    this.props.callback(user);
+    this.setState({redirect: true, redirectTo: user});
   }
 
   createLOC(type, quantity, price, rules) {
@@ -34,7 +43,7 @@ class LetterOfCredit extends Component {
         "id": "string"
       },
       "transactionId": "",
-      "timestamp": "2018-03-13T11:35:00.218Z" // the transactions seem to need this field in; when submitted the correct time will replace this value 
+      "timestamp": "2018-03-13T11:35:00.218Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
     })
     .then(() => {
       let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId;
@@ -50,7 +59,7 @@ class LetterOfCredit extends Component {
       this.setState({
         disableButtons: false
       })
-      this.props.callback(this.props.user);
+      this.handleOnClick(this.props.user);
     })
     .catch(error => {
       console.log(error);
@@ -74,7 +83,7 @@ class LetterOfCredit extends Component {
         this.setState({
           disableButtons: false
         });
-        this.props.callback(this.props.user);
+        this.handleOnClick(this.props.user);
       })
       .catch(error => {
         console.log(error);
@@ -98,7 +107,7 @@ class LetterOfCredit extends Component {
       this.setState({
         disableButtons: false
       });
-      this.props.callback(this.props.user);
+      this.handleOnClick(this.props.user);
     })
     .catch(error => {
       console.log(error);
@@ -121,7 +130,7 @@ class LetterOfCredit extends Component {
       this.setState({
         disableButtons: false
       });
-      this.props.callback(this.props.user);
+      this.handleOnClick(this.props.user);
     })
     .catch(error => {
       console.log(error);
@@ -135,6 +144,10 @@ class LetterOfCredit extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to={"/" + this.state.redirectTo} />;
+    }
+
     let productDetails = this.props.productDetails;
     let buttonsJSX = (<div/>);
     if(!this.props.isApply) {
@@ -169,7 +182,7 @@ class LetterOfCredit extends Component {
 
     return (
       <div class="LCcontainer">
-        <img class="backButton" src={backButtonIcon} alt="image not found" onClick={() => {if(!this.state.disableButtons){this.props.callback(this.props.user)}}}/>
+        <img class="backButton" src={backButtonIcon} alt="image not found" onClick={() => {if(!this.state.disableButtons){this.handleOnClick(this.props.user)}}}/>
         <div class="header">
           <div class="letterDetails">
             <h2>{this.props.letter.letterId}</h2>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import './App.css';
 import Page from './components/Pages/Page.js';
 import LetterOfCredit from './components/LetterOfCredit/LetterOfCredit.js';
@@ -122,7 +123,16 @@ class App extends Component {
         <Page contents={locPageContents} />
       );
     }
-    return pageToShow;
+    return (
+      <Switch>
+        <Route path="/alice" render={(props) => <AlicePage user={this.state.currentUser} switchUser={this.changeUser} callback={this.goToLetterScreen} {...props}/>}/>
+        <Route path="/matias" render={(props) => <MatiasPage user={this.state.currentUser} switchUser={this.changeUser} callback={this.goToLetterScreen} {...props}/>}/>
+        <Route path="/bob" render={(props) => <BobPage user={this.state.currentUser} switchUser={this.changeUser} callback={this.goToLetterScreen} {...props}/>}/>
+        <Route path="/ella" render={(props) => <EllaPage user={this.state.currentUser} switchUser={this.changeUser} callback={this.goToLetterScreen} {...props}/>}/>
+        <Route path="/loc" render={(props) => <LetterOfCredit letter={this.state.currentLetter} date={sampleLetter.date} applicant={sampleLetter.applicant} beneficiary={sampleLetter.beneficiary} rules={sampleLetter.rules} callback={this.changeUser} isApply={this.state.isApply} user={this.state.currentUser} {...props}/>}/>
+        <Redirect to="/alice" />
+      </Switch>
+    );
   }
 }
 

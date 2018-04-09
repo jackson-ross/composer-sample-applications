@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import './ellapage.css';
 import axios from 'axios';
 import Table from '../../Table/Table.js';
@@ -12,9 +13,24 @@ class EllaPage extends Component {
       letters: [],
       gettingLetters: false,
       switchUser: this.props.switchUser,
-      callback: this.props.callback
+      callback: this.props.callback,
+      redirect: false,
+      redirectTo: '',
+      isLetterOpen: false
 		}
+    this.handleOnClick = this.handleOnClick.bind(this);
+    this.openLetter = this.openLetter.bind(this);
 	}
+
+  handleOnClick(user) {
+    this.state.switchUser(user);
+    this.setState({redirect: true, redirectTo: user});
+  }
+
+  openLetter(i) {
+    this.props.callback(this.state.letters[i], false);
+    this.setState({isLetterOpen: true});
+  }
 
 	componentDidMount() {
     // open a websocket
@@ -25,7 +41,7 @@ class EllaPage extends Component {
     });
 
     // make rest calls
-    let cURL = 'http://localhost:3000/api/BankEmployee/' + this.props.user;
+    let cURL = 'http://localhost:3000/api/BankEmployee/ella';
 		axios.get(cURL)
 		.then(response => {
 			this.setState ({
@@ -64,7 +80,7 @@ class EllaPage extends Component {
       company = "Conga Computers"
     }
     return (
-			<tr className="row" onClick={() => this.props.callback(this.state.letters[i], false)}>
+			<tr className="row" onClick={() => this.openLetter(i) }>
 				<td className="blueText">{this.state.letters[i].letterId}</td>
 				<td>{submitter}</td>
 				<td>{company}</td>
@@ -74,6 +90,13 @@ class EllaPage extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to={"/" + this.state.redirectTo} />;
+    }
+    else if(this.state.isLetterOpen) {
+      return <Redirect push to="/loc" />;
+    }
+
     if(this.state.userDetails.name && !this.state.gettingLetters) {
       let username = this.state.userDetails.name + ", Employee at " + this.state.userDetails.bankName;
 
@@ -87,7 +110,8 @@ class EllaPage extends Component {
       return (
         <div id="ellaPageContainer" className="ellaPageContainer">
           <div id="ellaHeaderDiv" className="flexDiv ellaHeaderDiv">
-            <span className="ellaUsername" onClick={() => {this.state.switchUser('bob')}}> {username} </span>
+            {/* <Link className="ellaUsername" to={{ pathname: '/centralbankofbelgium/bob' }}>{username}</Link> */}
+            <span className="ellaUsername" onClick={() => {this.handleOnClick('bob')}}> {username} </span>
           </div>
           <div id="ellaWelcomeDiv" className="ellaWelcomeDiv">
             <h1> Welcome back {this.state.userDetails.name} </h1>

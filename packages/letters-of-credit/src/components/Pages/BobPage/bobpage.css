@@ -27,6 +27,7 @@
   font-weight: lighter;
   font-size: 90%;
   color: white;
+  text-decoration: none;
 }
 
 .bobUsername:hover {

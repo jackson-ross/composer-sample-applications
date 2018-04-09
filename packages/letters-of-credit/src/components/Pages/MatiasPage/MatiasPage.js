@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import './matiaspage.css';
 import axios from 'axios';
 import Table from '../../Table/Table.js';
@@ -12,9 +13,24 @@ class MatiasPage extends Component {
       letters: [],
       gettingLetters: false,
       switchUser: this.props.switchUser,
-      callback: this.props.callback
+      callback: this.props.callback,
+      redirect: false,
+      redirectTo: '',
+      isLetterOpen: false
 		}
+    this.handleOnClick = this.handleOnClick.bind(this);
+    this.openLetter = this.openLetter.bind(this);
 	}
+
+  handleOnClick(user) {
+    this.state.switchUser(user);
+    this.setState({redirect: true, redirectTo: user});
+  }
+
+  openLetter(i) {
+    this.props.callback(this.state.letters[i], false);
+    this.setState({isLetterOpen: true});
+  }
 
 	componentDidMount() {
     // open a websocket
@@ -25,7 +41,7 @@ class MatiasPage extends Component {
     });
 
     // make rest calls
-    let cURL = 'http://localhost:3000/api/BankEmployee/' + this.props.user;
+    let cURL = 'http://localhost:3000/api/BankEmployee/matias';
 		axios.get(cURL)
 		.then(response => {
 			this.setState ({
@@ -37,7 +53,7 @@ class MatiasPage extends Component {
     });
     this.getLetters();
   }
-  
+
   componentWillUnmount() {
     this.connection.close();
   }
@@ -64,7 +80,7 @@ class MatiasPage extends Component {
       company = "Conga Computers"
     }
     return (
-			<tr className="row" onClick={() => this.props.callback(this.state.letters[i], false)}>
+			<tr className="row" onClick={() => this.openLetter(i) }>
 				<td className="blueText">{this.state.letters[i].letterId}</td>
 				<td>{submitter}</td>
 				<td>{company}</td>
@@ -74,6 +90,13 @@ class MatiasPage extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to={"/" + this.state.redirectTo} />;
+    }
+    else if(this.state.isLetterOpen) {
+      return <Redirect push to="/loc" />;
+    }
+    
     if(this.state.userDetails.name && !this.state.gettingLetters) {
       let username = this.state.userDetails.name + ", Employee at " + this.state.userDetails.bankName;
 
@@ -87,7 +110,8 @@ class MatiasPage extends Component {
       return (
         <div id="matiasPageContainer" className="matiasPageContainer">
           <div id="matiasHeaderDiv" className="flexDiv matiasHeaderDiv">
-            <span className="matiasUsername" onClick={() => {this.state.switchUser('alice')}}> {username} </span>
+            {/* <Link className="matiasUsername" to={{ pathname: '/bankofargentina/alice' }}>{username}</Link> */}
+            <span className="matiasUsername" onClick={() => {this.handleOnClick('alice')}}> {username} </span>
             <div id="matiasMenu" className="matiasMenuItems">
               <span> Change account details </span>
               <span> View Transaction History </span>
