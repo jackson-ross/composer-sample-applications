@@ -131,27 +131,27 @@ class LetterOfCredit extends Component {
   render() {
     let productDetails = this.props.productDetails;
     let buttonsJSX = (<div/>);
-    if(!this.props.isApply) {
+    if (!this.props.isApply) {
       productDetails = {
         type: this.props.letter.productDetails.productType,
         quantity: this.props.letter.productDetails.quantity,
         pricePerUnit: this.props.letter.productDetails.pricePerUnit
       }
-      if(this.props.letter.status === 'APPROVED') {
-        buttonsJSX = (
-          <div class="actions">
-            <button disabled={this.state.disableButtons} onClick={() => this.closeLOC(this.props.letter.letterId)}>Close this Letter of Credit</button>
-          </div>
-        )
-      } else if(this.props.letter.status === 'CLOSED' || this.props.letter.status === 'REJECTED') {
-        buttonsJSX = (<div/>);
-      } else {
+      if (this.props.letter.status === 'AWAITING_APPROVAL' && !this.props.letter.approval.includes(this.props.user)) {
         buttonsJSX = (
           <div class="actions">
             <button disabled={this.state.disableButtons} onClick={() => {this.approveLOC(this.props.letter.letterId, this.props.user)}}>I accept the application</button>
             <button disabled={this.state.disableButtons} onClick={() => {this.rejectLOC(this.props.letter.letterId)}}>I reject the application</button>
           </div>
-        );
+          );
+      } else if (this.props.letter.status === 'RECEIVED') {
+        buttonsJSX = (
+          <div class="actions">
+            <button disabled={this.state.disableButtons} onClick={() => this.closeLOC(this.props.letter.letterId)}>Close this Letter of Credit</button>
+          </div>
+        )
+      } else {
+        buttonsJSX = (<div/>);
       }
     } else {
       buttonsJSX = (

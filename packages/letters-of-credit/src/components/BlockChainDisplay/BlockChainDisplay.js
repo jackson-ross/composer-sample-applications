@@ -15,7 +15,7 @@ class BlockChainDisplay extends React.Component {
 		axios.get('http://localhost:3000/api/system/historian')
 		.then((response) => {
       let relevantTransactions = [];
-      let transactionTypes = ["InitialApplication", "Approve", "Reject", "Close"];
+      let transactionTypes = ["InitialApplication", "Approve", "Reject", "ShipProduct", "ReceiveProduct", "Close"];
       response.data.map((i) => {
         let longName = i.transactionType.split(".")
         let name = longName[longName.length - 1];

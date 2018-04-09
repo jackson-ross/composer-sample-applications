@@ -60,7 +60,7 @@ class BobPage extends Component {
 
 	generateCard(i) {
 		return (
-      <LoCCard letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"}/>
+      <LoCCard letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"} user={this.props.user}/>
     );
   }
 
