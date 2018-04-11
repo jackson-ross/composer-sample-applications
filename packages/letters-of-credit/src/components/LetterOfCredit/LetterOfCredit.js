@@ -151,10 +151,10 @@ class LetterOfCredit extends Component {
         quantity: this.props.letter.productDetails.quantity,
         pricePerUnit: this.props.letter.productDetails.pricePerUnit
       }
-      if (this.props.letter.status === 'AWAITING_APPROVAL' && !this.props.letter.approval.includes(this.props.user)) {
+      if (this.props.letter.status === 'AWAITING_APPROVAL' && !this.props.letter.approval.includes(this.state.user)) {
         buttonJSX = (
           <div class="actions">
-            <button disabled={this.state.disableButtons} onClick={() => {this.approveLOC(this.props.letter.letterId, this.props.user)}}>I accept the application</button>
+            <button disabled={this.state.disableButtons} onClick={() => {this.approveLOC(this.props.letter.letterId, this.state.user)}}>I accept the application</button>
             <button disabled={this.state.disableButtons} onClick={() => {this.rejectLOC(this.props.letter.letterId)}}>I reject the application</button>
           </div>
           );
