@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import './bobpage.css';
 import axios from 'axios';
 import UserDetails from '../../UserDetails/UserDetails.js';
-import Alert from '../../Alert/Alert.js';
 import LoCCard from '../../LoCCard/LoCCard.js';
 import LoCApplyCard from '../../LoCCard/LoCApplyCard.js';
 
@@ -69,7 +68,7 @@ class BobPage extends Component {
 
 	generateCard(i) {
 		return (
-      <LoCCard letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"}/>
+      <LoCCard user="bob" letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"}/>
     );
   }
 
@@ -91,8 +90,6 @@ class BobPage extends Component {
 			return (
     		<div id="bobPageContainer" className="bobPageContainer">
     		  <div id="bobHeaderDiv" className="flexDiv bobHeaderDiv">
-            {/* <Link className="bobUsername" to={{ pathname: '/centralbankofbelgium/ella' }}>{username}</Link>
-            <Link className="aliceUsername" to={{ pathname: '/bankofargentina/alice' }}>Go to Alice</Link> */}
     		    <span className="bobUsername" onClick={() => {this.handleOnClick('ella')}}> {username} </span>
 						<span className="aliceUsername" onClick={() => {this.handleOnClick('alice')}}> Go to Alice </span>
     		  </div>
@@ -107,7 +104,7 @@ class BobPage extends Component {
 
 					</div>
     		  <div className="locDiv">
-    		    <LoCApplyCard callback={this.state.callback} />
+    		    <LoCApplyCard user="bob" callback={this.state.callback} />
 						{cardsJSX}
     		  </div>
 				</div>

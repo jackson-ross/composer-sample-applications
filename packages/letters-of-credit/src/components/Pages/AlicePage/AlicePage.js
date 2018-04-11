@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import './alicepage.css';
 import axios from 'axios';
 import UserDetails from '../../UserDetails/UserDetails.js';
@@ -68,7 +68,7 @@ class AlicePage extends Component {
 
 	generateCard(i) {
 		return (
-      <LoCCard letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"}/>
+      <LoCCard user="alice" letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"}/>
     );
 	}
 
@@ -90,8 +90,6 @@ class AlicePage extends Component {
 			return (
     		<div id="alicePageContainer" className="alicePageContainer">
     		  <div id="aliceHeaderDiv" className="flexDiv aliceHeaderDiv">
-            {/* <Link className="aliceUsername" to={{ pathname: '/bankofargentina/matias' }}>{username}</Link>
-            <Link className="aliceUsername" to={{ pathname: '/centralbankofbelgium/bob' }}>Go to Bob</Link> */}
     		    <span className="aliceUsername" onClick={() => {this.handleOnClick('matias')}}> {username} </span>
 						<span className="aliceUsername" onClick={() => {this.handleOnClick('bob')}}> Go to Bob </span>
     		    <div id="aliceMenu" className="aliceMenuItems">
@@ -112,7 +110,7 @@ class AlicePage extends Component {
 						</div>
 					</div>
     		  <div className="locDiv">
-    		    <LoCApplyCard callback={this.state.callback} />
+    		    <LoCApplyCard user="alice" callback={this.state.callback} />
 						{cardsJSX}
     		  </div>
 				</div>

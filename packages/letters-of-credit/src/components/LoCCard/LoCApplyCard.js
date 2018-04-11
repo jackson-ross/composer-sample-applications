@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import './loccard.css';
 
 class LoCApplyCard extends Component {
@@ -19,7 +18,7 @@ class LoCApplyCard extends Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect push to={"/loc"} />;
+      return <Redirect push to={this.props.user + "/loc"} />;
     }
 
     return (

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import './matiaspage.css';
 import axios from 'axios';
 import Table from '../../Table/Table.js';
@@ -29,7 +29,7 @@ class MatiasPage extends Component {
 
   openLetter(i) {
     this.props.callback(this.state.letters[i], false);
-    this.setState({isLetterOpen: true});
+    this.setState({isLetterOpen: true, redirectTo: 'matias'});
   }
 
 	componentDidMount() {
@@ -90,13 +90,13 @@ class MatiasPage extends Component {
   }
 
   render() {
-    if (this.state.redirect) {
+    if(this.state.isLetterOpen) {
+      return <Redirect push to={this.state.redirectTo + "/loc"} />;
+    }
+    else if (this.state.redirect) {
       return <Redirect push to={"/" + this.state.redirectTo} />;
     }
-    else if(this.state.isLetterOpen) {
-      return <Redirect push to="/loc" />;
-    }
-    
+
     if(this.state.userDetails.name && !this.state.gettingLetters) {
       let username = this.state.userDetails.name + ", Employee at " + this.state.userDetails.bankName;
 
@@ -110,7 +110,6 @@ class MatiasPage extends Component {
       return (
         <div id="matiasPageContainer" className="matiasPageContainer">
           <div id="matiasHeaderDiv" className="flexDiv matiasHeaderDiv">
-            {/* <Link className="matiasUsername" to={{ pathname: '/bankofargentina/alice' }}>{username}</Link> */}
             <span className="matiasUsername" onClick={() => {this.handleOnClick('alice')}}> {username} </span>
             <div id="matiasMenu" className="matiasMenuItems">
               <span> Change account details </span>

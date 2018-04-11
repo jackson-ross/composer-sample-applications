@@ -104,7 +104,7 @@ class DetailsCard extends Component {
 
     return (
       <div class="cardContainer">
-        <a href="#" onClick={this.switchEditable.bind((this))}><img src={editIcon}/></a>
+        <a href="#" onClick={this.switchEditable.bind((this))}><img src={editIcon} alt="click to edit"/></a>
         <h4>{mainHeadingTxt}</h4>
         {jsx}
       </div>

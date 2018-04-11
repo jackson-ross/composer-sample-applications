@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import './ellapage.css';
 import axios from 'axios';
 import Table from '../../Table/Table.js';
@@ -29,7 +29,7 @@ class EllaPage extends Component {
 
   openLetter(i) {
     this.props.callback(this.state.letters[i], false);
-    this.setState({isLetterOpen: true});
+    this.setState({isLetterOpen: true, redirectTo: 'ella'});
   }
 
 	componentDidMount() {
@@ -94,7 +94,7 @@ class EllaPage extends Component {
       return <Redirect push to={"/" + this.state.redirectTo} />;
     }
     else if(this.state.isLetterOpen) {
-      return <Redirect push to="/loc" />;
+      return <Redirect push to={this.state.redirectTo + "/loc"} />;
     }
 
     if(this.state.userDetails.name && !this.state.gettingLetters) {
@@ -110,7 +110,6 @@ class EllaPage extends Component {
       return (
         <div id="ellaPageContainer" className="ellaPageContainer">
           <div id="ellaHeaderDiv" className="flexDiv ellaHeaderDiv">
-            {/* <Link className="ellaUsername" to={{ pathname: '/centralbankofbelgium/bob' }}>{username}</Link> */}
             <span className="ellaUsername" onClick={() => {this.handleOnClick('bob')}}> {username} </span>
           </div>
           <div id="ellaWelcomeDiv" className="ellaWelcomeDiv">
