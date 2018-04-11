@@ -130,7 +130,7 @@ class LetterOfCredit extends Component {
 
   render() {
     let productDetails = this.props.productDetails;
-    let buttonsJSX = (<div/>);
+    let buttonJSX = (<div/>);
     if (!this.props.isApply) {
       productDetails = {
         type: this.props.letter.productDetails.productType,
@@ -138,23 +138,23 @@ class LetterOfCredit extends Component {
         pricePerUnit: this.props.letter.productDetails.pricePerUnit
       }
       if (this.props.letter.status === 'AWAITING_APPROVAL' && !this.props.letter.approval.includes(this.props.user)) {
-        buttonsJSX = (
+        buttonJSX = (
           <div class="actions">
             <button disabled={this.state.disableButtons} onClick={() => {this.approveLOC(this.props.letter.letterId, this.props.user)}}>I accept the application</button>
             <button disabled={this.state.disableButtons} onClick={() => {this.rejectLOC(this.props.letter.letterId)}}>I reject the application</button>
           </div>
           );
       } else if (this.props.letter.status === 'RECEIVED') {
-        buttonsJSX = (
+        buttonJSX = (
           <div class="actions">
             <button disabled={this.state.disableButtons} onClick={() => this.closeLOC(this.props.letter.letterId)}>Close this Letter of Credit</button>
           </div>
         )
       } else {
-        buttonsJSX = (<div/>);
+        buttonJSX = (<div/>);
       }
     } else {
-      buttonsJSX = (
+      buttonJSX = (
         <div class="actions">
           <button disabled={this.state.disableButtons} onClick={() => this.createLOC(this.props.productDetails.type, this.props.productDetails.quantity, this.props.productDetails.pricePerUnit, this.props.rules)}>Start approval process</button>
         </div>
@@ -167,7 +167,7 @@ class LetterOfCredit extends Component {
         <div class="header">
           <div class="letterDetails">
             <h2>{this.props.letter.letterId}</h2>
-            <h2>User logged in: {this.props.user}</h2>
+            <h2>User logged in: {this.props.user.charAt(0).toUpperCase() + this.props.user.slice(1)}</h2>
             <p>{this.props.date}</p>
           </div>
         </div>
@@ -180,7 +180,7 @@ class LetterOfCredit extends Component {
         <div class="rules">
             <DetailsCard type="Rules" data={["The product has been received and is as expected"]}/>
         </div>
-        {buttonsJSX}
+        {buttonJSX}
         { this.state.disableButtons && <div class="statusMessage"> Please wait... </div> }
         <div class="blockChainContainer">
           <BlockChainDisplay/>

@@ -39,70 +39,35 @@ class LoCCard extends Component {
       </div>
     );
 
-    let messageText, buttonStyle, callback, disableButton;
-
-    if (letter.status === 'APPROVED' || letter.status === 'SHIPPED' || letter.status === 'RECEIVED') {
-      if (user === 'bob') {
-        messageText = 'Ship this product';
-        buttonStyle = 'shipButton';
-      } else if (user === 'alice') {
-        messageText = 'This product is ready to be accepted';
-        buttonStyle = 'acceptButton';
-      }
-      contents = (
-        <div>
-          <h3>{'Ref: ' + letter.letterId}</h3>
-          <p>{messageText}</p>
-          <p>{'Product Type: ' + letter.productDetails.productType}</p>
-          <div className="shipButtonDiv">
-            <button className={buttonStyle} onClick={() => this.shipProduct(letter.letterId)}>✓</button>
-            <span className="shipText">Ship Order</span>
+    if (user === 'bob') {
+      if (letter.status === 'APPROVED' || letter.status === 'SHIPPED' || letter.status === 'RECEIVED') {
+        contents = (
+          <div>
+            <h3>{'Ref: ' + letter.letterId}</h3>
+            <p>{'Ship this product'}</p>
+            <p>{'Product Type: ' + letter.productDetails.productType}</p>
+            <div className="shipButtonDiv">
+              <button className="shipButton" onClick={() => {this.shipProduct(letter.letterId)}} disabled={(letter.status === 'APPROVED') ? false : true}>✓</button>
+              <span className="shipText">{'Ship Order'}</span>
+            </div>
           </div>
-        </div>
-      );
-
+        );
+      }
+    } else { // if the current user is not bob then it must be alice
+      if (letter.status === 'SHIPPED' || letter.status === 'RECEIVED') {
+        contents = (
+          <div>
+            <h3>{'Ref: ' + letter.letterId}</h3>
+            <p>{'This product is ready to be accepted'}</p>
+            <p>{'Product Type: ' + letter.productDetails.productType}</p>
+            <div className="shipButtonDiv">
+              <button className="acceptButton" onClick={() => {this.receiveProduct(letter.letterId)}} disabled={(letter.status === 'SHIPPED') ? false : true}>✓</button>
+              <span className="shipText">{'Accept Order'}</span>
+            </div>
+          </div>
+        );
+      }
     }
-
-    // if(letter.status !== 'AWAITING_APPROVAL' && this.props.user === 'bob') {
-    //   contents = (
-    //     <div>
-    //       <h3>{'Ref: ' + letter.letterId}</h3>
-    //       <p>{'Ship this product'}</p>
-    //       <p>{'Product Type: ' + letter.productDetails.productType}</p>
-    //       <div className="shipButtonDiv">
-    //         {letter.status === 'APPROVED' &&
-    //           <button className="shipButton" onClick={() => this.shipProduct(letter.letterId)}>✓</button>
-    //         }
-    //         {letter.status === 'SHIPPED' && 
-    //           <button className="shipButton" disabled>✓</button>
-    //         }
-    //         <span className="shipText">Ship Order</span>
-    //       </div>
-    //     </div>
-    //   );
-    // } else if(letter.status !== 'AWAITING_APPROVAL' && this.props.user === 'alice') {
-    //   contents = (
-    //     <div>
-    //       <h3>{'Ref: ' + letter.letterId}</h3>
-    //       <p>{'This product is ready to be accepted'}</p>
-    //       <p>{'Product Type: ' + letter.productDetails.productType}</p>
-    //       <div className="shipButtonDiv">
-    //         <button className="acceptButton acceptButtonDisabled" onClick={() => this.receiveProduct(letter.letterId)}>✓</button>
-    //         <span className="shipText">Receive Order</span>
-    //       </div>
-    //     </div>
-    //   );
-    // } else {
-    //   contents = (
-    //     <div>
-    //       <h3>{'Ref: ' + letter.letterId}</h3>
-    //       <p>{'Participants: Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</p>
-    //       <p>{'Product Type: ' + letter.productDetails.productType}</p>
-    //       <button className="viewButton" onClick={() => this.props.callback(this.props.letter, false)}>View Letter Of Credit</button>
-    //     </div>
-    //   )
-    // }
-
     return contents;
   }
 

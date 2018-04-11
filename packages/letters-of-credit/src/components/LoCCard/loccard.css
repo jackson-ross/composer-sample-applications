@@ -51,6 +51,7 @@ h3 {
 .shipButton:disabled {
   background-color: white;
   color: #28293c;
+  border-color: white;
 }
 
 .acceptButton {
@@ -65,6 +66,7 @@ h3 {
 .acceptButton:disabled {
   background-color: white;
   color: #3b34c4;
+  border-color: white;
 }
 
 .shipText {
