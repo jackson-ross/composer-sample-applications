@@ -72,6 +72,23 @@ class MatiasPage extends Component {
 		});
 	}
 
+  generateStatus(letter){
+    let status = '';
+    if (letter.status === 'AWAITING_APPROVAL') {
+      if (!letter.approval.includes('matias')) {
+        status = 'Awaiting approval from YOU';
+      } else if (!letter.approval.includes('ella')) {
+        status = 'Awaiting approval from Confirming Bank';
+      } else if (letter.approval.includes('ella') && !letter.approval.includes('bob')) {
+        status = 'Awaiting approval from Beneficiary';
+      }
+    } else { 
+      status = letter.status.toLowerCase();
+      status = status.charAt(0).toUpperCase() + status.slice(1);
+    }
+    return status;
+  }
+  
   generateRow(i) {
     let submitter = "Alice Hamilton";
     let company = "QuickFix IT";
@@ -79,12 +96,13 @@ class MatiasPage extends Component {
       submitter = "Bob Bobbins";
       company = "Conga Computers"
     }
+    let status = this.generateStatus(this.state.letters[i])
     return (
 			<tr className="row" onClick={() => this.openLetter(i) }>
 				<td className="blueText">{this.state.letters[i].letterId}</td>
 				<td>{submitter}</td>
 				<td>{company}</td>
-				<td>{this.state.letters[i].status}</td>
+				<td>{status}</td>
 			</tr>
 		);
   }

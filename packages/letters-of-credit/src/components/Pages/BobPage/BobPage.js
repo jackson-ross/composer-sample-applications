@@ -67,9 +67,14 @@ class BobPage extends Component {
 	}
 
 	generateCard(i) {
-		return (
-      <LoCCard user="bob" letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"}/>
-    );
+		// should only show LOCs that are ready for Bob to approve
+		if (this.state.letters[i].approval.includes('ella')){
+			return (
+    	  <LoCCard letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"} user="bob"/>
+			);
+		} else {
+			return <div />;
+		}
   }
 
   render() {

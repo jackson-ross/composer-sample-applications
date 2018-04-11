@@ -29,7 +29,7 @@ class LetterOfCredit extends Component {
     this.setState({
       disableButtons: true
     });
-    let letterId = this.generateLetterId();
+    let letterId = "L" + Math.floor((Math.random() * 8999) + 1000);
     axios.post('http://localhost:3000/api/InitialApplication', {
       "$class": "org.acme.loc.InitialApplication",
       "letterId": letterId,
@@ -138,43 +138,37 @@ class LetterOfCredit extends Component {
     })
   }
 
-  generateLetterId() {
-    let id = "L" + Math.floor((Math.random() * 8999) + 1000);
-    console.log(id);
-    return id;
-  }
-
   render() {
     if (this.state.redirect) {
       return <Redirect push to={"/" + this.state.redirectTo} />;
     }
 
     let productDetails = this.props.productDetails;
-    let buttonsJSX = (<div/>);
-    if(!this.props.isApply) {
+    let buttonJSX = (<div/>);
+    if (!this.props.isApply) {
       productDetails = {
         type: this.props.letter.productDetails.productType,
         quantity: this.props.letter.productDetails.quantity,
         pricePerUnit: this.props.letter.productDetails.pricePerUnit
       }
-      if(this.props.letter.status === 'APPROVED') {
-        buttonsJSX = (
+      if (this.props.letter.status === 'AWAITING_APPROVAL' && !this.props.letter.approval.includes(this.props.user)) {
+        buttonJSX = (
+          <div class="actions">
+            <button disabled={this.state.disableButtons} onClick={() => {this.approveLOC(this.props.letter.letterId, this.props.user)}}>I accept the application</button>
+            <button disabled={this.state.disableButtons} onClick={() => {this.rejectLOC(this.props.letter.letterId)}}>I reject the application</button>
+          </div>
+          );
+      } else if (this.props.letter.status === 'RECEIVED') {
+        buttonJSX = (
           <div class="actions">
             <button disabled={this.state.disableButtons} onClick={() => this.closeLOC(this.props.letter.letterId)}>Close this Letter of Credit</button>
           </div>
         )
-      } else if(this.props.letter.status === 'CLOSED' || this.props.letter.status === 'REJECTED') {
-        buttonsJSX = (<div/>);
       } else {
-        buttonsJSX = (
-          <div class="actions">
-            <button disabled={this.state.disableButtons} onClick={() => {this.approveLOC(this.props.letter.letterId, this.state.user)}}>I accept the application</button>
-            <button disabled={this.state.disableButtons} onClick={() => {this.rejectLOC(this.props.letter.letterId)}}>I reject the application</button>
-          </div>
-        );
+        buttonJSX = (<div/>);
       }
     } else {
-      buttonsJSX = (
+      buttonJSX = (
         <div class="actions">
           <button disabled={this.state.disableButtons} onClick={() => this.createLOC(this.props.productDetails.type, this.props.productDetails.quantity, this.props.productDetails.pricePerUnit, this.props.rules)}>Start approval process</button>
         </div>
@@ -187,7 +181,7 @@ class LetterOfCredit extends Component {
         <div class="header">
           <div class="letterDetails">
             <h2>{this.props.letter.letterId}</h2>
-            <h2>User logged in: {this.state.user}</h2>
+            <h2>User logged in: {this.state.user.charAt(0).toUpperCase() + this.state.user.slice(1)}</h2>
             <p>{this.props.date}</p>
           </div>
         </div>
@@ -200,7 +194,7 @@ class LetterOfCredit extends Component {
         <div class="rules">
             <DetailsCard type="Rules" data={["The product has been received and is as expected"]}/>
         </div>
-        {buttonsJSX}
+        {buttonJSX}
         { this.state.disableButtons && <div class="statusMessage"> Please wait... </div> }
         <div class="blockChainContainer">
           <BlockChainDisplay/>
