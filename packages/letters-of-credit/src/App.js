@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
-import Page from './components/Pages/Page.js';
 import LetterOfCredit from './components/LetterOfCredit/LetterOfCredit.js';
 import AlicePage from './components/Pages/AlicePage/AlicePage.js';
 import BobPage from './components/Pages/BobPage/BobPage.js';
@@ -51,7 +51,6 @@ class App extends Component {
     };
     this.changeUser = this.changeUser.bind(this);
     this.goToLetterScreen = this.goToLetterScreen.bind(this);
-    this.backFromLetterScreen = this.backFromLetterScreen.bind(this);
   }
 
   goToLetterScreen(letter, isApply) {
@@ -60,14 +59,6 @@ class App extends Component {
       currentLetter: letter,
       isApply: isApply
     });
-  }
-
-  backFromLetterScreen(user) {
-    if(user === "alice") {
-      this.goToCustomerScreen();
-    } else {
-      this.goToEmployeeScreen();
-    }
   }
 
   changeUser(user) {
@@ -95,34 +86,16 @@ class App extends Component {
   }
 
   render() {
-    let locPageContents = (
-      <LetterOfCredit letter={this.state.currentLetter} date={sampleLetter.date} applicant={sampleLetter.applicant} beneficiary={sampleLetter.beneficiary} rules={sampleLetter.rules} callback={this.changeUser} isApply={this.state.isApply} user={this.state.currentUser}/>
+    return (
+      <Switch>
+        <Route exact path="/alice" render={(props) => <AlicePage user={this.state.currentUser} switchUser={this.changeUser} callback={this.goToLetterScreen} {...props}/>}/>
+        <Route exact path="/matias" render={(props) => <MatiasPage user={this.state.currentUser} switchUser={this.changeUser} callback={this.goToLetterScreen} {...props}/>}/>
+        <Route exact path="/bob" render={(props) => <BobPage user={this.state.currentUser} switchUser={this.changeUser} callback={this.goToLetterScreen} {...props}/>}/>
+        <Route exact path="/ella" render={(props) => <EllaPage user={this.state.currentUser} switchUser={this.changeUser} callback={this.goToLetterScreen} {...props}/>}/>
+        <Route path="/:name/loc" render={(props) => <LetterOfCredit letter={this.state.currentLetter} date={sampleLetter.date} applicant={sampleLetter.applicant} beneficiary={sampleLetter.beneficiary} rules={sampleLetter.rules} callback={this.changeUser} isApply={this.state.isApply} user={this.state.currentUser} {...props}/>}/>
+        <Redirect to="/alice" />
+      </Switch>
     );
-
-    let pageToShow;
-
-    if(this.state.currentPage === pageContents.ALICE) {
-      pageToShow = (
-        <AlicePage user={this.state.currentUser} switchUser={this.changeUser} callback={this.goToLetterScreen}/>
-      );
-    } else if (this.state.currentPage === pageContents.BOB) {
-      pageToShow = (
-        <BobPage user={this.state.currentUser} switchUser={this.changeUser} callback={this.goToLetterScreen}/>
-      );
-    } else if(this.state.currentPage === pageContents.MATIAS) {
-      pageToShow = (
-        <MatiasPage user={this.state.currentUser} switchUser={this.changeUser} callback={this.goToLetterScreen}/>
-      );
-    } else if(this.state.currentPage === pageContents.ELLA) {
-      pageToShow = (
-        <EllaPage user={this.state.currentUser} switchUser={this.changeUser} callback={this.goToLetterScreen}/>
-      );
-    } else {
-      pageToShow = (
-        <Page contents={locPageContents} />
-      );
-    }
-    return pageToShow;
   }
 }
 
