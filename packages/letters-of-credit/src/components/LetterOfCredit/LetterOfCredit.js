@@ -43,10 +43,10 @@ class LetterOfCredit extends Component {
     this.setState({
       disableButtons: true
     });
-    let letterId = "L" + Math.floor((Math.random() * 8999) + 1000);
+    let currentTime = new Date().toLocaleTimeString().split(":").join('');
     axios.post('http://localhost:3000/api/InitialApplication', {
       "$class": "org.acme.loc.InitialApplication",
-      "letterId": letterId,
+      "letterId": ("L" + currentTime),
       "applicant": "resource:org.acme.loc.Customer#alice",
       "beneficiary": "resource:org.acme.loc.Customer#bob",
       "rules": rules,
@@ -61,7 +61,7 @@ class LetterOfCredit extends Component {
       "timestamp": "2018-03-13T11:35:00.218Z" // the transactions seem to need this field in; when submitted the correct time will replace this value 
     })
     .then(() => {
-      let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId;
+      let letter = "resource:org.acme.loc.LetterOfCredit#" + ("L" + currentTime);
       return axios.post('http://localhost:3000/api/Approve', {
         "$class": "org.acme.loc.Approve",
         "loc": letter,

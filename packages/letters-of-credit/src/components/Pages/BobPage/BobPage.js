@@ -48,6 +48,8 @@ class BobPage extends Component {
 		this.setState({gettingLetters: true});
 		axios.get('http://localhost:3000/api/LetterOfCredit')
     .then(response => {
+			// sort the LOCs by descending ID
+			response.data.sort((a,b) => b.letterId.localeCompare(a.letterId));
       this.setState ({
 				letters: response.data,
 				gettingLetters: false
@@ -75,7 +77,7 @@ class BobPage extends Component {
 
     	let cardsJSX = [];
     	if(this.state.letters.length) {
-				for(let i = 0; i < this.state.letters.length; i++) {
+				for(let i = 0; i < 5; i++) { // only show the 5 most recent LOCs
 					cardsJSX.push(this.generateCard(i));
 				}
 			}
