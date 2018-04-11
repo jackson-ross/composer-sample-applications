@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import './letterofcredit.css';
 import DetailsCard from '../DetailsCard/DetailsCard.js';
 import BlockChainDisplay from '../BlockChainDisplay/BlockChainDisplay.js';
@@ -11,9 +12,18 @@ class LetterOfCredit extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: this.props.match.params.name,
       transactions: [],
-      disableButtons: false
-    }
+      disableButtons: false,
+      redirect: false,
+      redirectTo: ''
+		}
+    this.handleOnClick = this.handleOnClick.bind(this);
+	}
+
+  handleOnClick(user) {
+    this.props.callback(user);
+    this.setState({redirect: true, redirectTo: user});
   }
 
   componentWillMount() {
@@ -58,14 +68,14 @@ class LetterOfCredit extends Component {
         "id": "string"
       },
       "transactionId": "",
-      "timestamp": "2018-03-13T11:35:00.218Z" // the transactions seem to need this field in; when submitted the correct time will replace this value 
+      "timestamp": "2018-03-13T11:35:00.218Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
     })
     .then(() => {
       let letter = "resource:org.acme.loc.LetterOfCredit#" + ("L" + currentTime);
       return axios.post('http://localhost:3000/api/Approve', {
         "$class": "org.acme.loc.Approve",
         "loc": letter,
-        "approvingParty": this.props.user,
+        "approvingParty": this.state.user,
         "transactionId": "",
         "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
       });
@@ -74,7 +84,7 @@ class LetterOfCredit extends Component {
       this.setState({
         disableButtons: false
       })
-      this.props.callback(this.props.user);
+      this.handleOnClick(this.state.user);
     })
     .catch(error => {
       console.log(error);
@@ -82,7 +92,7 @@ class LetterOfCredit extends Component {
   }
 
   approveLOC(letterId, approvingParty) {
-    if(!this.props.letter.approval.includes(this.props.user)) {
+    if(!this.props.letter.approval.includes(this.state.user)) {
       this.setState({
         disableButtons: true
       });
@@ -98,7 +108,7 @@ class LetterOfCredit extends Component {
         this.setState({
           disableButtons: false
         });
-        this.props.callback(this.props.user);
+        this.handleOnClick(this.state.user);
       })
       .catch(error => {
         console.log(error);
@@ -122,7 +132,7 @@ class LetterOfCredit extends Component {
       this.setState({
         disableButtons: false
       });
-      this.props.callback(this.props.user);
+      this.handleOnClick(this.state.user);
     })
     .catch(error => {
       console.log(error);
@@ -145,7 +155,7 @@ class LetterOfCredit extends Component {
       this.setState({
         disableButtons: false
       });
-      this.props.callback(this.props.user);
+      this.handleOnClick(this.state.user);
     })
     .catch(error => {
       console.log(error);
@@ -153,6 +163,10 @@ class LetterOfCredit extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to={"/" + this.state.redirectTo} />;
+    }
+
     let productDetails = this.props.productDetails;
     let buttonJSX = (<div/>);
     if (!this.props.isApply) {
@@ -161,10 +175,10 @@ class LetterOfCredit extends Component {
         quantity: this.props.letter.productDetails.quantity,
         pricePerUnit: this.props.letter.productDetails.pricePerUnit
       }
-      if (this.props.letter.status === 'AWAITING_APPROVAL' && !this.props.letter.approval.includes(this.props.user)) {
+      if (this.props.letter.status === 'AWAITING_APPROVAL' && !this.props.letter.approval.includes(this.state.user)) {
         buttonJSX = (
           <div class="actions">
-            <button disabled={this.state.disableButtons} onClick={() => {this.approveLOC(this.props.letter.letterId, this.props.user)}}>I accept the application</button>
+            <button disabled={this.state.disableButtons} onClick={() => {this.approveLOC(this.props.letter.letterId, this.state.user)}}>I accept the application</button>
             <button disabled={this.state.disableButtons} onClick={() => {this.rejectLOC(this.props.letter.letterId)}}>I reject the application</button>
           </div>
           );
@@ -187,11 +201,11 @@ class LetterOfCredit extends Component {
 
     return (
       <div class="LCcontainer">
-        <img class="backButton" src={backButtonIcon} alt="image not found" onClick={() => {if(!this.state.disableButtons){this.props.callback(this.props.user)}}}/>
+        <img class="backButton" src={backButtonIcon} alt="go back" onClick={() => {if(!this.state.disableButtons){this.handleOnClick(this.state.user)}}}/>
         <div class="header">
           <div class="letterDetails">
             <h2>{this.props.letter.letterId}</h2>
-            <h2>User logged in: {this.props.user.charAt(0).toUpperCase() + this.props.user.slice(1)}</h2>
+            <h2>User logged in: {this.state.user.charAt(0).toUpperCase() + this.state.user.slice(1)}</h2>
             <p>{this.props.date}</p>
           </div>
         </div>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import './bobpage.css';
 import axios from 'axios';
 import UserDetails from '../../UserDetails/UserDetails.js';
-import Alert from '../../Alert/Alert.js';
 import LoCCard from '../../LoCCard/LoCCard.js';
 import LoCApplyCard from '../../LoCCard/LoCApplyCard.js';
 
@@ -14,9 +14,17 @@ class BobPage extends Component {
 			letters: [],
 			gettingLetters: false,
 			switchUser: this.props.switchUser,
-			callback: this.props.callback
+			callback: this.props.callback,
+      redirect: false,
+      redirectTo: ''
 		}
+    this.handleOnClick = this.handleOnClick.bind(this);
 	}
+
+  handleOnClick(user) {
+    this.state.switchUser(user);
+    this.setState({redirect: true, redirectTo: user});
+  }
 
 	componentDidMount() {
 		// open a websocket
@@ -27,7 +35,7 @@ class BobPage extends Component {
 		});
 
 		// make rest calls
-		let cURL = 'http://localhost:3000/api/Customer/' + this.props.user;
+		let cURL = 'http://localhost:3000/api/Customer/bob';
 		axios.get(cURL)
 		.then(response => {
 			this.setState ({
@@ -64,7 +72,7 @@ class BobPage extends Component {
 		// should only show LOCs that are ready for Bob to approve
 		if (this.state.letters[i].approval.includes('ella')){
 			return (
-    	  <LoCCard letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"} user={this.props.user}/>
+    	  <LoCCard letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"} user="bob"/>
 			);
 		} else {
 			return <div />;
@@ -72,6 +80,10 @@ class BobPage extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to={"/" + this.state.redirectTo} />;
+    }
+
 		if(this.state.userDetails.name && !this.state.gettingLetters) {
 			let username = this.state.userDetails.name + ", Customer of " + this.state.userDetails.bankName;
 
@@ -85,8 +97,8 @@ class BobPage extends Component {
 			return (
     		<div id="bobPageContainer" className="bobPageContainer">
     		  <div id="bobHeaderDiv" className="flexDiv bobHeaderDiv">
-    		    <span className="bobUsername" onClick={() => {this.state.switchUser('ella')}}> {username} </span>
-						<span className="aliceUsername" onClick={() => {this.state.switchUser('alice')}}> Go to Alice </span>
+    		    <span className="bobUsername" onClick={() => {this.handleOnClick('ella')}}> {username} </span>
+						<span className="aliceUsername" onClick={() => {this.handleOnClick('alice')}}> Go to Alice </span>
     		  </div>
           <div class="bobWelcomeDiv">
             <p id="welcomeMessage">Welcome back {this.state.userDetails.name}</p>
@@ -99,7 +111,7 @@ class BobPage extends Component {
 
 					</div>
     		  <div className="locDiv">
-    		    <LoCApplyCard callback={this.state.callback} />
+    		    <LoCApplyCard user="bob" callback={this.state.callback} />
 						{cardsJSX}
     		  </div>
 				</div>

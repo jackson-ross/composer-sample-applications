@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import './alicepage.css';
 import axios from 'axios';
 import UserDetails from '../../UserDetails/UserDetails.js';
@@ -14,9 +15,17 @@ class AlicePage extends Component {
 			letters: [],
 			gettingLetters: false,
 			switchUser: this.props.switchUser,
-			callback: this.props.callback
+			callback: this.props.callback,
+      redirect: false,
+      redirectTo: ''
 		}
+    this.handleOnClick = this.handleOnClick.bind(this);
 	}
+
+  handleOnClick(user) {
+    this.state.switchUser(user);
+    this.setState({redirect: true, redirectTo: user});
+  }
 
 	componentDidMount() {
 		// open a websocket
@@ -26,7 +35,7 @@ class AlicePage extends Component {
 		});
 
 		// make rest calls
-		let cURL = 'http://localhost:3000/api/Customer/' + this.props.user;
+		let cURL = 'http://localhost:3000/api/Customer/alice';
 		axios.get(cURL)
 		.then(response => {
 			this.setState ({
@@ -61,11 +70,15 @@ class AlicePage extends Component {
 
 	generateCard(i) {
 		return (
-      <LoCCard letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"} user={this.props.user}/>
+      <LoCCard user="alice" letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"}/>
     );
 	}
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to={"/" + this.state.redirectTo} />;
+    }
+
 		if(this.state.userDetails.name && !this.state.gettingLetters) {
 			let username = this.state.userDetails.name + ", Customer of " + this.state.userDetails.bankName;
 
@@ -79,8 +92,8 @@ class AlicePage extends Component {
 			return (
     		<div id="alicePageContainer" className="alicePageContainer">
     		  <div id="aliceHeaderDiv" className="flexDiv aliceHeaderDiv">
-    		    <span className="aliceUsername" onClick={() => {this.state.switchUser('matias')}}> {username} </span>
-						<span className="aliceUsername" onClick={() => {this.state.switchUser('bob')}}> Go to Bob </span>
+    		    <span className="aliceUsername" onClick={() => {this.handleOnClick('matias')}}> {username} </span>
+						<span className="aliceUsername" onClick={() => {this.handleOnClick('bob')}}> Go to Bob </span>
     		    <div id="aliceMenu" className="aliceMenuItems">
     		      <span> Change account details </span>
     		      <span> View Transaction History </span>
@@ -99,7 +112,7 @@ class AlicePage extends Component {
 						</div>
 					</div>
     		  <div className="locDiv">
-    		    <LoCApplyCard callback={this.state.callback} />
+    		    <LoCApplyCard user="alice" callback={this.state.callback} />
 						{cardsJSX}
     		  </div>
 				</div>

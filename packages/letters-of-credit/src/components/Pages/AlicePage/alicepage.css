@@ -27,6 +27,7 @@
   font-weight: lighter;
   font-size: 90%;
   color: white;
+  text-decoration: none;
 }
 
 .aliceUsername:hover {
@@ -34,8 +35,9 @@
 }
 
 .aliceMenuItems {
+  position: absolute;
+  right: 0;
   margin-top: 3vh;
-  margin-left: 20%;
 }
 
 .aliceMenuItems > span {

@@ -1,8 +1,22 @@
 import React, {Component} from 'react';
+import { Redirect } from 'react-router-dom';
 import './loccard.css';
 import axios from 'axios';
 
-class LoCCard extends Component {  
+class LoCCard extends Component {
+  constructor(props) {
+		super(props);
+		this.state = {
+      redirect: false
+		}
+    this.handleOnClick = this.handleOnClick.bind(this);
+	}
+
+  handleOnClick() {
+    this.props.callback(this.props.letter, false);
+    this.setState({redirect: true});
+  }
+
   shipProduct(letterId) {
     let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId;
     axios.post('http://localhost:3000/api/ShipProduct', {
@@ -35,7 +49,7 @@ class LoCCard extends Component {
         <h3>{'Ref: ' + letter.letterId}</h3>
         <p>{'Participants: Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</p>
         <p>{'Product Type: ' + letter.productDetails.productType}</p>
-        <button className="viewButton" onClick={() => this.props.callback(this.props.letter, false)}>View Letter Of Credit</button>
+        <button className="viewButton" onClick={() => this.handleOnClick()}>View Letter Of Credit</button>
       </div>
     );
 
@@ -71,7 +85,11 @@ class LoCCard extends Component {
     return contents;
   }
 
-  render() {  
+  render() {
+    if (this.state.redirect) {
+      return <Redirect push to={this.props.user + "/loc"} />;
+    }
+    
     return (
       <div className = "LoCCard">
         {this.generateCardContents(this.props.letter, this.props.user)}
