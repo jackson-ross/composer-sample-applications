@@ -11,8 +11,32 @@ class LetterOfCredit extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      transactions: [],
       disableButtons: false
     }
+  }
+
+  componentWillMount() {
+    axios.get('http://localhost:3000/api/system/historian')
+    .then((response) => {
+      let relevantTransactions = [];
+      let transactionTypes = ["InitialApplication", "Approve", "Reject", "ShipProduct", "ReceiveProduct", "Close"];
+      response.data.map((i) => {
+        let transactionLetter = ((i.eventsEmitted.length) ? i.eventsEmitted[0].loc.split("#")[1] : undefined);
+        let longName = i.transactionType.split(".")
+        let name = longName[longName.length - 1];
+        if(transactionTypes.includes(name) && this.props.letter.letterId === transactionLetter) {
+          relevantTransactions.push(i);
+        }
+      });
+      relevantTransactions.sort((a,b) => a.transactionTimestamp.localeCompare(b.transactionTimestamp));
+      this.setState ({
+        transactions: relevantTransactions
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   createLOC(type, quantity, price, rules) {
@@ -183,7 +207,7 @@ class LetterOfCredit extends Component {
         {buttonJSX}
         { this.state.disableButtons && <div class="statusMessage"> Please wait... </div> }
         <div class="blockChainContainer">
-          <BlockChainDisplay/>
+          <BlockChainDisplay transactions={this.state.transactions}/>
         </div>
       </div>
     );

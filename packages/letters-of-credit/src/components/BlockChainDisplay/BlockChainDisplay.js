@@ -11,30 +11,8 @@ class BlockChainDisplay extends React.Component {
     }
   }
 
-  componentWillMount() {
-		axios.get('http://localhost:3000/api/system/historian')
-		.then((response) => {
-      let relevantTransactions = [];
-      let transactionTypes = ["InitialApplication", "Approve", "Reject", "ShipProduct", "ReceiveProduct", "Close"];
-      response.data.map((i) => {
-        let longName = i.transactionType.split(".")
-        let name = longName[longName.length - 1];
-        if(transactionTypes.includes(name)) {
-          relevantTransactions.push(i);
-        }
-      });
-      relevantTransactions.sort((a,b) => a.transactionTimestamp.localeCompare(b.transactionTimestamp));
-      this.setState ({
-        transactions: relevantTransactions
-      });
-		})
-		.catch(error => {
-			console.log(error);
-		});
-  }
-
   render() {
-    let transactions = this.state.transactions;
+    let transactions = this.props.transactions;
     let blocks = [];
     if(transactions.length) {
       for (let i = 0; i < transactions.length; i++) {
@@ -55,7 +33,7 @@ class BlockChainDisplay extends React.Component {
             <div className="greyBlockLine"/>
           </div>
         </div>
-    )
+    );
   }
 }
 
