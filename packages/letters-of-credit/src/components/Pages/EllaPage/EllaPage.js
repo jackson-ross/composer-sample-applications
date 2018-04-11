@@ -56,21 +56,42 @@ class EllaPage extends Component {
 		});
   }
 
-  generateRow(i) {
-    let submitter = "Alice Hamilton";
-    let company = "QuickFix IT";
-    if(this.state.letters[i].applicant === 'resource:org.acme.loc.Customer#bob') {
-      submitter = "Bob Bobbins";
-      company = "Conga Computers"
+  generateStatus(letter) {
+    let status = '';
+    if (letter.status === 'AWAITING_APPROVAL') {
+      if (!letter.approval.includes('ella')) {
+        status = 'Awaiting approval from YOU';
+      } else if (!letter.approval.includes('bob')) {
+        status = 'Awaiting approval from Beneficiary';
+      }
+    } else { 
+      status = letter.status.toLowerCase();
+      status = status.charAt(0).toUpperCase() + status.slice(1);
     }
-    return (
-			<tr className="row" onClick={() => this.props.callback(this.state.letters[i], false)}>
-				<td className="blueText">{this.state.letters[i].letterId}</td>
-				<td>{submitter}</td>
-				<td>{company}</td>
-				<td>{this.state.letters[i].status}</td>
-			</tr>
-		);
+    return status;
+  }
+
+  generateRow(i) {
+    // should only show LOCs that are ready for Ella to approve
+    if (this.state.letters[i].approval.includes('matias')) {
+      let submitter = "Alice Hamilton";
+      let company = "QuickFix IT";
+      if(this.state.letters[i].applicant === 'resource:org.acme.loc.Customer#bob') {
+        submitter = "Bob Bobbins";
+        company = "Conga Computers"
+      }
+      let status = this.generateStatus(this.state.letters[i]);
+      return (
+		  	<tr className="row" onClick={() => this.props.callback(this.state.letters[i], false)}>
+		  		<td className="blueText">{this.state.letters[i].letterId}</td>
+		  		<td>{submitter}</td>
+		  		<td>{company}</td>
+		  		<td>{status}</td>
+		  	</tr>
+      );
+    } else {
+      return <div/>;
+    }
   }
 
   render() {
