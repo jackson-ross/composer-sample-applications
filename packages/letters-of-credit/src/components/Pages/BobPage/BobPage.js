@@ -56,8 +56,12 @@ class BobPage extends Component {
 		this.setState({gettingLetters: true});
 		axios.get('http://localhost:3000/api/LetterOfCredit')
     .then(response => {
-      this.setState ({
-				letters: response.data,
+			// sort the LOCs by descending ID
+			response.data.sort((a,b) => b.letterId.localeCompare(a.letterId));
+			// only want to display the first 5 LOCs
+			let activeLetters = response.data.slice(0,5);
+			this.setState ({
+				letters: activeLetters,
 				gettingLetters: false
 			});
 		})

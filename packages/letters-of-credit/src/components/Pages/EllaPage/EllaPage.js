@@ -62,6 +62,8 @@ class EllaPage extends Component {
 		this.setState({gettingLetters: true});
 		axios.get('http://localhost:3000/api/LetterOfCredit')
     .then(response => {
+      // sort the LOCs by descending ID (will display the most recent first)
+			response.data.sort((a,b) => b.letterId.localeCompare(a.letterId));
       this.setState ({
         letters: response.data,
         gettingLetters: false

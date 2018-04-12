@@ -13,6 +13,7 @@ class LetterOfCredit extends Component {
     super(props);
     this.state = {
       user: this.props.match.params.name,
+      transactions: [],
       disableButtons: false,
       redirect: false,
       redirectTo: ''
@@ -25,14 +26,37 @@ class LetterOfCredit extends Component {
     this.setState({redirect: true, redirectTo: user});
   }
 
+  componentWillMount() {
+    axios.get('http://localhost:3000/api/system/historian')
+    .then((response) => {
+      let relevantTransactions = [];
+      let transactionTypes = ["InitialApplication", "Approve", "Reject", "ShipProduct", "ReceiveProduct", "Close"];
+      response.data.map((i) => {
+        let transactionLetter = ((i.eventsEmitted.length) ? i.eventsEmitted[0].loc.split("#")[1] : undefined);
+        let longName = i.transactionType.split(".")
+        let name = longName[longName.length - 1];
+        if(transactionTypes.includes(name) && this.props.letter.letterId === transactionLetter) {
+          relevantTransactions.push(i);
+        }
+      });
+      relevantTransactions.sort((a,b) => a.transactionTimestamp.localeCompare(b.transactionTimestamp));
+      this.setState ({
+        transactions: relevantTransactions
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
   createLOC(type, quantity, price, rules) {
     this.setState({
       disableButtons: true
     });
-    let letterId = "L" + Math.floor((Math.random() * 8999) + 1000);
+    let currentTime = new Date().toLocaleTimeString().split(":").join('');
     axios.post('http://localhost:3000/api/InitialApplication', {
       "$class": "org.acme.loc.InitialApplication",
-      "letterId": letterId,
+      "letterId": ("L" + currentTime),
       "applicant": "resource:org.acme.loc.Customer#alice",
       "beneficiary": "resource:org.acme.loc.Customer#bob",
       "rules": rules,
@@ -47,7 +71,7 @@ class LetterOfCredit extends Component {
       "timestamp": "2018-03-13T11:35:00.218Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
     })
     .then(() => {
-      let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId;
+      let letter = "resource:org.acme.loc.LetterOfCredit#" + ("L" + currentTime);
       return axios.post('http://localhost:3000/api/Approve', {
         "$class": "org.acme.loc.Approve",
         "loc": letter,
@@ -197,7 +221,7 @@ class LetterOfCredit extends Component {
         {buttonJSX}
         { this.state.disableButtons && <div class="statusMessage"> Please wait... </div> }
         <div class="blockChainContainer">
-          <BlockChainDisplay/>
+          <BlockChainDisplay transactions={this.state.transactions}/>
         </div>
       </div>
     );
