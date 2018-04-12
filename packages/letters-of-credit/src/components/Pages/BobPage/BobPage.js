@@ -58,8 +58,10 @@ class BobPage extends Component {
     .then(response => {
 			// sort the LOCs by descending ID
 			response.data.sort((a,b) => b.letterId.localeCompare(a.letterId));
-      this.setState ({
-				letters: response.data,
+			// only want to display the first 5 LOCs
+			let activeLetters = response.data.slice(0,5);
+			this.setState ({
+				letters: activeLetters,
 				gettingLetters: false
 			});
 		})
@@ -89,7 +91,7 @@ class BobPage extends Component {
 
     	let cardsJSX = [];
     	if(this.state.letters.length) {
-				for(let i = 0; i < 5; i++) { // only show the 5 most recent LOCs
+				for(let i = 0; i < this.state.letters.length; i++) {
 					cardsJSX.push(this.generateCard(i));
 				}
 			}
