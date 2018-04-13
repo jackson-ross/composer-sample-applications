@@ -78,7 +78,18 @@ class BobPage extends Component {
 		} else {
 			return <div />;
 		}
-  }
+	}
+	
+	getBalance() {
+		let balance = 15670;
+		this.state.letters.map((i) => {
+			if (i.status === 'CLOSED') {
+				balance += (i.productDetails.quantity * i.productDetails.pricePerUnit);
+			}
+		});
+
+		return balance.toLocaleString();
+	}
 
   render() {
     if (this.state.redirect) {
@@ -103,7 +114,7 @@ class BobPage extends Component {
     		  </div>
           <div class="bobWelcomeDiv">
             <p id="welcomeMessage">Welcome back {this.state.userDetails.name}</p>
-            <h1 id ="accountBalance">£15,670</h1>
+            <h1 id ="accountBalance">{'£'+(this.getBalance())}</h1>
           </div>
     		  <div id="infoDiv" className="flexDiv infoDiv">
     		    <div id="bobDetailsDiv" className="bobDetailsDiv">
