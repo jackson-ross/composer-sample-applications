@@ -36,7 +36,6 @@ class MatiasPage extends Component {
     // open a websocket
     this.connection = new WebSocket('ws://localhost:3000');
     this.connection.onmessage = ((evt) => {
-      console.log('Event on Matías\' page: ', evt);
       this.getLetters();
     });
 

@@ -49,6 +49,22 @@ class LetterOfCredit extends Component {
     });
   }
 
+  createRules() {
+    let rules = [];
+    let ruleIndex = 1;
+    this.props.rules.map((i) => {
+      if (i.ruleText !== "") {
+        rules.push({
+          "$class": "org.acme.loc.Rule",
+          "ruleId": "rule"+ruleIndex,
+          "ruleText": i.ruleText
+        });
+      ruleIndex++;
+      }
+    });
+    return rules;
+  }
+
   createLOC(type, quantity, price, rules) {
     this.setState({
       disableButtons: true
@@ -59,7 +75,7 @@ class LetterOfCredit extends Component {
       "letterId": ("L" + currentTime),
       "applicant": "resource:org.acme.loc.Customer#alice",
       "beneficiary": "resource:org.acme.loc.Customer#bob",
-      "rules": rules,
+      "rules": this.createRules(),
       "productDetails": {
         "$class": "org.acme.loc.ProductDetails",
         "productType": type,
@@ -168,13 +184,15 @@ class LetterOfCredit extends Component {
     }
 
     let productDetails = this.props.productDetails;
+    let rules = this.props.rules;
     let buttonJSX = (<div/>);
     if (!this.props.isApply) {
       productDetails = {
         type: this.props.letter.productDetails.productType,
         quantity: this.props.letter.productDetails.quantity,
         pricePerUnit: this.props.letter.productDetails.pricePerUnit
-      }
+      };
+      rules = this.props.letter.rules;
       if (this.props.letter.status === 'AWAITING_APPROVAL' && !this.props.letter.approval.includes(this.state.user)) {
         buttonJSX = (
           <div class="actions">
@@ -206,17 +224,16 @@ class LetterOfCredit extends Component {
           <div class="letterDetails">
             <h2>{this.props.letter.letterId}</h2>
             <h2>User logged in: {this.state.user.charAt(0).toUpperCase() + this.state.user.slice(1)}</h2>
-            <p>{this.props.date}</p>
           </div>
         </div>
         <div class="letterContent">
           <DetailsCard type="Person" data={["Application Request"].concat(Object.values(this.props.applicant))}/>
           <DetailsCard type="Person" data={["Supplier Request"].concat(Object.values(this.props.beneficiary))}/>
-          <DetailsCard type="Product" data={["Product Details"].concat(Object.values(productDetails))}/>
+          <DetailsCard type="Product" data={["Product Details"].concat(Object.values(productDetails))} canEdit={this.props.isApply}/>
         </div>
         <br/>
         <div class="rules">
-            <DetailsCard type="Rules" data={["The product has been received and is as expected"]}/>
+          <DetailsCard type="Rules" data={rules} canEdit={this.props.isApply}/>
         </div>
         {buttonJSX}
         { this.state.disableButtons && <div class="statusMessage"> Please wait... </div> }
@@ -229,7 +246,12 @@ class LetterOfCredit extends Component {
 }
 
 const mapStateToProps = state => {
-  return { productDetails: state.getLetterInputReducer.productDetails, rules: state.getLetterInputReducer.rules };
+  return { 
+    applicant: state.getLetterInputReducer.applicant,
+    beneficiary: state.getLetterInputReducer.beneficiary,
+    productDetails: state.getLetterInputReducer.productDetails, 
+    rules: state.getLetterInputReducer.rules 
+  };
 };
 
 export default connect(mapStateToProps)(LetterOfCredit);
