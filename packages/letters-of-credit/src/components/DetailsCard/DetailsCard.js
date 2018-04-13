@@ -85,7 +85,7 @@ class DetailsCard extends Component {
           jsx = (
             <ul>
               {this.state.data.map(function(rule, i) {
-                return <li><input type="text" onChange={this.handleChange.bind(this, i)} defaultValue={this.state.data[i]} /></li>;
+                return <li><input type="text" onChange={this.handleChange.bind(this, i)} defaultValue={this.state.data[i].ruleText} /></li>;
               }, this)}
             </ul>
           );
@@ -94,7 +94,7 @@ class DetailsCard extends Component {
           jsx = (
             <ul>
               {this.state.data.map(function(rule) {
-                return <li>{rule}</li>;
+                return <li>{rule.ruleText}</li>;
               })}
             </ul>
           );
