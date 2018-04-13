@@ -3,13 +3,14 @@ import * as actions from '../actions/actions'
 
 const initialState = {
   applicant: {
+    name: 'Alice Hamilton',
     companyName: 'QuickFix IT',
     sortCode: '12-34-57',
     accNo: '54564351',
     bankName: 'Bank of Argentina'
   },
   beneficiary: {
-    name: 'Bob',
+    name: 'Bob Bobbins',
     companyName: 'Conga Computers',
     sortCode: '98-76-21',
     accNo: '24689753',
@@ -17,14 +18,14 @@ const initialState = {
   },
   productDetails: {
     type: "",
-    quantity: 0,
-    pricePerUnit: 0,
+    quantity: "",
+    pricePerUnit: "",
     total: ""
   },
   rules: [
-    {ruleText: "This is a rule"},
-    {ruleText: "So is this"},
-    {ruleText: "I love rules"}
+    {ruleText: "The correct quantity of product has been delivered."},
+    {ruleText: "The product was received within 30 days of the placement of the order."},
+    {ruleText: "The product is not damaged and functions as expected."}
   ]
 }
 

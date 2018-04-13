@@ -23,7 +23,7 @@ class DetailsCard extends Component {
 
   handleChange(index, event) {
     const data = this.state.data;
-    data[index] = event.target.value;
+    data[index] = ((this.props.type === "Rules") ? {ruleText: event.target.value} : event.target.value);
 
     this.setState({
       data: data
@@ -37,11 +37,6 @@ class DetailsCard extends Component {
         total: parseInt(this.state.data[2]*this.state.data[3], 10)
       });
     }
-    else if (this.props.type === "Rules") {
-      this.props.getRules({
-        rules: this.state.data
-      });
-    }
   }
 
   render() {
@@ -53,15 +48,15 @@ class DetailsCard extends Component {
         jsx = (
           <div>
             <span class="subheadingSpan, topHeading">NAME</span>
-            { (this.state.editable) ? <input class="subheadingSpan" type="text" onChange={this.handleChange.bind(this, 1)} defaultValue={this.state.data[1]} /> : <span class="subheadingSpan">{this.state.data[1]}</span> }
+            <span class="subheadingSpan">{this.state.data[1]}</span>
             <span class="subheadingSpan, topHeading">COMPANY NAME</span>
-            { (this.state.editable) ? <input class="subheadingSpan" type="text" onChange={this.handleChange.bind(this, 2)} defaultValue={this.state.data[2]} /> : <span class="subheadingSpan">{this.state.data[2]}</span> }
+            <span class="subheadingSpan">{this.state.data[2]}</span>
             <span class="subheadingSpan, topHeading">SORT CODE</span>
-            { (this.state.editable) ? <input class="subheadingSpan" type="text" onChange={this.handleChange.bind(this, 3)} defaultValue={this.state.data[3]} /> : <span class="subheadingSpan">{this.state.data[3]}</span> }
+            <span class="subheadingSpan">{this.state.data[3]}</span>
             <span class="subheadingSpan, topHeading">ACCOUNT NUMBER</span>
-            { (this.state.editable) ? <input class="subheadingSpan" type="text" onChange={this.handleChange.bind(this, 4)} defaultValue={this.state.data[4]} /> : <span class="subheadingSpan">{this.state.data[4]}</span> }
+            <span class="subheadingSpan">{this.state.data[4]}</span>
             <span class="subheadingSpan, topHeading">BANK NAME</span>
-            { (this.state.editable) ? <input class="subheadingSpan" type="text" onChange={this.handleChange.bind(this, 5)} defaultValue={this.state.data[5]} /> : <span class="subheadingSpan">{this.state.data[5]}</span> }
+            <span class="subheadingSpan">{this.state.data[5]}</span>
           </div>
         );
         break;
@@ -73,9 +68,9 @@ class DetailsCard extends Component {
             <span class="subheadingSpan, topHeading">QUANTITY</span>
             { (this.state.editable) ? <input class="subheadingSpan" type="text" onChange={this.handleChange.bind(this, 2)} defaultValue={this.state.data[2]} /> : <span class="subheadingSpan">{this.state.data[2]}</span> }
             <span class="subheadingSpan, topHeading">PRICE PER UNIT</span>
-            { (this.state.editable) ? <input class="subheadingSpan" type="text" onChange={this.handleChange.bind(this, 3)} defaultValue={this.state.data[3]} /> : <span class="subheadingSpan">{this.state.data[3]}</span> }
+            { (this.state.editable) ? <input class="subheadingSpan" type="text" onChange={this.handleChange.bind(this, 3)} defaultValue={this.state.data[3]} /> : <span class="subheadingSpan">{"£" + this.state.data[3]}</span> }
             <span class="subheadingSpan, topHeading">TOTAL</span>
-            <span class="subheadingSpan">{this.state.data[2]*this.state.data[3]}</span>
+            <span class="subheadingSpan">{"£" + this.state.data[2]*this.state.data[3]}</span>
           </div>
         );
         break;
@@ -104,7 +99,7 @@ class DetailsCard extends Component {
 
     return (
       <div class="cardContainer">
-        <a href="#" onClick={this.switchEditable.bind((this))}><img src={editIcon} alt="click to edit"/></a>
+        { this.props.canEdit && <a href="#" onClick={this.switchEditable.bind((this))}><img src={editIcon} alt="click to edit"/></a> }
         <h4>{mainHeadingTxt}</h4>
         {jsx}
       </div>

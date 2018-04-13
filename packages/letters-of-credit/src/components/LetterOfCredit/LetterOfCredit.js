@@ -53,12 +53,14 @@ class LetterOfCredit extends Component {
     let rules = [];
     let ruleIndex = 1;
     this.props.rules.map((i) => {
-      rules.push({
-        "$class": "org.acme.loc.Rule",
-        "ruleId": "rule"+ruleIndex,
-        "ruleText": i.ruleText
-      });
+      if (i.ruleText !== "") {
+        rules.push({
+          "$class": "org.acme.loc.Rule",
+          "ruleId": "rule"+ruleIndex,
+          "ruleText": i.ruleText
+        });
       ruleIndex++;
+      }
     });
     return rules;
   }
@@ -227,11 +229,11 @@ class LetterOfCredit extends Component {
         <div class="letterContent">
           <DetailsCard type="Person" data={["Application Request"].concat(Object.values(this.props.applicant))}/>
           <DetailsCard type="Person" data={["Supplier Request"].concat(Object.values(this.props.beneficiary))}/>
-          <DetailsCard type="Product" data={["Product Details"].concat(Object.values(productDetails))}/>
+          <DetailsCard type="Product" data={["Product Details"].concat(Object.values(productDetails))} canEdit={this.props.isApply}/>
         </div>
         <br/>
         <div class="rules">
-            <DetailsCard type="Rules" data={rules}/>
+          <DetailsCard type="Rules" data={rules} canEdit={this.props.isApply}/>
         </div>
         {buttonJSX}
         { this.state.disableButtons && <div class="statusMessage"> Please wait... </div> }
