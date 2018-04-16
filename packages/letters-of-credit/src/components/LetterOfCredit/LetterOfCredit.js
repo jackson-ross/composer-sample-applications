@@ -5,6 +5,7 @@ import DetailsCard from '../DetailsCard/DetailsCard.js';
 import BlockChainDisplay from '../BlockChainDisplay/BlockChainDisplay.js';
 import axios from 'axios';
 import { connect } from "react-redux";
+import Config from '../../utils/config';
 
 import backButtonIcon from '../../resources/images/left-arrow.svg'
 
@@ -19,6 +20,7 @@ class LetterOfCredit extends Component {
       redirectTo: ''
 		}
     this.handleOnClick = this.handleOnClick.bind(this);
+    this.config = new Config();
 	}
 
   handleOnClick(user) {
@@ -27,19 +29,21 @@ class LetterOfCredit extends Component {
   }
 
   componentWillMount() {
-    axios.get('http://localhost:3000/api/system/historian')
+    axios.get(this.config.httpURL+'/system/historian')
     .then((response) => {
       let relevantTransactions = [];
       let transactionTypes = ["InitialApplication", "Approve", "Reject", "ShipProduct", "ReceiveProduct", "Close"];
-      response.data.map((i) => {
-        let transactionLetter = ((i.eventsEmitted.length) ? i.eventsEmitted[0].loc.split("#")[1] : undefined);
+      response.data.forEach((i) => {
+        let transactionLetter = ((i.eventsEmitted.length) ? decodeURIComponent(i.eventsEmitted[0].loc.split("#")[1]) : undefined);
         let longName = i.transactionType.split(".")
         let name = longName[longName.length - 1];
+        
         if(transactionTypes.includes(name) && this.props.letter.letterId === transactionLetter) {
           relevantTransactions.push(i);
         }
       });
       relevantTransactions.sort((a,b) => a.transactionTimestamp.localeCompare(b.transactionTimestamp));
+
       this.setState ({
         transactions: relevantTransactions
       });
@@ -70,7 +74,7 @@ class LetterOfCredit extends Component {
       disableButtons: true
     });
     let currentTime = new Date().toLocaleTimeString().split(":").join('');
-    axios.post('http://localhost:3000/api/InitialApplication', {
+    axios.post(this.config.httpURL+'/InitialApplication', {
       "$class": "org.acme.loc.InitialApplication",
       "letterId": ("L" + currentTime),
       "applicant": "resource:org.acme.loc.Customer#alice",
@@ -88,7 +92,7 @@ class LetterOfCredit extends Component {
     })
     .then(() => {
       let letter = "resource:org.acme.loc.LetterOfCredit#" + ("L" + currentTime);
-      return axios.post('http://localhost:3000/api/Approve', {
+      return axios.post(this.config.httpURL+'/Approve', {
         "$class": "org.acme.loc.Approve",
         "loc": letter,
         "approvingParty": this.state.user,
@@ -113,7 +117,7 @@ class LetterOfCredit extends Component {
         disableButtons: true
       });
       let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId
-      axios.post('http://localhost:3000/api/Approve', {
+      axios.post(this.config.httpURL+'/Approve', {
         "$class": "org.acme.loc.Approve",
         "loc": letter,
         "approvingParty": approvingParty,
@@ -137,7 +141,7 @@ class LetterOfCredit extends Component {
       disableButtons: true
     });
     let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId
-    axios.post('http://localhost:3000/api/Reject', {
+    axios.post(this.config.httpURL+'/Reject', {
       "$class": "org.acme.loc.Reject",
       "loc": letter,
       "closeReason": "Letter has been rejected",
@@ -160,7 +164,7 @@ class LetterOfCredit extends Component {
       disableButtons: true
     });
     let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId
-    axios.post('http://localhost:3000/api/Close', {
+    axios.post(this.config.httpURL+'/Close', {
       "$class": "org.acme.loc.Close",
       "loc": letter,
       "closeReason": "Letter has been completed.",
