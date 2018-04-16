@@ -301,10 +301,7 @@
   padding-bottom: 3px;
   align-items: center;
   display: flex;
-  margin: 0 auto;
-  /*width: 50%;*/ }
-  .Block > p {
-    line-height: normal; }
+  margin: 0 auto; }
 
 .BlockLine {
   background-color: #5f7bfd;
@@ -314,7 +311,8 @@
   margin: 0 5px; }
 
 .BlockText {
-  display: inline-block; }
+  display: inline-block;
+  line-height: 0; }
 
 .BlockNumber {
   display: inline-block; }
