@@ -5,8 +5,8 @@ import DetailsCard from '../DetailsCard/DetailsCard.js';
 import BlockChainDisplay from '../BlockChainDisplay/BlockChainDisplay.js';
 import axios from 'axios';
 import { connect } from "react-redux";
-
 import backButtonIcon from '../../resources/images/left-arrow.svg'
+import Stepper from 'react-stepper-horizontal';
 
 class LetterOfCredit extends Component {
   constructor(props) {
@@ -16,7 +16,8 @@ class LetterOfCredit extends Component {
       transactions: [],
       disableButtons: false,
       redirect: false,
-      redirectTo: ''
+      redirectTo: '',
+      letter: {}
 		}
     this.handleOnClick = this.handleOnClick.bind(this);
 	}
@@ -47,7 +48,20 @@ class LetterOfCredit extends Component {
     .catch(error => {
       console.log(error);
     });
+    this.getLetter();
   }
+
+  getLetter() {
+		axios.get('http://localhost:3000/api/LetterOfCredit/' + this.props.letter.letterId)
+    .then(response => {
+      this.setState ({
+        letter: response.data
+			});
+		})
+		.catch(error => {
+			console.log(error);
+		});
+	}
 
   createRules() {
     let rules = [];
@@ -183,6 +197,26 @@ class LetterOfCredit extends Component {
       return <Redirect push to={"/" + this.state.redirectTo} />;
     }
 
+    let activeStep = 0;
+
+    if (this.state.letter.status === 'AWAITING_APPROVAL') {
+      if (!this.state.letter.approval.includes('matias')) {
+        activeStep = 1;
+      }
+      else if (!this.state.letter.approval.includes('ella')) {
+        activeStep = 2;
+      }
+      else if (!this.state.letter.approval.includes('bob')) {
+        activeStep = 3;
+      }
+    }
+    else if (this.state.letter.status === 'APPROVED' ||
+             this.state.letter.status === 'SHIPPED' ||
+             this.state.letter.status === 'RECEIVED' ||
+             this.state.letter.status === 'CLOSED') {
+      activeStep = 4;
+    }
+
     let productDetails = this.props.productDetails;
     let rules = this.props.rules;
     let buttonJSX = (<div/>);
@@ -225,10 +259,13 @@ class LetterOfCredit extends Component {
             <h2>{this.props.letter.letterId}</h2>
             <h2>User logged in: {this.state.user.charAt(0).toUpperCase() + this.state.user.slice(1)}</h2>
           </div>
+          <div class="stepper">
+            <Stepper steps={ [{title: 'Letter Application'}, {title: 'BoA\'s Approval'}, {title: 'CBoB\'s Approval'}, {title: 'Bob\'s Approval'}, {title: 'Letter Closed'}] } activeStep={ activeStep } />
+          </div>
         </div>
         <div class="letterContent">
-          <DetailsCard type="Person" data={["Application Request"].concat(Object.values(this.props.applicant))}/>
-          <DetailsCard type="Person" data={["Supplier Request"].concat(Object.values(this.props.beneficiary))}/>
+          <DetailsCard disabled={true} type="Person" data={["Application Request"].concat(Object.values(this.props.applicant))}/>
+          <DetailsCard disabled={true} type="Person" data={["Supplier Request"].concat(Object.values(this.props.beneficiary))}/>
           <DetailsCard type="Product" data={["Product Details"].concat(Object.values(productDetails))} canEdit={this.props.isApply}/>
         </div>
         <br/>
@@ -246,11 +283,11 @@ class LetterOfCredit extends Component {
 }
 
 const mapStateToProps = state => {
-  return { 
+  return {
     applicant: state.getLetterInputReducer.applicant,
     beneficiary: state.getLetterInputReducer.beneficiary,
-    productDetails: state.getLetterInputReducer.productDetails, 
-    rules: state.getLetterInputReducer.rules 
+    productDetails: state.getLetterInputReducer.productDetails,
+    rules: state.getLetterInputReducer.rules
   };
 };
 
