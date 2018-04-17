@@ -52,20 +52,7 @@ class LetterOfCredit extends Component {
     .catch(error => {
       console.log(error);
     });
-    this.getLetter();
   }
-
-  getLetter() {
-		axios.get('http://localhost:3000/api/LetterOfCredit/' + this.props.letter.letterId)
-    .then(response => {
-      this.setState ({
-        letter: response.data
-			});
-		})
-		.catch(error => {
-			console.log(error);
-		});
-	}
 
   createRules() {
     let rules = [];
@@ -203,21 +190,21 @@ class LetterOfCredit extends Component {
 
     let activeStep = 0;
 
-    if (this.state.letter.status === 'AWAITING_APPROVAL') {
-      if (!this.state.letter.approval.includes('matias')) {
+    if (this.props.letter.status === 'AWAITING_APPROVAL') {
+      if (!this.props.letter.approval.includes('matias')) {
         activeStep = 1;
       }
-      else if (!this.state.letter.approval.includes('ella')) {
+      else if (!this.props.letter.approval.includes('ella')) {
         activeStep = 2;
       }
-      else if (!this.state.letter.approval.includes('bob')) {
+      else if (!this.props.letter.approval.includes('bob')) {
         activeStep = 3;
       }
     }
-    else if (this.state.letter.status === 'APPROVED' ||
-             this.state.letter.status === 'SHIPPED' ||
-             this.state.letter.status === 'RECEIVED' ||
-             this.state.letter.status === 'CLOSED') {
+    else if (this.props.letter.status === 'APPROVED' ||
+             this.props.letter.status === 'SHIPPED' ||
+             this.props.letter.status === 'RECEIVED' ||
+             this.props.letter.status === 'CLOSED') {
       activeStep = 4;
     }
 
