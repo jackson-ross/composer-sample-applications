@@ -11,46 +11,29 @@ class BlockChainDisplay extends React.Component {
     }
   }
 
-  componentWillMount() {
-		axios.get('http://localhost:3000/api/system/historian')
-		.then(response => {
-      this.setState ({
-        transactions: response.data
-      });
-		})
-		.catch(error => {
-			console.log(error);
-		});
-	}
-
   render() {
-    let relevantTransactions = ["InitialApplication", "RejectApplication", "SuggestChanges", "ApproveApplication"];
+    let transactions = this.props.transactions;
     let blocks = [];
-    let transactionCount = 1;
-    for (var i = this.state.transactions.length-1; i >= 0; i--){
-      let transaction = this.state.transactions[i];
-      if(transaction!== undefined){
-        let transactionDescription = transaction.transactionType.split(".");
-        let transactionName = transactionDescription[transactionDescription.length-1];
-        if (relevantTransactions.includes(transactionName)){
-          let blockNumber = ("0" + transactionCount).slice(-2);
-          let dateTime = transaction.transactionTimestamp.split("T");
-          let time = dateTime[0];
-          let date = dateTime[1].split(".")[0];
-          blocks.push(<Block transactionDetails = {transactionName} date = {date} time = {time} number = {blockNumber}/>);
-          transactionCount++;
-        }
+    if(transactions.length) {
+      for (let i = 0; i < transactions.length; i++) {
+        let name = transactions[i].transactionType.split(".")[3];
+        let blockNumber = (i+1 < 10) ? "0"+(i+1) : (i+1);
+        let dateTime = transactions[i].transactionTimestamp.split("T");
+        let date = dateTime[0];
+        let time = dateTime[1].split(".")[0];
+        blocks.push(<Block transactionDetails={name} date={date} time={time} number={blockNumber}/>);
       }
     }
+
     return (
         <div className="BlockChainDisplay">
           {blocks}
           <div className="greyBlock">
-            <div className="greyBlockNumber">9</div>
+            <div className="greyBlockNumber">x</div>
             <div className="greyBlockLine"/>
           </div>
         </div>
-    )
+    );
   }
 }
 

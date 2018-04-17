@@ -32,3 +32,44 @@
   background-color: #fc6a66;
   border-color: #fc6a66;
 }
+
+.shipButtonDiv {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.shipButton {
+  width: 25px;
+  margin: auto;
+  color: #BC5184;
+  border-color: #BC5184;
+  background: none;
+  border-radius: 20px;
+  padding: 5px 0px;
+}
+
+.shipButton:disabled {
+  background-color: white;
+  color: #28293c;
+  border-color: white;
+}
+
+.acceptButton {
+  width: 25px;
+  margin: auto;
+  border-color: white;
+  background: none;
+  border-radius: 20px;
+  padding: 5px 8px;
+}
+
+.acceptButton:disabled {
+  background-color: white;
+  color: #3b34c4;
+  border-color: white;
+}
+
+.shipText {
+  margin: auto;
+}

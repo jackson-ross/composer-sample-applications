@@ -1,38 +1,71 @@
 import React, { Component } from 'react';
 import '../../../stylesheets/css/main.css';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import UserDetails from '../../UserDetails/UserDetails.js';
 import Alert from '../../Alert/Alert.js';
 import LoCCard from '../../LoCCard/LoCCard.js';
 import LoCApplyCard from '../../LoCCard/LoCApplyCard.js';
+import Config from '../../../utils/config';
 
 class AlicePage extends Component {
   constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			userDetails: {},
 			letters: [],
+			gettingLetters: false,
 			switchUser: this.props.switchUser,
-			callback: this.props.callback
+			callback: this.props.callback,
+      redirect: false,
+      redirectTo: ''
 		}
+		this.handleOnClick = this.handleOnClick.bind(this);
+		this.config = new Config();
 	}
 
+  handleOnClick(user) {
+    this.state.switchUser(user);
+    this.setState({redirect: true, redirectTo: user});
+  }
+
 	componentDidMount() {
-		let cURL = 'http://localhost:3000/api/Customer/' + this.props.user;
+		// open a websocket
+		this.connection = new WebSocket(this.config.webSocketURL);
+		this.connection.onmessage = ((evt) => {
+			this.getLetters();
+		});
+
+		// make rest calls
+		let cURL = this.config.httpURL+'/Customer/alice';
 		axios.get(cURL)
 		.then(response => {
 			this.setState ({
 				userDetails: response.data
-      });
+			});
 		})
 		.catch(error => {
 			console.log(error);
 		});
-    axios.get('http://localhost:3000/api/LetterOfCredit')
+		this.getLetters();
+	}
+
+	componentWillUnmount() {
+		this.connection.close();
+	}
+
+	getLetters() {
+		this.setState({gettingLetters: true});
+		axios.get(this.config.httpURL+'/LetterOfCredit')
     .then(response => {
+			// sort the LOCs by descending ID (will display the most recent first)
+			response.data.sort((a,b) => b.letterId.localeCompare(a.letterId));
+			// only want to display the first 5 LOCs
+			let activeLetters = response.data.slice(0,5);
       this.setState ({
-        letters: response.data
-      });
+				letters: activeLetters,
+				gettingLetters: false
+			});
 		})
 		.catch(error => {
 			console.log(error);
@@ -41,12 +74,16 @@ class AlicePage extends Component {
 
 	generateCard(i) {
 		return (
-      <LoCCard letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"}/>
+      <LoCCard user="alice" letter={this.state.letters[i]} callback={this.state.callback} pageType={"view"}/>
     );
-  }
+	}
 
   render() {
-		if(this.state.userDetails.name) {
+    if (this.state.redirect) {
+      return <Redirect push to={"/" + this.state.redirectTo} />;
+    }
+
+		if(this.state.userDetails.name && !this.state.gettingLetters) {
 			let username = this.state.userDetails.name + ", Customer of " + this.state.userDetails.bankName;
 
     	let cardsJSX = [];
@@ -59,8 +96,8 @@ class AlicePage extends Component {
 			return (
     		<div id="alicePageContainer" className="alicePageContainer">
     		  <div id="aliceHeaderDiv" className="flexDiv aliceHeaderDiv">
-    		    <span className="aliceUsername" onClick={() => {this.state.switchUser('matias')}}> {username} </span>
-						<span className="aliceUsername" onClick={() => {this.state.switchUser('bob')}}> Go to Bob </span>
+    		    <span className="aliceUsername" onClick={() => {this.handleOnClick('matias')}}> {username} </span>
+						<span className="aliceUsername" onClick={() => {this.handleOnClick('bob')}}> Go to Bob </span>
     		    <div id="aliceMenu" className="aliceMenuItems">
     		      <span> Change account details </span>
     		      <span> View Transaction History </span>
@@ -79,7 +116,7 @@ class AlicePage extends Component {
 						</div>
 					</div>
     		  <div className="locDiv">
-    		    <LoCApplyCard callback={this.state.callback} />
+    		    <LoCApplyCard user="alice" callback={this.state.callback} />
 						{cardsJSX}
     		  </div>
 				</div>
