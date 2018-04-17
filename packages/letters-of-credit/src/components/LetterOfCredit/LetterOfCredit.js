@@ -6,8 +6,8 @@ import BlockChainDisplay from '../BlockChainDisplay/BlockChainDisplay.js';
 import axios from 'axios';
 import { connect } from "react-redux";
 import Config from '../../utils/config';
-
 import backButtonIcon from '../../resources/images/left-arrow.svg'
+import Stepper from 'react-stepper-horizontal';
 
 class LetterOfCredit extends Component {
   constructor(props) {
@@ -17,7 +17,8 @@ class LetterOfCredit extends Component {
       transactions: [],
       disableButtons: false,
       redirect: false,
-      redirectTo: ''
+      redirectTo: '',
+      letter: {}
 		}
     this.handleOnClick = this.handleOnClick.bind(this);
     this.config = new Config();
@@ -187,6 +188,26 @@ class LetterOfCredit extends Component {
       return <Redirect push to={"/" + this.state.redirectTo} />;
     }
 
+    let activeStep = 0;
+
+    if (this.props.letter.status === 'AWAITING_APPROVAL') {
+      if (!this.props.letter.approval.includes('matias')) {
+        activeStep = 1;
+      }
+      else if (!this.props.letter.approval.includes('ella')) {
+        activeStep = 2;
+      }
+      else if (!this.props.letter.approval.includes('bob')) {
+        activeStep = 3;
+      }
+    }
+    else if (this.props.letter.status === 'APPROVED' ||
+             this.props.letter.status === 'SHIPPED' ||
+             this.props.letter.status === 'RECEIVED' ||
+             this.props.letter.status === 'CLOSED') {
+      activeStep = 4;
+    }
+
     let productDetails = this.props.productDetails;
     let rules = this.props.rules;
     let buttonJSX = (<div/>);
@@ -229,10 +250,13 @@ class LetterOfCredit extends Component {
             <h2>{this.props.letter.letterId}</h2>
             <h2>User logged in: {this.state.user.charAt(0).toUpperCase() + this.state.user.slice(1)}</h2>
           </div>
+          <div class="stepper">
+            <Stepper steps={ [{title: 'Letter Application'}, {title: 'BoA\'s Approval'}, {title: 'CBoB\'s Approval'}, {title: 'Bob\'s Approval'}, {title: 'Letter Closed'}] } activeStep={ activeStep } />
+          </div>
         </div>
         <div class="letterContent">
-          <DetailsCard type="Person" data={["Application Request"].concat(Object.values(this.props.applicant))}/>
-          <DetailsCard type="Person" data={["Supplier Request"].concat(Object.values(this.props.beneficiary))}/>
+          <DetailsCard disabled={true} type="Person" data={["Application Request"].concat(Object.values(this.props.applicant))}/>
+          <DetailsCard disabled={true} type="Person" data={["Supplier Request"].concat(Object.values(this.props.beneficiary))}/>
           <DetailsCard type="Product" data={["Product Details"].concat(Object.values(productDetails))} canEdit={this.props.isApply}/>
         </div>
         <br/>
