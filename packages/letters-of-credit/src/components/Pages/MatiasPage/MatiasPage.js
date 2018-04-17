@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import '../../../stylesheets/css/main.css';
 import { Redirect } from 'react-router-dom';
-import './matiaspage.css';
 import axios from 'axios';
 import Table from '../../Table/Table.js';
 import Config from '../../../utils/config';
@@ -84,13 +84,13 @@ class MatiasPage extends Component {
       } else if (letter.approval.includes('ella') && !letter.approval.includes('bob')) {
         status = 'Awaiting approval from Beneficiary';
       }
-    } else { 
+    } else {
       status = letter.status.toLowerCase();
       status = status.charAt(0).toUpperCase() + status.slice(1);
     }
     return status;
   }
-  
+
   generateRow(i) {
     let submitter = "Alice Hamilton";
     let company = "QuickFix IT";

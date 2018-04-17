@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import editIcon from '../../resources/editIcon.svg';
-import './detailscard.css';
+import '../../stylesheets/css/main.css';
 import { connect } from "react-redux";
 import { getProductDeatils } from "../../actions/actions";
 import { getRules } from "../../actions/actions";

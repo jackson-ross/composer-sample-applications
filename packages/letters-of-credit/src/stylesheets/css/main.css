@@ -1,0 +1,493 @@
+.alicePageContainer {
+  width: 100%;
+  height: -webkit-fill-available;
+  background-color: #4d48da;
+  display: flex;
+  flex-direction: column; }
+
+.loadingSpan {
+  margin: auto;
+  color: white; }
+
+.flexDiv {
+  display: flex;
+  flex-direction: row; }
+
+.aliceHeaderDiv {
+  width: 100%;
+  height: 10vh; }
+
+.aliceUsername {
+  float: left;
+  margin: 3vh;
+  font-weight: lighter;
+  font-size: 90%;
+  color: white; }
+
+.aliceUsername:hover {
+  cursor: pointer; }
+
+.aliceMenuItems {
+  margin-top: 3vh;
+  margin-left: 15%; }
+
+.aliceMenuItems > span {
+  margin: 3vh;
+  color: white;
+  font-weight: lighter;
+  font-size: 90%; }
+
+.infoDiv {
+  height: 50vh; }
+
+.aliceWelcomeDiv > h1 {
+  margin-left: 6vh;
+  margin-top: 10vh;
+  color: white; }
+
+.alertsDiv {
+  display: flex;
+  flex-direction: column;
+  width: 75%; }
+
+.locDiv {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  overflow-x: scroll;
+  padding-bottom: 7%; }
+
+.bobPageContainer {
+  width: 100%;
+  height: -webkit-fill-available;
+  background-color: #28293c;
+  display: flex;
+  flex-direction: column; }
+
+.loadingSpan {
+  margin: auto;
+  color: white; }
+
+.flexDiv {
+  display: flex;
+  flex-direction: row; }
+
+.bobHeaderDiv {
+  width: 100%;
+  height: 10vh; }
+
+.bobUsername {
+  float: left;
+  margin: 3vh;
+  font-weight: lighter;
+  font-size: 90%;
+  color: white; }
+
+.bobUsername:hover {
+  cursor: pointer; }
+
+.bobMenuItems {
+  margin-top: 3vh;
+  margin-left: 20%; }
+
+.bobMenuItems > span {
+  margin: 3vh;
+  color: white;
+  font-weight: lighter;
+  font-size: 90%; }
+
+.infoDiv {
+  height: 50vh; }
+
+.bobWelcomeDiv {
+  text-align: center;
+  margin-left: 0;
+  margin-top: 0;
+  color: white; }
+
+.bobDetailsDiv {
+  margin-top: 1vh;
+  color: white; }
+
+.alertsDiv {
+  display: flex;
+  flex-direction: column;
+  width: 75%; }
+
+.locDiv {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  overflow-x: scroll;
+  padding-bottom: 7%; }
+
+#welcomeMessage {
+  font-size: 16px;
+  font-weight: lighter; }
+
+#accountBalance {
+  font-size: 50px;
+  font-weight: lighter; }
+
+.ellaPageContainer {
+  width: 100%;
+  height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column; }
+
+.ellaLoadingSpan {
+  margin: auto; }
+
+.flexDiv {
+  display: flex;
+  flex-direction: row; }
+
+.ellaHeaderDiv {
+  width: 100%;
+  height: 10vh; }
+
+.ellaUsername {
+  float: left;
+  margin: 3vh;
+  font-weight: lighter;
+  font-size: 90%; }
+
+.ellaUsername:hover {
+  cursor: pointer; }
+
+.ellaMenuItems {
+  margin-top: 3vh;
+  margin-left: 20%; }
+
+.ellaMenuItems > span {
+  margin: 3vh;
+  font-weight: lighter;
+  font-size: 90%; }
+
+.ellaWelcomeDiv > h1 {
+  text-align: center;
+  margin-left: 6vh;
+  font-weight: lighter; }
+
+.matiasPageContainer {
+  width: 100%;
+  height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column; }
+
+.matiasLoadingSpan {
+  margin: auto; }
+
+.flexDiv {
+  display: flex;
+  flex-direction: row; }
+
+.matiasHeaderDiv {
+  width: 100%;
+  height: 10vh; }
+
+.matiasUsername {
+  float: left;
+  margin: 3vh;
+  font-weight: lighter;
+  font-size: 90%; }
+
+.matiasUsername:hover {
+  cursor: pointer; }
+
+.matiasMenuItems {
+  margin-top: 3vh;
+  margin-left: 20%; }
+
+.matiasMenuItems > span {
+  margin: 3vh;
+  font-weight: lighter;
+  font-size: 90%; }
+
+.matiasWelcomeDiv > h1 {
+  margin-left: 6vh; }
+
+.Page {
+  height: 100vh;
+  width: 100%; }
+
+.Username {
+  float: right;
+  margin: 3vh; }
+
+.LCcontainer {
+  background-color: #f5f6fa;
+  width: 100%;
+  height: 100%; }
+  .LCcontainer > br {
+    clear: left; }
+
+.letterDetails {
+  padding: 2% 0 0 2%; }
+  .letterDetails > h2 {
+    margin: 0; }
+
+.cardsContainer {
+  width: 60%; }
+  .cardsContainer > div > span {
+    margin-bottom: 10px; }
+
+.letterContent > div {
+  display: block;
+  float: left;
+  width: 20%;
+  margin: 2%;
+  text-align: left; }
+
+.rules {
+  display: block;
+  text-align: left;
+  width: 76.5%;
+  margin: 2%; }
+  .rules > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0; }
+
+.actions {
+  padding-left: 2%; }
+  .actions > button {
+    border-radius: 30px;
+    border: 1px solid #5f7bfd;
+    background-color: transparent;
+    color: #5f7bfd;
+    padding: 0.8%;
+    margin: 0 1% 1% 0; }
+  .actions > button:hover {
+    background-color: #5f7bfd;
+    color: #fff; }
+
+.statusMessage {
+  margin: 2.5%; }
+
+.backButton {
+  margin-top: 1%;
+  margin-left: 2%;
+  height: 20px; }
+  .backButton :hover {
+    cursor: pointer; }
+
+.blockChainContainer {
+  margin-left: 81%; }
+
+.userInfo {
+  display: inline-block;
+  padding: 2% 0 0 2%; }
+
+.header {
+  display: flex; }
+
+.Alert {
+  width: 35%;
+  height: 15%;
+  line-height: 2;
+  margin-left: 80vh;
+  margin-bottom: 1vh;
+  padding-left: 15px;
+  border: 1px solid white;
+  border-radius: 15px; }
+  .Alert > p {
+    color: white;
+    font-weight: lighter; }
+
+.Block {
+  padding-left: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  align-items: center;
+  display: flex;
+  margin: 0 auto; }
+
+.BlockLine {
+  background-color: #5f7bfd;
+  width: 4px;
+  height: 50px;
+  display: inline-block;
+  margin: 0 5px; }
+
+.BlockText {
+  display: inline-block;
+  line-height: 0; }
+
+.BlockNumber {
+  display: inline-block; }
+
+.container {
+  overflow: auto; }
+
+.BlockChainDisplay {
+  position: absolute;
+  bottom: 0;
+  /*width: 100%;*/
+  overflow: scroll;
+  height: 100%;
+  padding-right: 7%; }
+
+.greyBlock {
+  padding-left: 5px;
+  padding-top: 3px;
+  align-items: center;
+  display: flex;
+  margin: 0 auto;
+  /*width: 50%;*/ }
+
+.greyBlockLine {
+  background-color: gray;
+  width: 4px;
+  height: 25px;
+  display: inline-block;
+  margin: 0 14px; }
+
+.greyBlockNumber {
+  display: inline-block;
+  opacity: 0; }
+
+.cardContainer {
+  background-color: white;
+  box-shadow: 0 0 5px #ddd;
+  border-radius: 1px;
+  padding: 20px;
+  text-align: left;
+  position: relative; }
+  .cardContainer a {
+    visibility: hidden; }
+  .cardContainer :hover a {
+    visibility: visible; }
+  .cardContainer img {
+    position: absolute;
+    top: 5%;
+    right: 1%;
+    display: inline-block;
+    height: 10%; }
+  .cardContainer input {
+    width: 75%; }
+  .cardContainer > ul {
+    margin: 0; }
+  .cardContainer > h4 {
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 0; }
+
+.subheadingSpan {
+  float: left;
+  clear: left; }
+
+.topHeading {
+  float: left;
+  clear: left;
+  color: #ccc; }
+
+.LoCCard {
+  padding: 20px 20px 40px 30px;
+  margin-left: 6vh;
+  border: 1px solid white;
+  text-align: left;
+  color: white;
+  font-weight: lighter;
+  min-width: 21%;
+  max-width: 21%; }
+  .LoCCard > h3 {
+    font-weight: lighter; }
+
+.noBorder {
+  border: none;
+  padding-left: 0; }
+
+.viewButton {
+  height: 3vh;
+  margin-top: 5px;
+  margin-left: -5px;
+  border: 1px solid #3b34c4;
+  border-radius: 20px;
+  background-color: #3b34c4;
+  color: white; }
+
+.applyButton {
+  background-color: #fc6a66;
+  border-color: #fc6a66; }
+
+.background {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 50; }
+
+.container {
+  flex-direction: column;
+  display: flex;
+  margin: auto;
+  height: 30%;
+  width: 35%;
+  align-items: left;
+  background-color: white;
+  border: 1px solid; }
+
+.title {
+  color: black; }
+
+.message {
+  color: black; }
+
+.textMargins {
+  margin: 5% 0 0 5%; }
+
+.button {
+  border: 1px solid grey;
+  margin-right: 5px; }
+
+.UserDetails {
+  text-align: left;
+  padding-left: 6vh;
+  padding-top: 40px;
+  padding-bottom: 50px;
+  color: white;
+  font-weight: lighter; }
+  .UserDetails > p {
+    margin: 0; }
+
+.headerBar {
+  height: 5vh;
+  border: 1px solid #e8e9eb;
+  background-color: #f6f8fb;
+  line-height: 2.5; }
+
+.locOrdersText {
+  margin-left: 6vh; }
+
+.viewAllText {
+  margin-left: 50%; }
+
+table {
+  width: 80%;
+  margin: 3vh 0 3vh 6vh;
+  border-collapse: collapse; }
+
+th {
+  text-align: left;
+  height: 5vh; }
+
+.row:hover {
+  cursor: pointer;
+  background-color: #f6f8fb; }
+
+td {
+  height: 5vh; }
+
+.blueText {
+  color: #4d48da; }
+
+.viewMoreButton {
+  height: 3vh;
+  border: 1px solid #3b34c4;
+  border-radius: 20px;
+  margin-left: 6vh;
+  background-color: #3b34c4;
+  color: white; }

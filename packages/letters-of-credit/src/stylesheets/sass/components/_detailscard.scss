@@ -1,0 +1,49 @@
+.cardContainer {
+  background-color: white;
+  box-shadow: 0 0 5px #ddd;
+  border-radius: 1px;
+  padding: 20px;
+  text-align: left;
+  position: relative;
+
+  a {
+    visibility: hidden;
+  }
+
+  :hover a {
+    visibility: visible;
+  }
+
+  img {
+    position: absolute;
+    top: 5%;
+    right: 1%;
+    display: inline-block;
+    height: 10%;
+  }
+
+  input {
+    width: 75%;
+  }
+
+  > ul {
+    margin: 0;
+  }
+
+  > h4 {
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+.subheadingSpan {
+  float: left;
+  clear: left;
+}
+
+.topHeading {
+  float: left;
+  clear: left;
+  color: #ccc;
+}

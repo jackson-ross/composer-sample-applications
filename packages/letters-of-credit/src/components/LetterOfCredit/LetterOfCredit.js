@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import '../../stylesheets/css/main.css';
 import { Redirect } from 'react-router-dom';
-import './letterofcredit.css';
 import DetailsCard from '../DetailsCard/DetailsCard.js';
 import BlockChainDisplay from '../BlockChainDisplay/BlockChainDisplay.js';
 import axios from 'axios';

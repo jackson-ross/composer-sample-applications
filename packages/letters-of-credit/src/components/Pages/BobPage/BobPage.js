@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import '../../../stylesheets/css/main.css';
 import { Redirect } from 'react-router-dom';
-import './bobpage.css';
 import axios from 'axios';
 import UserDetails from '../../UserDetails/UserDetails.js';
 import LoCCard from '../../LoCCard/LoCCard.js';
@@ -81,7 +81,7 @@ class BobPage extends Component {
 			return <div />;
 		}
 	}
-	
+
 	getBalance() {
 		let balance = 15670;
 		this.state.letters.map((i) => {

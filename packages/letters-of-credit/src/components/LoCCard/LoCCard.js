@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import Config from '../../utils/config';
-import './loccard.css';
+import '../../stylesheets/css/main.css';
 import axios from 'axios';
 
 class LoCCard extends Component {
@@ -91,7 +91,7 @@ class LoCCard extends Component {
     if (this.state.redirect) {
       return <Redirect push to={this.props.user + "/loc"} />;
     }
-    
+
     return (
       <div className = "LoCCard">
         {this.generateCardContents(this.props.letter, this.props.user)}

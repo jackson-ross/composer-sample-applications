@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import '../../../stylesheets/css/main.css';
 import { Redirect } from 'react-router-dom';
-import './ellapage.css';
 import axios from 'axios';
 import Table from '../../Table/Table.js';
 import Config from '../../../utils/config';

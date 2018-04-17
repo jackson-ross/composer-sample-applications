@@ -1,5 +1,5 @@
 import React from 'react';
-import './blockchaindisplay.css';
+import '../../stylesheets/css/main.css';
 import Block from '../../components/Block/Block.js';
 import axios from 'axios';
 

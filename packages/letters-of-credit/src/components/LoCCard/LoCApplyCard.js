@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
-import './loccard.css';
+import '../../stylesheets/css/main.css';
 
 class LoCApplyCard extends Component {
   constructor(props) {
