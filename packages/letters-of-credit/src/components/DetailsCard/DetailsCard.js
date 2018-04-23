@@ -68,9 +68,9 @@ class DetailsCard extends Component {
             <span class="subheadingSpan, topHeading">TYPE</span>
             { (this.state.editable) ? <input class="subheadingSpan" type="text" onChange={this.handleChange.bind(this, 1)} defaultValue={this.state.data[1]} /> : <span class="subheadingSpan">{this.state.data[1]}</span> }
             <span class="subheadingSpan, topHeading">QUANTITY</span>
-            { (this.state.editable) ? <input class="subheadingSpan" type="text" onChange={this.handleChange.bind(this, 2)} defaultValue={this.state.data[2]} /> : <span class="subheadingSpan">{this.state.data[2]}</span> }
+            { (this.state.editable) ? <input class="subheadingSpan" type="text" onChange={this.handleChange.bind(this, 2)} defaultValue={this.state.data[2]} /> : <span class="subheadingSpan">{this.state.data[2] ? this.state.data[2] : "0"}</span> }
             <span class="subheadingSpan, topHeading">PRICE PER UNIT</span>
-            { (this.state.editable) ? <input class="subheadingSpan" type="text" onChange={this.handleChange.bind(this, 3)} defaultValue={this.state.data[3]} /> : <span class="subheadingSpan">{"£" + this.state.data[3]}</span> }
+            { (this.state.editable) ? <input class="subheadingSpan" type="text" onChange={this.handleChange.bind(this, 3)} defaultValue={this.state.data[3]} /> : <span class="subheadingSpan">{"£" + (this.state.data[3] ? this.state.data[3] : "0")}</span> }
             <span class="subheadingSpan, topHeading">TOTAL</span>
             <span class="subheadingSpan">{"£" + this.state.data[2]*this.state.data[3]}</span>
           </div>
@@ -99,10 +99,12 @@ class DetailsCard extends Component {
         break;
     }
 
+    let buttonTxt = this.state.editable ? "Save" : "Edit";
+
     return (
       <div class={containerClasses}>
-        { this.props.canEdit && <a href="#" onClick={this.switchEditable.bind((this))}><img src={editIcon} alt="click to edit"/></a> }
-        <h4>{mainHeadingTxt}</h4>
+        { this.props.canEdit && <button onClick={this.switchEditable.bind((this))}><span>{buttonTxt}</span></button> }
+        <h5>{mainHeadingTxt}</h5>
         {jsx}
       </div>
     );
