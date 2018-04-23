@@ -7,6 +7,7 @@ import Alert from '../../Alert/Alert.js';
 import LoCCard from '../../LoCCard/LoCCard.js';
 import LoCApplyCard from '../../LoCCard/LoCApplyCard.js';
 import Config from '../../../utils/config';
+import aliceUsernameIcon from '../../../resources/images/viewLocIcon.png';
 
 class AlicePage extends Component {
   constructor(props) {
@@ -96,23 +97,22 @@ class AlicePage extends Component {
 			return (
     		<div id="alicePageContainer" className="alicePageContainer">
     		  <div id="aliceHeaderDiv" className="flexDiv aliceHeaderDiv">
-    		    <span className="aliceUsername" onClick={() => {this.handleOnClick('matias')}}> {username} </span>
+    		    <span className="aliceUsername" onClick={() => {this.handleOnClick('matias')}}>
+              <img src = {aliceUsernameIcon} alt = "" className = "aliceUsernameIcon"/>
+              {username}
+            </span>
 						<span className="aliceUsername" onClick={() => {this.handleOnClick('bob')}}> Go to Bob </span>
     		    <div id="aliceMenu" className="aliceMenuItems">
     		      <span> Change account details </span>
     		      <span> View Transaction History </span>
     		      <span> Make Transaction </span>
-    		      <span> Current Balance: £15,670 </span>
+    		      <span className="currentBalance"> Current Balance: £15,670 </span>
     		    </div>
     		  </div>
     		  <div id="infoDiv" className="flexDiv infoDiv">
     		    <div id="aliceWelcomeDiv" className="aliceWelcomeDiv">
-    		      <h1> Welcome back {this.state.userDetails.name} </h1>
+    		      <h1 className = "aliceWelcomeMessage"> Welcome back {this.state.userDetails.name} </h1>
     		      <UserDetails name={this.state.userDetails.name} companyName={this.state.userDetails.companyName} sortCode={'12-34-57'} accountNumber={'54564351'}/>
-						</div>
-						<div id="alertsDiv" className="alertsDiv">
-							<Alert alertType={"Alert when:"} alertMessage={"my account balance falls below £15000"}/>
-							<Alert alertType={"Weekly Alert:"} alertMessage={"with most recent transactions"}/>
 						</div>
 					</div>
     		  <div className="locDiv">

@@ -13,17 +13,17 @@ class UserDetails extends Component {
   }
 
   render() {
-    let nameText = 'Name: ' + this.state.name;
-    let companyNameText = 'Company Name: '+ this.state.companyName;
-    let sortCodeText = 'Sort Code: ' + this.state.sortCode;
-    let accountNumberText = 'Account Number: ' + this.state.accountNumber;
+    let nameText = 'Name: ' ;
+    let companyNameText = 'Company Name: ';
+    let sortCodeText = 'Sort Code: ';
+    let accountNumberText = 'Account Number: ';
     return (
       <div className="UserDetails">
         <h1>Business Account</h1>
-        <p>{nameText}</p>
-        <p>{companyNameText}</p>
-        <p>{sortCodeText}</p>
-        <p>{accountNumberText}</p>
+        {nameText}<b>{this.state.name}</b><br/>
+        {companyNameText}<b>{this.state.companyName}</b><br/>
+        {sortCodeText}<b>{this.state.sortCode}</b><br/>
+        {accountNumberText}<b>{this.state.accountNumber}</b>
       </div>
     );
   }

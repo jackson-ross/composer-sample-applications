@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Config from '../../utils/config';
 import '../../stylesheets/css/main.css';
 import axios from 'axios';
+import viewButtonIcon from '../../resources/images/viewLocIcon.png';
 
 class LoCCard extends Component {
   constructor(props) {
@@ -51,7 +52,12 @@ class LoCCard extends Component {
         <h3>{'Ref: ' + letter.letterId}</h3>
         <p>{'Participants: Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</p>
         <p>{'Product Type: ' + letter.productDetails.productType}</p>
-        <button className="viewButton" onClick={() => this.handleOnClick()}>View Letter Of Credit</button>
+        <button className="viewButton" onClick={() => this.handleOnClick()}>
+          <div className = "viewButtonImage">
+            <img src = {viewButtonIcon} alt = ""/>
+          </div>
+          <p>View Letter Of Credit</p>
+        </button>
       </div>
     );
 

@@ -1,7 +1,9 @@
 .alicePageContainer {
   width: 100%;
   height: -webkit-fill-available;
-  background-color: #4d48da;
+  background-image: url("../../resources/backgrounds/smallbackgroundslice.png"), url("../../resources/backgrounds/largebackgroundslice.png");
+  background-repeat: no-repeat, no-repeat;
+  background-color: #3B51DC;
   display: flex;
   flex-direction: column;
 }
@@ -34,33 +36,47 @@
   cursor: pointer;
 }
 
+.aliceUsernameIcon {
+  margin-right: 5px;
+}
+
 .aliceMenuItems {
   position: absolute;
   right: 0;
   margin-top: 3vh;
-}
-
-.aliceMenuItems > span {
-  margin: 3vh;
-  color: white;
-  font-weight: lighter;
-  font-size: 90%;
+  > span {
+    margin: 3vh;
+    color: white;
+    font-weight: lighter;
+    font-size: 90%;
+  }
 }
 
 .infoDiv {
   height: 50vh;
 }
 
-.aliceWelcomeDiv > h1 {
-  margin-left: 6vh;
-  margin-top: 10vh;
-  color: white;
+.aliceWelcomeDiv {
+  > h1 {
+    margin-left: 6vh;
+    margin-top: 5vh;
+    margin-bottom: 4vh;
+    color: white;
+  }
+}
+
+.aliceWelcomeMessage {
+  font-family:HiraMaruPro-W4;
+  font-weight: lighter;
+  font-size:44px;
+  color:#ffffff;
+  letter-spacing:0;
 }
 
 .alertsDiv {
   display: flex;
   flex-direction: column;
-  width: 75%;
+  float: right;
 }
 
 .locDiv {
@@ -69,4 +85,14 @@
   width: 100%;
   overflow-x: scroll;
   padding-bottom: 7%;
+}
+
+.currentBalance {
+  margin-top: 5px;
+  margin-left: -5px;
+  border: 1px solid #273ec6;
+  border-radius: 20px;
+  background-color: #273ec6;
+  color: white;
+  padding: 12px;
 }

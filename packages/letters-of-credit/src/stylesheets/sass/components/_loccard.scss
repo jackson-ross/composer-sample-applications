@@ -19,18 +19,30 @@
 }
 
 .viewButton {
-  height: 3vh;
   margin-top: 5px;
   margin-left: -5px;
-  border: 1px solid #3b34c4;
+  border: 1px solid #273ec6;
   border-radius: 20px;
-  background-color: #3b34c4;
+  background-color: #273ec6;
   color: white;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  display: flex;
+  > p {
+    margin: 0;
+    padding-right: 8px;
+  }
+}
+
+.viewButtonImage {
+  padding-right: 8px;
+  padding-left: 8px;
 }
 
 .applyButton {
   background-color: #fc6a66;
   border-color: #fc6a66;
+  padding-left: 10px;
 }
 
 .shipButtonDiv {
