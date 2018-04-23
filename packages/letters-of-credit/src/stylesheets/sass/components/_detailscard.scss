@@ -1,25 +1,30 @@
 .cardContainer {
   background-color: white;
-  box-shadow: 0 0 5px #ddd;
-  border-radius: 1px;
+  box-shadow: 0 0 5px #d1d1d1;
+  border-radius: 3px;
   padding: 20px;
   text-align: left;
   position: relative;
 
-  a {
-    visibility: hidden;
-  }
-
-  :hover a {
-    visibility: visible;
-  }
-
-  img {
+  button {
+    width: 130px;
+    height: 30px;
     position: absolute;
-    top: 5%;
-    right: 1%;
-    display: inline-block;
-    height: 10%;
+    bottom: -15px;
+    left: 5px;
+    border-radius: 30px;
+    background-color: #4880ff;
+    border: none;
+    color: white;
+    font-size: 10pt;
+
+    > span {
+      background-color: #2c58bd;
+      border-radius: 30px;
+      width: 50px;
+      float: left;
+      padding: 3px;
+    }
   }
 
   input {
@@ -28,13 +33,23 @@
 
   > ul {
     margin: 0;
+
+    > li {
+      font-size: 10pt;
+    }
   }
 
-  > h4 {
+  > h5 {
     margin-top: 0;
     margin-right: 0;
     margin-left: 0;
   }
+}
+
+.disabled {
+  background: transparent;
+  box-shadow: none;
+  border: 1px solid #d1d1d1;
 }
 
 .subheadingSpan {
@@ -45,5 +60,10 @@
 .topHeading {
   float: left;
   clear: left;
-  color: #ccc;
+  color: #95989a;
+}
+
+.subheadingSpan, .topHeading {
+  font-size: 10pt;
+  padding-bottom: 5px;
 }

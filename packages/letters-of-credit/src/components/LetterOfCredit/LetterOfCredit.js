@@ -221,8 +221,8 @@ class LetterOfCredit extends Component {
       if (this.props.letter.status === 'AWAITING_APPROVAL' && !this.props.letter.approval.includes(this.state.user)) {
         buttonJSX = (
           <div class="actions">
-            <button disabled={this.state.disableButtons} onClick={() => {this.approveLOC(this.props.letter.letterId, this.state.user)}}>I accept the application</button>
             <button disabled={this.state.disableButtons} onClick={() => {this.rejectLOC(this.props.letter.letterId)}}>I reject the application</button>
+            <button disabled={this.state.disableButtons} onClick={() => {this.approveLOC(this.props.letter.letterId, this.state.user)}}>I accept the application</button>
           </div>
           );
       } else if (this.props.letter.status === 'RECEIVED') {
@@ -244,14 +244,16 @@ class LetterOfCredit extends Component {
 
     return (
       <div class="LCcontainer">
-        <img class="backButton" src={backButtonIcon} alt="go back" onClick={() => {if(!this.state.disableButtons){this.handleOnClick(this.state.user)}}}/>
-        <div class="header">
-          <div class="letterDetails">
-            <h2>{this.props.letter.letterId}</h2>
-            <h2>User logged in: {this.state.user.charAt(0).toUpperCase() + this.state.user.slice(1)}</h2>
+        <div class="LCHeader">
+          <div>
+            <img class="backButton" src={backButtonIcon} alt="go back" onClick={() => {if(!this.state.disableButtons){this.handleOnClick(this.state.user)}}}/>
           </div>
+          <p class="loc-text">Letter of Credit</p>
+          <p class="username-txt">{this.state.user.charAt(0).toUpperCase() + this.state.user.slice(1)}</p>
+        </div>
+        <div class="header">
           <div class="stepper">
-            <Stepper steps={ [{title: 'Letter Application'}, {title: 'BoA\'s Approval'}, {title: 'CBoB\'s Approval'}, {title: 'Bob\'s Approval'}, {title: 'Letter Closed'}] } activeStep={ activeStep } />
+            <Stepper steps={ [{title: 'Letter Application'}, {title: 'BoA\'s Approval'}, {title: 'CBoB\'s Approval'}, {title: 'Bob\'s Approval'}, {title: 'Letter Closed'}] } activeStep={activeStep} circleFontSize={12} titleFontSize={12} completeColor={"#4880ff"} activeColor={"#4880ff"} completeBarColor={"#4880ff"} size={24}/>
           </div>
         </div>
         <div class="letterContent">
@@ -263,11 +265,11 @@ class LetterOfCredit extends Component {
         <div class="rules">
           <DetailsCard type="Rules" data={rules} canEdit={this.props.isApply}/>
         </div>
-        {buttonJSX}
-        { this.state.disableButtons && <div class="statusMessage"> Please wait... </div> }
         <div class="blockChainContainer">
           <BlockChainDisplay transactions={this.state.transactions}/>
         </div>
+        {buttonJSX}
+        { this.state.disableButtons && <div class="statusMessage"> Please wait... </div> }
       </div>
     );
   }
