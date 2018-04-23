@@ -1,19 +1,47 @@
 .LCcontainer {
   background-color: #f5f6fa;
   width: 100%;
-  height: 100%;
+  height: -webkit-fill-available;
 
   > br {
     clear: left;
   }
 }
 
-.letterDetails {
-  padding: 2% 0 0 2%;
+.LCHeader {
+  height: 50px;
+  background-color: white;
+  border-bottom: 1px solid #ebeef5;
 
-  > h2 {
-    margin: 0;
+  > div {
+    position: relative;
+    height: 100%;
+    width: 50px;
+    border-right: 1px solid #ebeef5;
   }
+
+  > p {
+    font-size: 10pt;
+    line-height: 25px;
+  }
+}
+
+.loc-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.username-txt {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  margin-right: 5%;
 }
 
 .cardsContainer {
@@ -48,19 +76,25 @@
 }
 
 .actions {
-  padding-left: 2%;
+  padding-right: 1%;
+  display: flex;
+  justify-content: flex-end;
 
   > button {
     border-radius: 30px;
-    border: 1px solid #5f7bfd;
+    border: 1px solid #4880ff;
     background-color: transparent;
-    color: #5f7bfd;
-    padding: 0.8%;
+    color: #4880ff;
+    padding: 0.7% 1.2% 0.7% 1.2%;
     margin: 0 1% 1% 0;
+    font-weight: 500;
+    white-space: nowrap;
+    text-align: center;
+    z-index: 99999999;
   }
 
   > button:hover {
-    background-color: #5f7bfd;
+    background-color: #4880ff;
     color: #fff;
   }
 }
@@ -70,17 +104,23 @@
 }
 
 .backButton {
-  margin-top: 1%;
-  margin-left: 2%;
+  cursor: pointer;
   height: 20px;
-
-  :hover {
-    cursor: pointer;
-  }
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 25%;
+  margin: auto;
+  z-index: 999999999;
 }
 
 .blockChainContainer {
-  margin-left: 81%;
+
+}
+
+.bottomHack {
+  display: flex;
+  justify-content: space-between;
 }
 
 .userInfo {
@@ -90,4 +130,9 @@
 
 .header {
   display: flex;
+}
+
+.stepper {
+  width: 50%;
+  margin: 0 auto;
 }
