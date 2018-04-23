@@ -1,7 +1,9 @@
 .alicePageContainer {
   width: 100%;
   height: -webkit-fill-available;
-  background-color: #4d48da;
+  background-image: url("../../resources/backgrounds/smallbackgroundslice.png"), url("../../resources/backgrounds/largebackgroundslice.png");
+  background-repeat: no-repeat, no-repeat;
+  background-color: #3B51DC;
   display: flex;
   flex-direction: column; }
 
@@ -25,32 +27,39 @@
   color: white;
   text-decoration: none; }
 
-.aliceUsername:hover {
-  cursor: pointer; }
+.aliceUsernameIcon {
+  margin-right: 5px; }
 
 .aliceMenuItems {
   position: absolute;
   right: 0;
   margin-top: 3vh; }
-
-.aliceMenuItems > span {
-  margin: 3vh;
-  color: white;
-  font-weight: lighter;
-  font-size: 90%; }
+  .aliceMenuItems > span {
+    margin: 3vh;
+    color: white;
+    font-weight: lighter;
+    font-size: 90%; }
 
 .infoDiv {
   height: 50vh; }
 
 .aliceWelcomeDiv > h1 {
   margin-left: 6vh;
-  margin-top: 10vh;
+  margin-top: 5vh;
+  margin-bottom: 4vh;
   color: white; }
+
+.aliceWelcomeMessage {
+  font-family: HiraMaruPro-W4;
+  font-weight: lighter;
+  font-size: 44px;
+  color: #ffffff;
+  letter-spacing: 0; }
 
 .alertsDiv {
   display: flex;
   flex-direction: column;
-  width: 75%; }
+  float: right; }
 
 .locDiv {
   display: flex;
@@ -58,6 +67,15 @@
   width: 100%;
   overflow-x: scroll;
   padding-bottom: 7%; }
+
+.currentBalance {
+  margin-top: 5px;
+  margin-left: -5px;
+  border: 1px solid #273ec6;
+  border-radius: 20px;
+  background-color: #273ec6;
+  color: white;
+  padding: 12px; }
 
 .bobPageContainer {
   width: 100%;
@@ -114,8 +132,7 @@
 
 .alertsDiv {
   display: flex;
-  flex-direction: column;
-  width: 75%; }
+  flex-direction: column; }
 
 .locDiv {
   display: flex;
@@ -327,9 +344,8 @@
 
 .Alert {
   width: 35%;
-  height: 15%;
-  line-height: 2;
-  margin-left: 80vh;
+  line-height: 1;
+  margin-left: 87vh;
   margin-bottom: 1vh;
   padding-left: 15px;
   border: 1px solid white;
@@ -461,17 +477,27 @@
   padding-left: 0; }
 
 .viewButton {
-  height: 3vh;
   margin-top: 5px;
   margin-left: -5px;
-  border: 1px solid #3b34c4;
+  border: 1px solid #273ec6;
   border-radius: 20px;
-  background-color: #3b34c4;
-  color: white; }
+  background-color: #273ec6;
+  color: white;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  display: flex; }
+  .viewButton > p {
+    margin: 0;
+    padding-right: 8px; }
+
+.viewButtonImage {
+  padding-right: 8px;
+  padding-left: 8px; }
 
 .applyButton {
   background-color: #fc6a66;
-  border-color: #fc6a66; }
+  border-color: #fc6a66;
+  padding-left: 10px; }
 
 .shipButtonDiv {
   display: flex;
@@ -543,12 +569,19 @@
 .UserDetails {
   text-align: left;
   padding-left: 6vh;
-  padding-top: 40px;
   padding-bottom: 50px;
   color: white;
   font-weight: lighter; }
+  .UserDetails > h1 {
+    font-family: HelveticaNeue-Bold;
+    font-size: 19px; }
   .UserDetails > p {
-    margin: 0; }
+    margin: 0;
+    font-family: HelveticaNeue; }
+
+.userDetailsTextBold {
+  font-weight: bold;
+  display: inline; }
 
 .headerBar {
   height: 5vh;
