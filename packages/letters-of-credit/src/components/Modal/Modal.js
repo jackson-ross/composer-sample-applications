@@ -2,36 +2,38 @@ import React, { Component } from 'react';
 import '../../stylesheets/css/main.css';
 
 class Modal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: false
-    }
-	}
 
-  handleClick() {
-    this.setState({
-      show: false
-    })
-	}
+  getMessage() {
+    let message = "";
+    if (this.props.modalType === 'CREATE' || this.props.modalType === 'APPROVE') {
+      message = "By clicking 'Yes' you are agreeing to the Terms and Conditions of this Letter of Credit. The letter will now be sent to the next participant for approval."  
+    } else if (this.props.modalType === 'REJECT') {
+      message = "By clicking 'Yes' you are rejecting this application and the Letter of Credit will be closed. Once rejected, you will be unable to reopen this Letter of Credit."
+    } else {
+      message = "By clicking 'Yes' you are agreeing that the Terms and Conditions of this Letter of Credit have been met, and that the payment has been made to the beneficiary.";
+    }
+
+    return message;
+  }
 
   render() {
-    if(this.state.show === false) {
-      return (<div />);
-    }
-    else {
+    if(this.props.show) {
+      let message = this.getMessage();
       return (
       	<div id="modalBackground" className="background">
           <div id="modalContainer" className="container">
-            <span id="titleText" className="title textMargins"> Are you sure you want to approve this Letter of Credit? </span>
-            <p id="messageBody" className="message textMargins"> By approving this letter of credit you are sending it over to Bob's bank: The Central Bank of Belgium. Do you still want to send it?</p>
-            <div id="buttonRow" className="buttonRow textMargins">
-              <button className="button" onClick={() => this.handleClick()}> Yes, send it over </button>
-              <button className="button" onClick={() => this.handleClick()}> No, I'd like to continue reviewing </button>
+            <h4 id="titleText" className="textMargins title">Are you sure you want to {this.props.modalType.toLowerCase()} this letter?</h4>
+            <p id="messageBody" className="textMargins message">{message}</p>
+            <div id="buttonRow" className="textMargins">
+              <button className="cancelButton" onClick={this.props.cancelCallback}>Cancel</button>
+              <button className="yesButton" onClick={this.props.yesCallback}>Yes</button>
             </div>
           </div>
         </div>
       );
+    }
+    else {
+      return (<div />);
   	}
   }
 }

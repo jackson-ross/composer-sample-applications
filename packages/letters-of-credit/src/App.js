@@ -7,19 +7,10 @@ import BobPage from './components/Pages/BobPage/BobPage.js';
 import MatiasPage from './components/Pages/MatiasPage/MatiasPage.js';
 import EllaPage from './components/Pages/EllaPage/EllaPage.js';
 
-const pageContents = {
-  ALICE: "ALICE",
-  BOB: "BOB",
-  MATIAS: "MATIAS",
-  ELLA: "ELLA",
-  LOC: "LOC"
-}
-
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      currentPage: pageContents.ALICE,
       currentLetter: {},
       currentUser: "alice"
     };
@@ -29,7 +20,6 @@ class App extends Component {
 
   goToLetterScreen(letter, isApply) {
     this.setState({
-      currentPage: pageContents.LOC,
       currentLetter: letter,
       isApply: isApply
     });
@@ -38,22 +28,18 @@ class App extends Component {
   changeUser(user) {
     if(user === 'alice') {
       this.setState({
-        currentPage: pageContents.ALICE,
         currentUser: "alice"
       });
     } else if (user === 'bob') {
       this.setState({
-        currentPage: pageContents.BOB,
         currentUser: "bob"
       });
     } else if (user === 'matias') {
       this.setState({
-        currentPage: pageContents.MATIAS,
         currentUser: "matias"
       });
     } else {
       this.setState({
-        currentPage: pageContents.ELLA,
         currentUser: "ella"
       });
     }
