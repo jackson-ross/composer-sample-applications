@@ -83,7 +83,7 @@ class BobPage extends Component {
 	}
 
 	getBalance() {
-		let balance = 15670;
+		let balance = 12399;
 		this.state.letters.map((i) => {
 			if (i.status === 'CLOSED') {
 				balance += (i.productDetails.quantity * i.productDetails.pricePerUnit);
