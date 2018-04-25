@@ -120,7 +120,7 @@ class BobPage extends Component {
           </div>
     		  <div id="infoDiv" className="flexDiv infoDiv">
     		    <div id="bobDetailsDiv" className="bobDetailsDiv">
-    		      <UserDetails name={this.state.userDetails.name} companyName={this.state.userDetails.companyName} accountNumber={'54564351'} ibanNumber={'BE05 1234 5678 0101'}/>
+    		      <UserDetails name={this.state.userDetails.name} companyName={this.state.userDetails.companyName} IBAN={'BE05 1234 5678 0101'} swiftCode={'BOHUBE05'}/>
 						</div>
 
 					</div>

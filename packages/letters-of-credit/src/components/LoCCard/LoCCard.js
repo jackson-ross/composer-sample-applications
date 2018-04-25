@@ -64,13 +64,15 @@ class LoCCard extends Component {
 
     if (user === 'bob') {
       if (letter.status === 'APPROVED' || letter.status === 'SHIPPED' || letter.status === 'RECEIVED') {
+        // generating a hash from the timestamp
+        let hash = new Date().getTime().toString(24);
         contents = (
           <div>
             <h3>{'Ref: ' + letter.letterId}</h3>
             <p>{'Ship this product'}</p>
             <p>{'Product Type: ' + letter.productDetails.productType}</p>
             <div className="shipButtonDiv">
-              <button className="shipButton" onClick={() => {this.shipProduct(letter.letterId, 'd8deaf57566e73a0c45fe27a729bb5ca')}} disabled={(letter.status === 'APPROVED') ? false : true}>✓</button>
+              <button className="shipButton" onClick={() => {this.shipProduct(letter.letterId, hash)}} disabled={(letter.status === 'APPROVED') ? false : true}>✓</button>
               <span className="shipText">{'Ship Order'}</span>
             </div>
           </div>

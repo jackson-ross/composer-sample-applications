@@ -53,9 +53,9 @@ class DetailsCard extends Component {
             <span class="subheadingSpan">{this.state.data[1]}</span>
             <span class="subheadingSpan, topHeading">COMPANY NAME</span>
             <span class="subheadingSpan">{this.state.data[2]}</span>
-            <span class="subheadingSpan, topHeading">ACCOUNT NUMBER</span>
+            <span class="subheadingSpan, topHeading">IBAN</span>
             <span class="subheadingSpan">{this.state.data[3]}</span>
-            <span class="subheadingSpan, topHeading">IBAN NUMBER</span>
+            <span class="subheadingSpan, topHeading">SWIFT CODE</span>
             <span class="subheadingSpan">{this.state.data[4]}</span>
             <span class="subheadingSpan, topHeading">BANK NAME</span>
             <span class="subheadingSpan">{this.state.data[5]}</span>

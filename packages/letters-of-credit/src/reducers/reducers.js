@@ -5,15 +5,15 @@ const initialState = {
   applicant: {
     name: 'Alice Hamilton',
     companyName: 'QuickFix IT',
-    accNo: '54564351',
-    ibanNumber: 'AR22 9876 5321 9090',
+    IBAN: 'AR22 9876 5321 9090',
+    swiftCode: 'PNBNAR22',
     bankName: 'Penguin Banking'
   },
   beneficiary: {
     name: 'Bob Appleton',
     companyName: 'Conga Computers',
-    accNo: '24689753',
-    ibanNumber: 'BE05 1234 5678 0101',
+    IBAN: 'BE05 1234 5678 0101',
+    swiftCode: 'BOHUBE05',
     bankName: 'Bank of Hursley'
   },
   productDetails: {
