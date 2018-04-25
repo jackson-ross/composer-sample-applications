@@ -85,11 +85,11 @@ class LetterOfCredit extends Component {
         "$class": "org.acme.loc.ProductDetails",
         "productType": type,
         "quantity": quantity,
-        "pricePerUnit": price,
+        "pricePerUnit": price.toFixed(2),
         "id": "string"
       },
       "transactionId": "",
-      "timestamp": "2018-03-13T11:35:00.218Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
+      "timestamp": "2018-03-13T11:35:00.218Z" // the transactions seem to need this field filled in; when submitted the correct time will replace this value
     })
     .then(() => {
       let letter = "resource:org.acme.loc.LetterOfCredit#" + ("L" + currentTime);
@@ -98,7 +98,7 @@ class LetterOfCredit extends Component {
         "loc": letter,
         "approvingParty": this.state.user,
         "transactionId": "",
-        "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
+        "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field filled in; when submitted the correct time will replace this value
       });
     })
     .then(() => {
@@ -123,7 +123,7 @@ class LetterOfCredit extends Component {
         "loc": letter,
         "approvingParty": approvingParty,
         "transactionId": "",
-        "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
+        "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field filled in; when submitted the correct time will replace this value
       })
       .then(() => {
         this.setState({
@@ -147,7 +147,7 @@ class LetterOfCredit extends Component {
       "loc": letter,
       "closeReason": "Letter has been rejected",
       "transactionId": "",
-      "timestamp": "2018-03-13T11:35:00.281Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
+      "timestamp": "2018-03-13T11:35:00.281Z" // the transactions seem to need this field filled in; when submitted the correct time will replace this value
     })
     .then(() => {
       this.setState({
@@ -170,7 +170,7 @@ class LetterOfCredit extends Component {
       "loc": letter,
       "closeReason": "Letter has been completed.",
       "transactionId": "",
-      "timestamp": "2018-03-13T11:35:00.139Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
+      "timestamp": "2018-03-13T11:35:00.139Z" // the transactions seem to need this field filled in; when submitted the correct time will replace this value
     })
     .then(() => {
       this.setState({
@@ -249,7 +249,7 @@ class LetterOfCredit extends Component {
             <img class="backButton" src={backButtonIcon} alt="go back" onClick={() => {if(!this.state.disableButtons){this.handleOnClick(this.state.user)}}}/>
           </div>
           <p class="loc-text">Letter of Credit</p>
-          <p class="username-txt">{this.state.user.charAt(0).toUpperCase() + this.state.user.slice(1)}</p>
+          <p class="username-txt">{(this.state.user.charAt(3) === 'i') ? 'Matías' : this.state.user.charAt(0).toUpperCase() + this.state.user.slice(1)}</p>
         </div>
         <div class="header">
           <div class="stepper">

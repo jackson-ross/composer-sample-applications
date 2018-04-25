@@ -5,22 +5,22 @@ const initialState = {
   applicant: {
     name: 'Alice Hamilton',
     companyName: 'QuickFix IT',
-    sortCode: '12-34-57',
     accNo: '54564351',
-    bankName: 'Bank of Argentina'
+    ibanNumber: 'AR22 9876 5321 9090',
+    bankName: 'Penguin Banking'
   },
   beneficiary: {
-    name: 'Bob Bobbins',
+    name: 'Bob Appleton',
     companyName: 'Conga Computers',
-    sortCode: '98-76-21',
     accNo: '24689753',
-    bankName: 'Central Bank of Belgium'
+    ibanNumber: 'BE05 1234 5678 0101',
+    bankName: 'Bank of Hursley'
   },
   productDetails: {
     type: "",
-    quantity: "",
-    pricePerUnit: "",
-    total: ""
+    quantity: 0,
+    pricePerUnit: 0,
+    total: 0
   },
   rules: [
     {ruleText: "The correct quantity of product has been delivered."},
