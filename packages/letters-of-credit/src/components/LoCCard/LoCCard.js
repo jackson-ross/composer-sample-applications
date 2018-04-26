@@ -20,13 +20,14 @@ class LoCCard extends Component {
     this.setState({redirect: true});
   }
 
-  shipProduct(letterId) {
+  shipProduct(letterId, evidenceHash) {
     let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId;
     axios.post(this.config.httpURL+'/ShipProduct', {
       "$class": "org.acme.loc.ShipProduct",
       "loc": letter,
+      "evidence": evidenceHash,
       "transactionId": "",
-      "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
+      "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field filled in; when submitted the correct time will replace this value
     })
     .catch(error => {
       console.log(error);
@@ -39,7 +40,7 @@ class LoCCard extends Component {
       "$class": "org.acme.loc.ReceiveProduct",
       "loc": letter,
       "transactionId": "",
-      "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
+      "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field filled in; when submitted the correct time will replace this value
     })
     .catch(error => {
       console.log(error);
@@ -50,7 +51,7 @@ class LoCCard extends Component {
     let contents = (
       <div>
         <h3>{'Ref: ' + letter.letterId}</h3>
-        <p>{'Participants: Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</p>
+        <p>{'Participants: Alice, ' + letter.issuingBank + ', Bob, ' + letter.exportingBank}</p>
         <p>{'Product Type: ' + letter.productDetails.productType}</p>
         <button className="viewButton" onClick={() => this.handleOnClick()}>
           <div className = "viewButtonImage">
@@ -63,13 +64,15 @@ class LoCCard extends Component {
 
     if (user === 'bob') {
       if (letter.status === 'APPROVED' || letter.status === 'SHIPPED' || letter.status === 'RECEIVED') {
+        // generating a hash from the timestamp
+        let hash = new Date().getTime().toString(24);
         contents = (
           <div>
             <h3>{'Ref: ' + letter.letterId}</h3>
             <p>{'Ship this product'}</p>
             <p>{'Product Type: ' + letter.productDetails.productType}</p>
             <div className="shipButtonDiv">
-              <button className="shipButton" onClick={() => {this.shipProduct(letter.letterId)}} disabled={(letter.status === 'APPROVED') ? false : true}>✓</button>
+              <button className="shipButton" onClick={() => {this.shipProduct(letter.letterId, hash)}} disabled={(letter.status === 'APPROVED') ? false : true}>✓</button>
               <span className="shipText">{'Ship Order'}</span>
             </div>
           </div>

@@ -83,7 +83,7 @@ class BobPage extends Component {
 	}
 
 	getBalance() {
-		let balance = 15670;
+		let balance = 12399;
 		this.state.letters.map((i) => {
 			if (i.status === 'CLOSED') {
 				balance += (i.productDetails.quantity * i.productDetails.pricePerUnit);
@@ -120,12 +120,12 @@ class BobPage extends Component {
           </div>
     		  <div id="infoDiv" className="flexDiv infoDiv">
     		    <div id="bobDetailsDiv" className="bobDetailsDiv">
-    		      <UserDetails name={this.state.userDetails.name} companyName={this.state.userDetails.companyName} sortCode={'12-34-57'} accountNumber={'54564351'}/>
+    		      <UserDetails name={this.state.userDetails.name} companyName={this.state.userDetails.companyName} IBAN={'BE05 1234 5678 0101'} swiftCode={'BOHUBE05'}/>
 						</div>
 
 					</div>
     		  <div className="locDiv">
-    		    <LoCApplyCard user="bob" callback={this.state.callback} />
+    		    <LoCApplyCard user="bob" callback={this.state.callback} disableApply/>
 						{cardsJSX}
     		  </div>
 				</div>

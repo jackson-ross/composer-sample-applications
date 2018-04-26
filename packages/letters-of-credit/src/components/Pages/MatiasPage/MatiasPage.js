@@ -80,7 +80,7 @@ class MatiasPage extends Component {
       if (!letter.approval.includes('matias')) {
         status = 'Awaiting approval from YOU';
       } else if (!letter.approval.includes('ella')) {
-        status = 'Awaiting approval from Confirming Bank';
+        status = 'Awaiting approval from Exporting Bank';
       } else if (letter.approval.includes('ella') && !letter.approval.includes('bob')) {
         status = 'Awaiting approval from Beneficiary';
       }
