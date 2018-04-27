@@ -125,13 +125,8 @@ class BobPage extends Component {
 						</div>
 
 					</div>
-<<<<<<< HEAD
     		  <div className="locDivBob">
     		    <LoCApplyCard user="bob" callback={this.state.callback} />
-=======
-    		  <div className="locDiv">
-    		    <LoCApplyCard user="bob" callback={this.state.callback} disableApply/>
->>>>>>> 86a4078ef5c61b8d585e2542cfca8f69cb900624
 						{cardsJSX}
     		  </div>
 				</div>

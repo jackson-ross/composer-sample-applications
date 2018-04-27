@@ -49,7 +49,6 @@ class LoCCard extends Component {
   }
 
   generateCardContents(letter, user) {
-<<<<<<< HEAD
     let contents;
     if (user === 'bob') {
       contents = (
@@ -59,16 +58,6 @@ class LoCCard extends Component {
           Product Type: <b>{letter.productDetails.productType}</b>
           <div>
             <img class="viewButtonBob" src={viewButtonIconBob} alt="View Letter of Credit" onClick={() => this.handleOnClick()}/>
-=======
-    let contents = (
-      <div>
-        <h3>{'Ref: ' + letter.letterId}</h3>
-        <p>{'Participants: Alice, ' + letter.issuingBank + ', Bob, ' + letter.exportingBank}</p>
-        <p>{'Product Type: ' + letter.productDetails.productType}</p>
-        <button className="viewButton" onClick={() => this.handleOnClick()}>
-          <div className = "viewButtonImage">
-            <img src = {viewButtonIcon} alt = ""/>
->>>>>>> 86a4078ef5c61b8d585e2542cfca8f69cb900624
           </div>
         </div>
       );
