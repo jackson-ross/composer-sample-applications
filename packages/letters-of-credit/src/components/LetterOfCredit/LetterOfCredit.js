@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import Config from '../../utils/config';
 import backButtonIcon from '../../resources/images/left-arrow.svg'
 import Stepper from 'react-stepper-horizontal';
+import Modal from '../../components/Modal/Modal.js'
 
 class LetterOfCredit extends Component {
   constructor(props) {
@@ -18,8 +19,10 @@ class LetterOfCredit extends Component {
       disableButtons: false,
       redirect: false,
       redirectTo: '',
-      letter: {}
-		}
+      showModal: false
+    }
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.config = new Config();
 	}
@@ -54,6 +57,51 @@ class LetterOfCredit extends Component {
     });
   }
 
+  showModal(tx) {
+    // work out what transaction will be made if the yes button is clicked
+    const txTypes = {
+      CREATE: "CREATE",
+      APPROVE: "APPROVE",
+      REJECT: "REJECT",
+      CLOSE: "CLOSE"
+    }
+
+    let callback;
+    if (tx === 'CREATE') {
+      callback = () => {
+        this.hideModal();
+        this.createLOC(this.props.productDetails.type, this.props.productDetails.quantity, this.props.productDetails.pricePerUnit, this.props.rules)
+      };
+    } else if (tx === txTypes.APPROVE) {
+      callback = () => {
+        this.hideModal();
+        this.approveLOC(this.props.letter.letterId, this.state.user)
+      };
+    } else if (tx === txTypes.REJECT) {
+      callback = () => {
+        this.hideModal();
+        this.rejectLOC(this.props.letter.letterId)
+      }
+    } else {
+      callback = () => {
+        this.hideModal();
+        this.closeLOC(this.props.letter.letterId)
+      }
+    }
+
+    this.setState({
+      showModal: true,
+      modalType: tx,
+      modalFunction: callback
+    });
+  }
+
+  hideModal() {
+    this.setState({
+      showModal: false
+    });
+  }
+
   createRules() {
     let rules = [];
     let ruleIndex = 1;
@@ -85,11 +133,11 @@ class LetterOfCredit extends Component {
         "$class": "org.acme.loc.ProductDetails",
         "productType": type,
         "quantity": quantity,
-        "pricePerUnit": price,
+        "pricePerUnit": price.toFixed(2),
         "id": "string"
       },
       "transactionId": "",
-      "timestamp": "2018-03-13T11:35:00.218Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
+      "timestamp": "2018-03-13T11:35:00.218Z" // the transactions seem to need this field filled in; when submitted the correct time will replace this value
     })
     .then(() => {
       let letter = "resource:org.acme.loc.LetterOfCredit#" + ("L" + currentTime);
@@ -98,7 +146,7 @@ class LetterOfCredit extends Component {
         "loc": letter,
         "approvingParty": this.state.user,
         "transactionId": "",
-        "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
+        "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field filled in; when submitted the correct time will replace this value
       });
     })
     .then(() => {
@@ -123,7 +171,7 @@ class LetterOfCredit extends Component {
         "loc": letter,
         "approvingParty": approvingParty,
         "transactionId": "",
-        "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
+        "timestamp": "2018-03-13T11:25:08.043Z" // the transactions seem to need this field filled in; when submitted the correct time will replace this value
       })
       .then(() => {
         this.setState({
@@ -147,7 +195,7 @@ class LetterOfCredit extends Component {
       "loc": letter,
       "closeReason": "Letter has been rejected",
       "transactionId": "",
-      "timestamp": "2018-03-13T11:35:00.281Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
+      "timestamp": "2018-03-13T11:35:00.281Z" // the transactions seem to need this field filled in; when submitted the correct time will replace this value
     })
     .then(() => {
       this.setState({
@@ -170,7 +218,7 @@ class LetterOfCredit extends Component {
       "loc": letter,
       "closeReason": "Letter has been completed.",
       "transactionId": "",
-      "timestamp": "2018-03-13T11:35:00.139Z" // the transactions seem to need this field in; when submitted the correct time will replace this value
+      "timestamp": "2018-03-13T11:35:00.139Z" // the transactions seem to need this field filled in; when submitted the correct time will replace this value
     })
     .then(() => {
       this.setState({
@@ -221,14 +269,14 @@ class LetterOfCredit extends Component {
       if (this.props.letter.status === 'AWAITING_APPROVAL' && !this.props.letter.approval.includes(this.state.user)) {
         buttonJSX = (
           <div class="actions">
-            <button disabled={this.state.disableButtons} onClick={() => {this.rejectLOC(this.props.letter.letterId)}}>I reject the application</button>
-            <button disabled={this.state.disableButtons} onClick={() => {this.approveLOC(this.props.letter.letterId, this.state.user)}}>I accept the application</button>
+            <button disabled={this.state.disableButtons} onClick={() => {this.showModal('REJECT')}}>I reject the application</button>
+            <button disabled={this.state.disableButtons} onClick={() => {this.showModal('APPROVE')}}>I accept the application</button>
           </div>
           );
       } else if (this.props.letter.status === 'RECEIVED') {
         buttonJSX = (
           <div class="actions">
-            <button disabled={this.state.disableButtons} onClick={() => this.closeLOC(this.props.letter.letterId)}>Close this Letter of Credit</button>
+            <button disabled={this.state.disableButtons} onClick={() => {this.showModal('CLOSE')}}>Close this Letter of Credit</button>
           </div>
         )
       } else {
@@ -237,19 +285,20 @@ class LetterOfCredit extends Component {
     } else {
       buttonJSX = (
         <div class="actions">
-          <button disabled={this.state.disableButtons} onClick={() => this.createLOC(this.props.productDetails.type, this.props.productDetails.quantity, this.props.productDetails.pricePerUnit, this.props.rules)}>Start approval process</button>
+          <button disabled={this.state.disableButtons} onClick={() => {this.showModal('CREATE')}}>Start approval process</button>
         </div>
       );
     }
 
     return (
       <div class="LCcontainer">
+        <Modal show={this.state.showModal} modalType={this.state.modalType} cancelCallback={()=>{this.hideModal()}} yesCallback={this.state.modalFunction}/>
         <div class="LCHeader">
           <div>
             <img class="backButton" src={backButtonIcon} alt="go back" onClick={() => {if(!this.state.disableButtons){this.handleOnClick(this.state.user)}}}/>
           </div>
           <p class="loc-text">Letter of Credit</p>
-          <p class="username-txt">{this.state.user.charAt(0).toUpperCase() + this.state.user.slice(1)}</p>
+          <p class="username-txt">{(this.state.user.charAt(3) === 'i') ? 'Matías' : this.state.user.charAt(0).toUpperCase() + this.state.user.slice(1)}</p>
         </div>
         <div class="header">
           <div class="stepper">

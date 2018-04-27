@@ -7,23 +7,24 @@ class UserDetails extends Component {
     this.state = {
       name: this.props.name,
       companyName: this.props.companyName,
-      sortCode: this.props.sortCode,
-      accountNumber: this.props.accountNumber
+      swiftCode: this.props.swiftCode,
+      IBAN: this.props.IBAN,
     }
   }
 
   render() {
     let nameText = 'Name: ' ;
     let companyNameText = 'Company Name: ';
-    let sortCodeText = 'Sort Code: ';
-    let accountNumberText = 'Account Number: ';
+    let ibanText = 'IBAN : ';
+    let swiftCodeText = 'SWIFT code: ';
+    
     return (
       <div className="UserDetails">
         <h1>Business Account</h1>
         {nameText}<b>{this.state.name}</b><br/>
         {companyNameText}<b>{this.state.companyName}</b><br/>
-        {sortCodeText}<b>{this.state.sortCode}</b><br/>
-        {accountNumberText}<b>{this.state.accountNumber}</b>
+        {ibanText}<b>{this.state.IBAN}</b><br/>
+        {swiftCodeText}<b>{this.state.swiftCode}</b>
       </div>
     );
   }
