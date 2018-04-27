@@ -3,7 +3,8 @@ import { Redirect } from 'react-router-dom';
 import Config from '../../utils/config';
 import '../../stylesheets/css/main.css';
 import axios from 'axios';
-import viewButtonIcon from '../../resources/images/viewLocIcon.png';
+import viewButtonIconAlice from '../../resources/images/viewLocIcon.png';
+import viewButtonIconBob from '../../resources/images/viewLocIconBob.png';
 
 class LoCCard extends Component {
   constructor(props) {
@@ -47,19 +48,34 @@ class LoCCard extends Component {
   }
 
   generateCardContents(letter, user) {
-    let contents = (
-      <div>
-        <h3>{'Ref: ' + letter.letterId}</h3>
-        <p>{'Participants: Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</p>
-        <p>{'Product Type: ' + letter.productDetails.productType}</p>
-        <button className="viewButton" onClick={() => this.handleOnClick()}>
-          <div className = "viewButtonImage">
-            <img src = {viewButtonIcon} alt = ""/>
+    let contents;
+    if (user === 'bob') {
+      contents = (
+        <div>
+          <h3>{'Ref: ' + letter.letterId}</h3>
+          Participants: <b>{'Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</b><br/><br/>
+          Product Type: <b>{letter.productDetails.productType}</b>
+          <div>
+            <img class="viewButtonBob" src={viewButtonIconBob} alt="View Letter of Credit" onClick={() => this.handleOnClick()}/>
           </div>
-          <p>View Letter Of Credit</p>
-        </button>
-      </div>
-    );
+        </div>
+      );
+    }
+    else { // if the current user is not bob then it must be alice
+      contents = (
+        <div>
+          <h3>{'Ref: ' + letter.letterId}</h3>
+          Participants: <b>{'Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</b><br/><br/>
+          Product Type: <b>{letter.productDetails.productType}</b><p></p>
+          <button className="viewButton" onClick={() => this.handleOnClick()}>
+            <div className = "viewButtonImage">
+              <img src = {viewButtonIconAlice} alt = ""/>
+            </div>
+            <p>View Letter Of Credit</p>
+          </button>
+        </div>
+      );
+    }
 
     if (user === 'bob') {
       if (letter.status === 'APPROVED' || letter.status === 'SHIPPED' || letter.status === 'RECEIVED') {
@@ -97,9 +113,9 @@ class LoCCard extends Component {
     if (this.state.redirect) {
       return <Redirect push to={this.props.user + "/loc"} />;
     }
-
+    let LoCCardStyle = (this.props.user == 'bob') ? "LoCCardBob" : "LoCCard";
     return (
-      <div className = "LoCCard">
+      <div className = {LoCCardStyle}>
         {this.generateCardContents(this.props.letter, this.props.user)}
       </div>
     );
