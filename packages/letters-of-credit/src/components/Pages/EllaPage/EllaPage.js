@@ -85,6 +85,7 @@ class EllaPage extends Component {
     } else {
       status = letter.status.toLowerCase();
       status = status.charAt(0).toUpperCase() + status.slice(1);
+      status = ((letter.status === 'PAYMENT_MADE') ? status.replace(/_/g, ' ') : status);
     }
     return status;
   }
@@ -95,7 +96,7 @@ class EllaPage extends Component {
       let submitter = "Alice Hamilton";
       let company = "QuickFix IT";
       if(this.state.letters[i].applicant === 'resource:org.acme.loc.Customer#bob') {
-        submitter = "Bob Bobbins";
+        submitter = "Bob Appleton";
         company = "Conga Computers"
       }
       let status = this.generateStatus(this.state.letters[i]);

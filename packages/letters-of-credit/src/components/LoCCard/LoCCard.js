@@ -62,8 +62,22 @@ class LoCCard extends Component {
       </div>
     );
 
-    if (user === 'bob') {
-      if (letter.status === 'APPROVED' || letter.status === 'SHIPPED' || letter.status === 'RECEIVED') {
+    if (user === 'alice') {
+      if (letter.status !== 'AWAITING_APPROVAL' && letter.status !== 'APPROVED') {
+        contents = (
+          <div>
+            <h3>{'Ref: ' + letter.letterId}</h3>
+            <p>{'This product is ready to be accepted'}</p>
+            <p>{'Product Type: ' + letter.productDetails.productType}</p>
+            <div className="shipButtonDiv">
+              <button className="acceptButton" onClick={() => {this.receiveProduct(letter.letterId)}} disabled={(letter.status === 'SHIPPED') ? false : true}>✓</button>
+              <span className="shipText">{'Accept Order'}</span>
+            </div>
+          </div>
+        );
+      }
+    } else {
+      if (letter.status !== 'AWAITING_APPROVAL') {
         // generating a hash from the timestamp
         let hash = new Date().getTime().toString(24);
         contents = (
@@ -74,20 +88,6 @@ class LoCCard extends Component {
             <div className="shipButtonDiv">
               <button className="shipButton" onClick={() => {this.shipProduct(letter.letterId, hash)}} disabled={(letter.status === 'APPROVED') ? false : true}>✓</button>
               <span className="shipText">{'Ship Order'}</span>
-            </div>
-          </div>
-        );
-      }
-    } else { // if the current user is not bob then it must be alice
-      if (letter.status === 'SHIPPED' || letter.status === 'RECEIVED') {
-        contents = (
-          <div>
-            <h3>{'Ref: ' + letter.letterId}</h3>
-            <p>{'This product is ready to be accepted'}</p>
-            <p>{'Product Type: ' + letter.productDetails.productType}</p>
-            <div className="shipButtonDiv">
-              <button className="acceptButton" onClick={() => {this.receiveProduct(letter.letterId)}} disabled={(letter.status === 'SHIPPED') ? false : true}>✓</button>
-              <span className="shipText">{'Accept Order'}</span>
             </div>
           </div>
         );
