@@ -302,7 +302,11 @@ class LetterOfCredit extends Component {
         </div>
         <div class="header">
           <div class="stepper">
-            <Stepper steps={ [{title: 'Letter Application'}, {title: 'BoA\'s Approval'}, {title: 'CBoB\'s Approval'}, {title: 'Bob\'s Approval'}, {title: 'Letter Closed'}] } activeStep={activeStep} circleFontSize={12} titleFontSize={12} completeColor={"#4880ff"} activeColor={"#4880ff"} completeBarColor={"#4880ff"} size={24}/>
+            <Stepper steps={ [{title: 'Letter Application'}, {title: 'PB\'s Approval'}, {title: 'BoH\'s Approval'}, {title: 'Bob\'s Approval'}, {title: 'Letter Closed'}] } activeStep={activeStep} circleFontSize={12} titleFontSize={12} completeColor={"#4880ff"} activeColor={"#4880ff"} completeBarColor={"#4880ff"} size={24}/>
+          </div>
+        </div>
+        <div class="letterContent">
+
           </div>
         </div>
         <div class="letterContent">

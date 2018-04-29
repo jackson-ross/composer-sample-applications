@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Table from '../../Table/Table.js';
 import Config from '../../../utils/config';
+import matiasUsernameIcon from '../../../resources/images/viewLocIcon.png';
 
 class MatiasPage extends Component {
   constructor(props) {
@@ -99,6 +100,7 @@ class MatiasPage extends Component {
       company = "Conga Computers"
     }
     let status = this.generateStatus(this.state.letters[i])
+    console.log(this.state.letters[i]);
     return (
 			<tr className="row" onClick={() => this.openLetter(i) }>
 				<td className="blueText">{this.state.letters[i].letterId}</td>
@@ -130,12 +132,15 @@ class MatiasPage extends Component {
       return (
         <div id="matiasPageContainer" className="matiasPageContainer">
           <div id="matiasHeaderDiv" className="flexDiv matiasHeaderDiv">
-            <span className="matiasUsername" onClick={() => {this.handleOnClick('alice')}}> {username} </span>
+            <span className="matiasUsername">
+              <img src={matiasUsernameIcon} alt="" className="matiasUsernameIcon"/>
+              {username}
+            </span>
             <div id="matiasMenu" className="matiasMenuItems">
-              <span> Change account details </span>
-              <span> View Transaction History </span>
-              <span> Make Transaction </span>
-              <span> Viewing all Business Acccounts </span>
+              <span>Change Account Details</span>
+              <span>View Transaction History</span>
+              <span>Make Transaction</span>
+              <span>Viewing All Business Acccounts</span>
             </div>
           </div>
           <div id="matiasWelcomeDiv" className="matiasWelcomeDiv">

@@ -133,9 +133,13 @@ class EllaPage extends Component {
       return (
         <div id="ellaPageContainer" className="ellaPageContainer">
           <div id="ellaHeaderDiv" className="flexDiv ellaHeaderDiv">
-            <span className="ellaUsername" onClick={() => {this.handleOnClick('bob')}}> {username} </span>
+            <span className="ellaUsername"> {username} </span>
+            {/* <div id="ellaMenu" className="ellaMenuItems">
+              <span>Viewing All Business Acccounts</span>
+            </div> */}
           </div>
           <div id="ellaWelcomeDiv" className="ellaWelcomeDiv">
+            <span> {this.state.userDetails.bankName} </span>
             <h1> Welcome back {this.state.userDetails.name} </h1>
           </div>
           <div id="tableDiv">
