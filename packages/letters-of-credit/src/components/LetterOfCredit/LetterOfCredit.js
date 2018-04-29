@@ -306,10 +306,6 @@ class LetterOfCredit extends Component {
           </div>
         </div>
         <div class="letterContent">
-
-          </div>
-        </div>
-        <div class="letterContent">
           <DetailsCard disabled={true} type="Person" data={["Application Request"].concat(Object.values(this.props.applicant))}/>
           <DetailsCard disabled={true} type="Person" data={["Supplier Request"].concat(Object.values(this.props.beneficiary))}/>
           <DetailsCard type="Product" data={["Product Details"].concat(Object.values(productDetails))} canEdit={this.props.isApply}/>
