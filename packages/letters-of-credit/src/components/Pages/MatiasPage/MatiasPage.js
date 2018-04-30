@@ -77,6 +77,7 @@ class MatiasPage extends Component {
 
   generateStatus(letter) {
     let status = '';
+    let statusColour;
     if (letter.status === 'AWAITING_APPROVAL') {
       if (!letter.approval.includes('matias')) {
         status = 'Awaiting approval from YOU';
@@ -85,12 +86,13 @@ class MatiasPage extends Component {
       } else if (letter.approval.includes('ella') && !letter.approval.includes('bob')) {
         status = 'Awaiting approval from Beneficiary';
       }
+      statusColour = "red";
     } else {
       status = letter.status.toLowerCase();
       status = status.charAt(0).toUpperCase() + status.slice(1);
       status = ((letter.status === 'PAYMENT_MADE') ? status.replace(/_/g, ' ') : status);
     }
-    return status;
+    return {status: status, statusColour: statusColour};
   }
 
   generateRow(i) {
@@ -98,16 +100,19 @@ class MatiasPage extends Component {
     let company = "QuickFix IT";
     if(this.state.letters[i].applicant === 'resource:org.acme.loc.Customer#bob') {
       submitter = "Bob Appleton";
-      company = "Conga Computers"
+      company = "Conga Computers";
     }
-    let status = this.generateStatus(this.state.letters[i])
-    console.log(this.state.letters[i]);
+    let status = this.generateStatus(this.state.letters[i]);
+
     return (
 			<tr className="row" onClick={() => this.openLetter(i) }>
 				<td className="blueText">{this.state.letters[i].letterId}</td>
 				<td>{submitter}</td>
 				<td>{company}</td>
-				<td>{status}</td>
+        <td>
+          {status.status}
+          <span className={status.statusColour}></span>
+        </td>
 			</tr>
 		);
   }
