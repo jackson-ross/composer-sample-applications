@@ -87,10 +87,18 @@ class MatiasPage extends Component {
         status = 'Awaiting approval from Beneficiary';
       }
       statusColour = "red";
-    } else {
+    }
+    else {
       status = letter.status.toLowerCase();
       status = status.charAt(0).toUpperCase() + status.slice(1);
       status = ((letter.status === 'PAYMENT_MADE') ? status.replace(/_/g, ' ') : status);
+
+      if(letter.status === 'CLOSED') {
+        statusColour = "green";
+      }
+      else {
+        statusColour = "blue";
+      }
     }
     return {status: status, statusColour: statusColour};
   }
@@ -103,7 +111,9 @@ class MatiasPage extends Component {
       company = "Conga Computers";
     }
     let status = this.generateStatus(this.state.letters[i]);
-
+    let statusStyle = {
+      backgroundColor: status.statusColour
+    }
     return (
 			<tr className="row" onClick={() => this.openLetter(i) }>
 				<td className="blueText">{this.state.letters[i].letterId}</td>
@@ -111,7 +121,7 @@ class MatiasPage extends Component {
 				<td>{company}</td>
         <td>
           {status.status}
-          <span className={status.statusColour}></span>
+          <span style={statusStyle}></span>
         </td>
 			</tr>
 		);

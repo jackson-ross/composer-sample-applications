@@ -85,14 +85,17 @@ class EllaPage extends Component {
       }
       statusColour = "red";
     }
-    else if(letter.status === 'CLOSED') {
-      statusColour = "green";
-    }
     else {
       status = letter.status.toLowerCase();
       status = status.charAt(0).toUpperCase() + status.slice(1);
       status = ((letter.status === 'PAYMENT_MADE') ? status.replace(/_/g, ' ') : status);
-      statusColour = "blue";
+
+      if(letter.status === 'CLOSED') {
+        statusColour = "green";
+      }
+      else {
+        statusColour = "blue";
+      }
     }
     return {status: status, statusColour: statusColour};
   }
