@@ -46,7 +46,12 @@ class LetterOfCredit extends Component {
           relevantTransactions.push(i);
         }
       });
-      relevantTransactions.sort((a,b) => a.transactionTimestamp.localeCompare(b.transactionTimestamp));
+      relevantTransactions.sort((a,b) => {
+        // creating a new date object to account for daylight savings
+        a.transactionTimestamp = new Date(a.transactionTimestamp);
+        b.transactionTimestamp = new Date(b.transactionTimestamp);
+        return a.transactionTimestamp - b.transactionTimestamp;
+      });
 
       this.setState ({
         transactions: relevantTransactions
