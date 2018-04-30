@@ -32,10 +32,26 @@ class BobPage extends Component {
 		// open a websocket
 		this.connection = new WebSocket(this.config.webSocketURL);
 		this.connection.onmessage = ((evt) => {
-			this.getLetters();
+			let eventInfo = JSON.parse(evt.data);
+			eventInfo = eventInfo.$class.split('.').pop();
+			if (eventInfo === 'MakePaymentEvent') {
+				this.getLetters();
+				this.getUserInfo();
+			} else {
+				this.getLetters();
+			}
 		});
 
 		// make rest calls
+		this.getUserInfo();
+		this.getLetters();
+	}
+
+	componentWillUnmount() {
+		this.connection.close();
+	}
+
+	getUserInfo() {
 		let cURL = this.config.httpURL+'/Customer/bob';
 		axios.get(cURL)
 		.then(response => {
@@ -46,11 +62,6 @@ class BobPage extends Component {
 		.catch(error => {
 			console.log(error);
 		});
-		this.getLetters();
-	}
-
-	componentWillUnmount() {
-		this.connection.close();
 	}
 
 	getLetters() {
@@ -82,17 +93,6 @@ class BobPage extends Component {
 		}
 	}
 
-	getBalance() {
-		let balance = 12399;
-		this.state.letters.map((i) => {
-			if (i.status === 'CLOSED') {
-				balance += (i.productDetails.quantity * i.productDetails.pricePerUnit);
-			}
-		});
-
-		return balance.toLocaleString();
-	}
-
   render() {
     if (this.state.redirect) {
       return <Redirect push to={"/" + this.state.redirectTo} />;
@@ -116,7 +116,7 @@ class BobPage extends Component {
     		  </div>
           <div class="bobWelcomeDiv">
             <p id="welcomeMessage">Welcome back {this.state.userDetails.name}</p>
-            <h1 id ="accountBalance">{'£'+(this.getBalance())}</h1>
+            <h1 id ="accountBalance">€{(this.state.userDetails.balance) ? this.state.userDetails.balance.toLocaleString() : 0}</h1>
           </div>
     		  <div id="infoDiv" className="flexDiv infoDiv">
     		    <div id="bobDetailsDiv" className="bobDetailsDiv">

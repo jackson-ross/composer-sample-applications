@@ -36,7 +36,7 @@ class LetterOfCredit extends Component {
     axios.get(this.config.httpURL+'/system/historian')
     .then((response) => {
       let relevantTransactions = [];
-      let transactionTypes = ["InitialApplication", "Approve", "Reject", "ShipProduct", "ReceiveProduct", "Close"];
+      let transactionTypes = ["InitialApplication", "Approve", "Reject", "ShipProduct", "ReceiveProduct", "MakePayment", "Close"];
       response.data.forEach((i) => {
         let transactionLetter = ((i.eventsEmitted.length) ? decodeURIComponent(i.eventsEmitted[0].loc.split("#")[1]) : undefined);
         let longName = i.transactionType.split(".")
@@ -63,6 +63,7 @@ class LetterOfCredit extends Component {
       CREATE: "CREATE",
       APPROVE: "APPROVE",
       REJECT: "REJECT",
+      PAY: "PAY",
       CLOSE: "CLOSE"
     }
 
@@ -81,6 +82,11 @@ class LetterOfCredit extends Component {
       callback = () => {
         this.hideModal();
         this.rejectLOC(this.props.letter.letterId)
+      }
+    } else if (tx === txTypes.PAY) {
+      callback = () => {
+        this.hideModal();
+        this.payLOC(this.props.letter.letterId)
       }
     } else {
       callback = () => {
@@ -165,7 +171,7 @@ class LetterOfCredit extends Component {
       this.setState({
         disableButtons: true
       });
-      let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId
+      let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId;
       axios.post(this.config.httpURL+'/Approve', {
         "$class": "org.acme.loc.Approve",
         "loc": letter,
@@ -189,7 +195,7 @@ class LetterOfCredit extends Component {
     this.setState({
       disableButtons: true
     });
-    let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId
+    let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId;
     axios.post(this.config.httpURL+'/Reject', {
       "$class": "org.acme.loc.Reject",
       "loc": letter,
@@ -208,11 +214,34 @@ class LetterOfCredit extends Component {
     });
   }
 
+  payLOC(letterId) {
+    this.setState({
+      disableButtons: true
+    });
+    let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId;
+    axios.post(this.config.httpURL+'/MakePayment', {
+      "$class" : "org.acme.loc.MakePayment",
+      "loc": letter,
+      'beneficiary': "resource:org.acme.loc.Customer#bob",
+      "transactionId": "",
+      "timestamp": "2018-03-13T11:35:00.281Z" // the transactions seem to need this field filled in; when submitted the correct time will replace this value
+    })
+    .then(() => {
+      this.setState({
+        disableButtons: false
+      });
+      this.handleOnClick(this.state.user);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
   closeLOC(letterId) {
     this.setState({
       disableButtons: true
     });
-    let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId
+    let letter = "resource:org.acme.loc.LetterOfCredit#" + letterId;
     axios.post(this.config.httpURL+'/Close', {
       "$class": "org.acme.loc.Close",
       "loc": letter,
@@ -272,13 +301,19 @@ class LetterOfCredit extends Component {
             <button disabled={this.state.disableButtons} onClick={() => {this.showModal('REJECT')}}>I reject the application</button>
             <button disabled={this.state.disableButtons} onClick={() => {this.showModal('APPROVE')}}>I accept the application</button>
           </div>
-          );
-      } else if (this.props.letter.status === 'RECEIVED') {
+        );
+      } else if (this.props.letter.status === 'RECEIVED' && this.state.user === 'matias') {
+        buttonJSX = (
+          <div class="actions">
+            <button disabled={this.state.disableButtons} onClick={() => {this.showModal('PAY')}}>Ready for Payment</button>
+          </div>
+        );
+      } else if (this.props.letter.status === 'PAYMENT_MADE' && this.state.user === 'ella') {
         buttonJSX = (
           <div class="actions">
             <button disabled={this.state.disableButtons} onClick={() => {this.showModal('CLOSE')}}>Close this Letter of Credit</button>
           </div>
-        )
+        );
       } else {
         buttonJSX = (<div/>);
       }

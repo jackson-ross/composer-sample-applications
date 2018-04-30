@@ -75,7 +75,7 @@ class MatiasPage extends Component {
 		});
 	}
 
-  generateStatus(letter){
+  generateStatus(letter) {
     let status = '';
     if (letter.status === 'AWAITING_APPROVAL') {
       if (!letter.approval.includes('matias')) {
@@ -88,6 +88,7 @@ class MatiasPage extends Component {
     } else {
       status = letter.status.toLowerCase();
       status = status.charAt(0).toUpperCase() + status.slice(1);
+      status = ((letter.status === 'PAYMENT_MADE') ? status.replace(/_/g, ' ') : status);
     }
     return status;
   }
@@ -96,7 +97,7 @@ class MatiasPage extends Component {
     let submitter = "Alice Hamilton";
     let company = "QuickFix IT";
     if(this.state.letters[i].applicant === 'resource:org.acme.loc.Customer#bob') {
-      submitter = "Bob Bobbins";
+      submitter = "Bob Appleton";
       company = "Conga Computers"
     }
     let status = this.generateStatus(this.state.letters[i])
