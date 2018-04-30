@@ -38,21 +38,25 @@ class AlicePage extends Component {
 		});
 
 		// make rest calls
-		let cURL = this.config.httpURL+'/Customer/alice';
-		axios.get(cURL)
-		.then(response => {
-			this.setState ({
-				userDetails: response.data
-			});
-		})
-		.catch(error => {
-			console.log(error);
-		});
+		this.getUserInfo();
 		this.getLetters();
 	}
 
 	componentWillUnmount() {
 		this.connection.close();
+	}
+
+	getUserInfo() {
+		let cURL = this.config.httpURL+'/Customer/alice';
+		axios.get(cURL)
+		.then(response => {
+			this.setState ({
+				userDetails: response.data
+      });
+		})
+		.catch(error => {
+			console.log(error);
+		});
 	}
 
 	getLetters() {
@@ -105,7 +109,7 @@ class AlicePage extends Component {
     		      <span> Change account details </span>
     		      <span> View Transaction History </span>
     		      <span> Make Transaction </span>
-    		      <span className="currentBalance"> Current Balance: £15,670 </span>
+    		      <span className="currentBalance"> Current Balance: ${(this.state.userDetails.balance) ? this.state.userDetails.balance.toLocaleString() : 0} </span>
     		    </div>
     		  </div>
     		  <div id="infoDiv" className="flexDiv infoDiv">
