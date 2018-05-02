@@ -7,8 +7,6 @@
   font-weight: lighter;
   min-width: 21%;
   max-width: 21%;
-  background-color: linear-gradient(-90deg, rgba(118,70,192,0.27) 0%, rgba(190,79,131,0.68) 100%);
-
   > h3 {
     font-weight: lighter;
   }
@@ -46,7 +44,6 @@
   font-size: 15px;
   min-width: 14%;
   max-width: 14%;
-
   > h3 {
     font-weight: lighter;
   }
@@ -124,6 +121,6 @@
   margin: auto;
 }
 
-.newMessage {
-  font-size : 18px;
+#LoCCardBobAccepted {
+  background: linear-gradient(-90deg, rgba(118,70,192,0.27) 0%, rgba(190,79,131,0.68) 100%);
 }

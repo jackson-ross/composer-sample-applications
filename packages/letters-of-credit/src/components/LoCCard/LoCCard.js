@@ -54,49 +54,58 @@ class LoCCard extends Component {
     if(!this.props.letter.approval.includes("bob")){
       newMessage = "NEW";
     }
+    //generate new LoC cards
     if (user === 'bob') {
       contents = (
-        <div>
-          <div className = "newMessage">
-            <b>{newMessage}</b>
-          </div>
-          <h3>{'Ref: ' + letter.letterId}</h3>
-          Participants: <b>{'Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</b><br/><br/>
-          Product Type: <b>{letter.productDetails.productType}</b>
+        <div className = "LoCCardBob">
           <div>
-            <img class="viewButtonBob" src={viewButtonIconBob} alt="View Letter of Credit" onClick={() => this.handleOnClick()}/>
+            <h3>{newMessage}</h3>
+            <h3>{'Ref: ' + letter.letterId}</h3>
+            Participants: <b>{'Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</b><br/><br/>
+            Product Type: <b>{letter.productDetails.productType}</b>
+            <div>
+              <img class="viewButtonBob" src={viewButtonIconBob} alt="View Letter of Credit" onClick={() => this.handleOnClick()}/>
+            </div>
           </div>
         </div>
       );
     }
     else { // if the current user is not bob then it must be alice
       contents = (
-        <div>
-          <h3>{'Ref: ' + letter.letterId}</h3>
-          Participants: <b>{'Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</b><br/><br/>
-          Product Type: <b>{letter.productDetails.productType}</b><p></p>
-          <button className="viewButton" onClick={() => this.handleOnClick()}>
-            <div className = "viewButtonImage">
-              <img src = {viewButtonIconAlice} alt = ""/>
-            </div>
-            <p>View Letter Of Credit</p>
-          </button>
+        <div className = "LoCCard">
+          <div>
+            <h3>{'Ref: ' + letter.letterId}</h3>
+            Participants: <b>{'Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</b><br/><br/>
+            Product Type: <b>{letter.productDetails.productType}</b><p></p>
+            <button className="viewButton" onClick={() => this.handleOnClick()}>
+              <div className = "viewButtonImage">
+                <img src = {viewButtonIconAlice} alt = ""/>
+              </div>
+              <p>View Letter Of Credit</p>
+            </button>
+          </div>
         </div>
       );
     }
 
+    //generate accepted LoC cards
     if (user === 'bob') {
       if (letter.status === 'APPROVED' || letter.status === 'SHIPPED' || letter.status === 'RECEIVED') {
         // generating a hash from the timestamp
         let hash = new Date().getTime().toString(24);
         contents = (
-          <div>
-            <h3>{'Ref: ' + letter.letterId}</h3>
-            <p>{'Ship this product'}</p>
-            <p>{'Product Type: ' + letter.productDetails.productType}</p>
-            <div className="shipButtonDiv">
-              <button className="shipButton" onClick={() => {this.shipProduct(letter.letterId, hash)}} disabled={(letter.status === 'APPROVED') ? false : true}>✓</button>
-              <span className="shipText">{'Ship Order'}</span>
+          <div className = "LoCCardBob" id= "LoCCardBobAccepted">
+            <div>
+              <h3>{'Ref: ' + letter.letterId}</h3>
+              <p>{'Ship this product'}</p>
+              <p>{'Product Type: ' + letter.productDetails.productType}</p>
+              <div className="shipButtonDiv">
+                <button className="shipButton" onClick={() => {this.shipProduct(letter.letterId, hash)}} disabled={(letter.status === 'APPROVED') ? false : true}>✓</button>
+                <span className="shipText">{'Ship Order'}</span>
+              </div>
+              <div>
+                <img class="viewButtonBob" src={viewButtonIconBob} alt="View Letter of Credit" onClick={() => this.handleOnClick()}/>
+              </div>
             </div>
           </div>
         );
@@ -104,13 +113,21 @@ class LoCCard extends Component {
     } else { // if the current user is not bob then it must be alice
       if (letter.status === 'SHIPPED' || letter.status === 'RECEIVED') {
         contents = (
-          <div>
-            <h3>{'Ref: ' + letter.letterId}</h3>
-            <p>{'This product is ready to be accepted'}</p>
-            <p>{'Product Type: ' + letter.productDetails.productType}</p>
-            <div className="shipButtonDiv">
-              <button className="acceptButton" onClick={() => {this.receiveProduct(letter.letterId)}} disabled={(letter.status === 'SHIPPED') ? false : true}>✓</button>
-              <span className="shipText">{'Accept Order'}</span>
+          <div className = "LoCCard">
+            <div>
+              <h3>{'Ref: ' + letter.letterId}</h3>
+              <p>{'This product is ready to be accepted'}</p>
+              <p>{'Product Type: ' + letter.productDetails.productType}</p>
+              <div className="shipButtonDiv">
+                <button className="acceptButton" onClick={() => {this.receiveProduct(letter.letterId)}} disabled={(letter.status === 'SHIPPED') ? false : true}>✓</button>
+                <span className="shipText">{'Accept Order'}</span>
+              </div>
+              <button className="viewButton" onClick={() => this.handleOnClick()}>
+                <div className = "viewButtonImage">
+                  <img src = {viewButtonIconAlice} alt = ""/>
+                </div>
+                <p>View Letter Of Credit</p>
+              </button>
             </div>
           </div>
         );
@@ -125,9 +142,7 @@ class LoCCard extends Component {
     }
     let LoCCardStyle = (this.props.user == 'bob') ? "LoCCardBob" : "LoCCard";
     return (
-      <div className = {LoCCardStyle}>
-        {this.generateCardContents(this.props.letter, this.props.user)}
-      </div>
+        this.generateCardContents(this.props.letter, this.props.user)
     );
   }
 }
