@@ -50,7 +50,7 @@
   color: white; }
 
 .aliceWelcomeMessage {
-  font-family: HiraMaruPro-W4;
+  font-family: HiraMaruPro-W4, sans-serif;
   font-weight: lighter;
   font-size: 44px;
   color: #ffffff;
