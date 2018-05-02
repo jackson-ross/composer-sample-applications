@@ -61,7 +61,7 @@ class LoCCard extends Component {
           <div>
             <h3>{newMessage}</h3>
             <h3>{'Ref: ' + letter.letterId}</h3>
-            Participants: <b>{'Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</b><br/><br/>
+            Participants: <b>{'Alice, ' + letter.issuingBank + ', Bob, ' + letter.exportingBank}</b><br/><br/>
             Product Type: <b>{letter.productDetails.productType}</b>
             <div>
               <img class="viewButtonBob" src={viewButtonIconBob} alt="View Letter of Credit" onClick={() => this.handleOnClick()}/>
@@ -75,7 +75,7 @@ class LoCCard extends Component {
         <div className = "LoCCard">
           <div>
             <h3>{'Ref: ' + letter.letterId}</h3>
-            Participants: <b>{'Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</b><br/><br/>
+            Participants: <b>{'Alice, ' + letter.issuingBank + ', Bob, ' + letter.exportingBank}</b><br/><br/>
             Product Type: <b>{letter.productDetails.productType}</b><p></p>
             <button className="viewButton" onClick={() => this.handleOnClick()}>
               <div className = "viewButtonImage">
@@ -92,9 +92,13 @@ class LoCCard extends Component {
     if (user === 'bob') {
       if (letter.status === 'APPROVED' || letter.status === 'SHIPPED' || letter.status === 'RECEIVED') {
         // generating a hash from the timestamp
+        let idStyle;
+        if (letter.status === 'SHIPPED'){
+          idStyle = "LoCCardBobAccepted";
+        }
         let hash = new Date().getTime().toString(24);
         contents = (
-          <div className = "LoCCardBob" id= "LoCCardBobAccepted">
+          <div className = "LoCCardBob" id= {idStyle}>
             <div>
               <h3>{'Ref: ' + letter.letterId}</h3>
               <p>{'Ship this product'}</p>
