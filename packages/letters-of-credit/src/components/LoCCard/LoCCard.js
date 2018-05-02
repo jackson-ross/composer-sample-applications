@@ -110,8 +110,10 @@ class LoCCard extends Component {
           </div>
         );
       }
-    } else { // if the current user is not bob then it must be alice
-      if (letter.status === 'SHIPPED' || letter.status === 'RECEIVED') {
+    } else {
+      if (letter.status !== 'AWAITING_APPROVAL') {
+        // generating a hash from the timestamp
+        let hash = new Date().getTime().toString(24);
         contents = (
           <div className = "LoCCard">
             <div>
