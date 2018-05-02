@@ -50,9 +50,16 @@ class LoCCard extends Component {
 
   generateCardContents(letter, user) {
     let contents;
+    let newMessage = "";
+    if(!this.props.letter.approval.includes("bob")){
+      newMessage = "NEW";
+    }
     if (user === 'bob') {
       contents = (
         <div>
+          <div className = "newMessage">
+            <b>{newMessage}</b>
+          </div>
           <h3>{'Ref: ' + letter.letterId}</h3>
           Participants: <b>{'Alice, ' + letter.issuingBank + ', Bob, ' + letter.confirmingBank}</b><br/><br/>
           Product Type: <b>{letter.productDetails.productType}</b>
