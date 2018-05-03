@@ -284,10 +284,16 @@ class LetterOfCredit extends Component {
       }
     }
     else if (this.props.letter.status === 'APPROVED' ||
-             this.props.letter.status === 'SHIPPED' ||
-             this.props.letter.status === 'RECEIVED' ||
-             this.props.letter.status === 'CLOSED') {
-      activeStep = 4;
+    this.props.letter.status === 'SHIPPED' ||
+    this.props.letter.status === 'RECEIVED' ||
+    this.props.letter.status === 'CLOSED') {
+      if (this.props.letter.status === 'SHIPPED') {
+        activeStep = 4;
+      } else if (this.props.letter.status === 'RECEIVED'){
+        activeStep = 5;
+      } else if (this.props.letter.status === 'CLOSED'){
+        activeStep = 6;
+      }
     }
 
     let productDetails = this.props.productDetails;
@@ -342,7 +348,7 @@ class LetterOfCredit extends Component {
         </div>
         <div class="header">
           <div class="stepper">
-            <Stepper steps={ [{title: 'Letter Application'}, {title: 'PB\'s Approval'}, {title: 'BoH\'s Approval'}, {title: 'Bob\'s Approval'}, {title: 'Letter Closed'}] } activeStep={activeStep} circleFontSize={12} titleFontSize={12} completeColor={"#4880ff"} activeColor={"#4880ff"} completeBarColor={"#4880ff"} size={24}/>
+            <Stepper steps={ [{title: 'Letter Application'}, {title: 'PB\'s Approval'}, {title: 'BoH\'s Approval'}, {title: 'Bob\'s Approval'}, {title: 'Goods Shipped'}, {title: 'Shipment Accepted'}, {title: 'Letter Closed'}] } activeStep={activeStep} circleFontSize={12} titleFontSize={12} completeColor={"#4880ff"} activeColor={"#4880ff"} completeBarColor={"#4880ff"} size={24}/>
           </div>
         </div>
         <div class="letterContent">
