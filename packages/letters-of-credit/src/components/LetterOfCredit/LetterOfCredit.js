@@ -287,7 +287,9 @@ class LetterOfCredit extends Component {
     this.props.letter.status === 'SHIPPED' ||
     this.props.letter.status === 'RECEIVED' ||
     this.props.letter.status === 'CLOSED') {
-      if (this.props.letter.status === 'SHIPPED') {
+      if (this.props.letter.status === 'APPROVED'){
+        activeStep = 3;
+      } else if (this.props.letter.status === 'SHIPPED') {
         activeStep = 4;
       } else if (this.props.letter.status === 'RECEIVED'){
         activeStep = 5;
