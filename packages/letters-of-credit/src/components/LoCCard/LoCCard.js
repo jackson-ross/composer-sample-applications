@@ -117,7 +117,6 @@ class LoCCard extends Component {
     } else {
       if (letter.status !== 'AWAITING_APPROVAL') {
         // generating a hash from the timestamp
-        let hash = new Date().getTime().toString(24);
         contents = (
           <div className = "LoCCard">
             <div>
@@ -144,9 +143,8 @@ class LoCCard extends Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect push to={this.props.user + "/loc"} />;
+      return <Redirect push to={"/" + this.props.user + "/loc/" + this.props.letter.letterId} />;
     }
-    let LoCCardStyle = (this.props.user == 'bob') ? "LoCCardBob" : "LoCCard";
     return (
         this.generateCardContents(this.props.letter, this.props.user)
     );
