@@ -385,7 +385,6 @@ class LetterOfCredit extends Component {
           <DetailsCard disabled={true} type="Person" data={["Application Request"].concat(Object.values(this.props.applicant))}/>
           <DetailsCard disabled={true} type="Person" data={["Supplier Request"].concat(Object.values(this.props.beneficiary))}/>
           <DetailsCard type="Product" data={["Product Details"].concat(Object.values(productDetails))} canEdit={this.state.isApply} user={this.state.user}/>
-          <button onClick={() => window.location.reload()}>test button process</button>
         </div>
         <br/>
         <div class="rules">
