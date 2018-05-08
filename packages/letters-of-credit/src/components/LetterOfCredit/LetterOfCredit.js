@@ -297,9 +297,9 @@ class LetterOfCredit extends Component {
     }
 
     let activeStep = 0;
-
     if (this.state.letter.status === 'AWAITING_APPROVAL') {
       if (!this.state.letter.approval.includes('resource:org.acme.loc.BankEmployee#matias')) {
+
         activeStep = 1;
       }
       else if (!this.state.letter.approval.includes('resource:org.acme.loc.BankEmployee#ella')) {
@@ -309,15 +309,15 @@ class LetterOfCredit extends Component {
         activeStep = 3;
       }
     }
-    else if (this.props.letter.status === 'APPROVED'){
+    else if (this.state.letter.status === 'APPROVED'){
         activeStep = 4;
-    } else if (this.props.letter.status === 'SHIPPED') {
+    } else if (this.state.letter.status === 'SHIPPED') {
       activeStep = 5;
-    } else if (this.props.letter.status === 'RECEIVED'){
+    } else if (this.state.letter.status === 'RECEIVED'){
       activeStep = 6;
-    } else if (this.props.letter.status === 'READY_FOR_PAYMENT'){
+    } else if (this.state.letter.status === 'READY_FOR_PAYMENT'){
       activeStep = 7;
-    } else if (this.props.letter.status === 'CLOSED'){
+    } else if (this.state.letter.status === 'CLOSED'){
       activeStep = 8;
     }
 
@@ -385,6 +385,7 @@ class LetterOfCredit extends Component {
           <DetailsCard disabled={true} type="Person" data={["Application Request"].concat(Object.values(this.props.applicant))}/>
           <DetailsCard disabled={true} type="Person" data={["Supplier Request"].concat(Object.values(this.props.beneficiary))}/>
           <DetailsCard type="Product" data={["Product Details"].concat(Object.values(productDetails))} canEdit={this.state.isApply} user={this.state.user}/>
+          <button onClick={() => window.location.reload()}>test button process</button>
         </div>
         <br/>
         <div class="rules">

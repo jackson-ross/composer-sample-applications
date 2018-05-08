@@ -604,7 +604,7 @@ body {
   height: 32%;
   width: 20%;
   background-color: white;
-  font-family: Helvetica Neue; }
+  font-family: Helvetica Neue, sans-serif; }
 
 .title {
   color: black; }
@@ -644,11 +644,11 @@ body {
   color: white;
   font-weight: lighter; }
   .UserDetails > h1 {
-    font-family: HelveticaNeue-Bold;
+    font-family: HelveticaNeue-Bold, sans-serif;
     font-size: 19px; }
   .UserDetails > p {
     margin: 0;
-    font-family: HelveticaNeue; }
+    font-family: HelveticaNeue, sans-serif; }
 
 .userDetailsTextBold {
   font-weight: bold;
