@@ -5,6 +5,8 @@ import '../../stylesheets/css/main.css';
 import axios from 'axios';
 import viewButtonIconAlice from '../../resources/images/viewLocIcon.png';
 import viewButtonIconBob from '../../resources/images/viewLocIconBob.png';
+import Toggle from 'react-toggle';
+import "react-toggle/style.css";
 
 class LoCCard extends Component {
   constructor(props) {
@@ -48,6 +50,23 @@ class LoCCard extends Component {
     });
   }
 
+  generateStatus(letter) {
+    let status = '';
+    if (letter.status === 'AWAITING_APPROVAL') {
+      status = 'Awaiting Approval';
+    } else if (letter.status === 'READY_FOR_PAYMENT'){
+      status = 'Payment Made';
+    }
+    else {
+      status = letter.status.toLowerCase();
+      status = status.charAt(0).toUpperCase() + status.slice(1);
+    }
+    if(letter.status === 'CLOSED') {
+      //status = 'Letter Closed';
+    }
+    return status;
+  }
+
   generateCardContents(letter, user) {
     let contents;
     let newMessage = "";
@@ -87,25 +106,31 @@ class LoCCard extends Component {
         </div>
       );
     }
-
+    let statusMessage = this.generateStatus(letter);
     //generate accepted LoC cards
     if (user === 'bob') {
-      if (letter.status === 'APPROVED' || letter.status === 'SHIPPED' || letter.status === 'RECEIVED') {
+      if (letter.status !== 'AWAITING_APPROVAL') {
         // generating a hash from the timestamp
         let idStyle;
-        if (letter.status === 'SHIPPED'){
+        let toggleChecked = false;
+        let toggleDisabled = false;
+        let shippingText = "Ship Order";
+        if (letter.status !== 'APPROVED'){
           idStyle = "LoCCardBobAccepted";
+          toggleChecked = true;
+          toggleDisabled = true;
+          shippingText = "Order Shipped";
         }
         let hash = new Date().getTime().toString(24);
         contents = (
           <div className = "LoCCardBob" id= {idStyle}>
             <div>
               <h3>{'Ref: ' + letter.letterId}</h3>
-              <p>{'Ship this product'}</p>
+              <p>{statusMessage}</p>
               <p>{'Product Type: ' + letter.productDetails.productType}</p>
-              <div className="shipButtonDiv">
-                <button className="shipButton" onClick={() => {this.shipProduct(letter.letterId, hash)}} disabled={(letter.status === 'APPROVED') ? false : true}>✓</button>
-                <span className="shipText">{'Ship Order'}</span>
+              <div className = "shipButtonDiv">
+                <Toggle defaultChecked={toggleChecked} onChange={() => {this.shipProduct(letter.letterId, hash)}} disabled ={toggleDisabled} />
+                <span className="shipText">{shippingText}</span>
               </div>
               <div>
                 <img class="viewButtonBob" src={viewButtonIconBob} alt="View Letter of Credit" onClick={() => this.handleOnClick()}/>
@@ -115,17 +140,25 @@ class LoCCard extends Component {
         );
       }
     } else {
-      if (letter.status !== 'AWAITING_APPROVAL') {
+      if (letter.status !== 'AWAITING_APPROVAL' && letter.status !== 'APPROVED') {
         // generating a hash from the timestamp
+        let toggleChecked = false;
+        let toggleDisabled = false;
+        let shippingText = "Receive Order";
+        if (letter.status !== 'SHIPPED') {
+          toggleChecked = true;
+          toggleDisabled = true;
+          shippingText = "Order Received";
+        }
         contents = (
           <div className = "LoCCard">
             <div>
               <h3>{'Ref: ' + letter.letterId}</h3>
-              <p>{'This product is ready to be accepted'}</p>
+              <p>{statusMessage}</p>
               <p>{'Product Type: ' + letter.productDetails.productType}</p>
-              <div className="shipButtonDiv">
-                <button className="acceptButton" onClick={() => {this.receiveProduct(letter.letterId)}} disabled={(letter.status === 'SHIPPED') ? false : true}>✓</button>
-                <span className="shipText">{'Accept Order'}</span>
+              <div className = "shipButtonDiv">
+                <Toggle defaultChecked={toggleChecked} onChange={() => {this.receiveProduct(letter.letterId)}} disabled ={toggleDisabled} />
+                <span className="shipText">{shippingText}</span>
               </div>
               <button className="viewButton" onClick={() => this.handleOnClick()}>
                 <div className = "viewButtonImage">
