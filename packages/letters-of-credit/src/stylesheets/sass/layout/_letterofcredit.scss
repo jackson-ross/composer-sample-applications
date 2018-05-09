@@ -82,9 +82,6 @@
 
   > button {
     border-radius: 30px;
-    border: 1px solid #4880ff;
-    background-color: transparent;
-    color: #4880ff;
     padding: 0.7% 1.2% 0.7% 1.2%;
     margin: 0 1% 1% 0;
     font-weight: 500;
@@ -93,7 +90,17 @@
     z-index: 99999999;
   }
 
-  > button:hover {
+  > button:enabled {
+    border: 1px solid #4880ff;
+    background-color: transparent;
+    color: #4880ff;
+  }
+
+  > button:disabled {
+    cursor: not-allowed;
+  }
+
+  > button:enabled:hover {
     background-color: #4880ff;
     color: #fff;
   }
