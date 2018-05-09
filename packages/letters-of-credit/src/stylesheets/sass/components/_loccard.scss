@@ -44,8 +44,16 @@
   font-size: 15px;
   min-width: 14%;
   max-width: 14%;
+
   > h3 {
     font-weight: lighter;
+  }
+
+  > .background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 

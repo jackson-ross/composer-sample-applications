@@ -7,20 +7,38 @@ import viewButtonIconAlice from '../../resources/images/viewLocIcon.png';
 import viewButtonIconBob from '../../resources/images/viewLocIconBob.png';
 import Toggle from 'react-toggle';
 import "react-toggle/style.css";
+import Modal from '../Modal/Modal.js';
 
 class LoCCard extends Component {
   constructor(props) {
 		super(props);
+
 		this.state = {
-      redirect: false
+      redirect: false,
+      showModal: false
 		}
+
     this.handleOnClick = this.handleOnClick.bind(this);
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
     this.config = new Config();
 	}
 
   handleOnClick() {
     this.props.callback(this.props.letter, false);
     this.setState({redirect: true});
+  }
+
+  showModal() {
+    this.setState({
+      showModal: true
+    });
+  }
+
+  hideModal() {
+    this.setState({
+      showModal: false
+    });
   }
 
   shipProduct(letterId, evidenceHash) {
@@ -124,16 +142,17 @@ class LoCCard extends Component {
         let hash = new Date().getTime().toString(24);
         contents = (
           <div className = "LoCCardBob" id= {idStyle}>
+            <Modal show={this.state.showModal} modalType={'SHIP'} cancelCallback={this.hideModal} yesCallback={() => {this.shipProduct(letter.letterId, hash)}}/>
             <div>
               <h3>{'Ref: ' + letter.letterId}</h3>
               <p>{statusMessage}</p>
               <p>{'Product Type: ' + letter.productDetails.productType}</p>
               <div className = "shipButtonDiv">
-                <Toggle defaultChecked={toggleChecked} onChange={() => {this.shipProduct(letter.letterId, hash)}} disabled ={toggleDisabled} />
+                <Toggle defaultChecked={toggleChecked} onChange={this.showModal} disabled ={toggleDisabled} />
                 <span className="shipText">{shippingText}</span>
               </div>
               <div>
-                <img class="viewButtonBob" src={viewButtonIconBob} alt="View Letter of Credit" onClick={() => this.handleOnClick()}/>
+                <img class="viewButtonBob" src={viewButtonIconBob} alt="View Letter of Credit" onClick={this.handleOnClick}/>
               </div>
             </div>
           </div>
