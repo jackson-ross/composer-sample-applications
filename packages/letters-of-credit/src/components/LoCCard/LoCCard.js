@@ -79,9 +79,6 @@ class LoCCard extends Component {
       status = letter.status.toLowerCase();
       status = status.charAt(0).toUpperCase() + status.slice(1);
     }
-    if(letter.status === 'CLOSED') {
-      //status = 'Letter Closed';
-    }
     return status;
   }
 
@@ -125,14 +122,15 @@ class LoCCard extends Component {
       );
     }
     let statusMessage = this.generateStatus(letter);
+    let toggleChecked = false;
+    let toggleDisabled = false;
+    let shippingText;
     //generate accepted LoC cards
     if (user === 'bob') {
       if (letter.status !== 'AWAITING_APPROVAL') {
         // generating a hash from the timestamp
         let idStyle;
-        let toggleChecked = false;
-        let toggleDisabled = false;
-        let shippingText = "Ship Order";
+        shippingText = "Ship Order";
         if (letter.status !== 'APPROVED'){
           idStyle = "LoCCardBobAccepted";
           toggleChecked = true;
@@ -161,9 +159,7 @@ class LoCCard extends Component {
     } else {
       if (letter.status !== 'AWAITING_APPROVAL' && letter.status !== 'APPROVED') {
         // generating a hash from the timestamp
-        let toggleChecked = false;
-        let toggleDisabled = false;
-        let shippingText = "Receive Order";
+        shippingText = "Receive Order";
         if (letter.status !== 'SHIPPED') {
           toggleChecked = true;
           toggleDisabled = true;
