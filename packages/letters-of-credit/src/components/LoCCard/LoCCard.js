@@ -146,7 +146,7 @@ class LoCCard extends Component {
               <p>{statusMessage}</p>
               <p>{'Product Type: ' + letter.productDetails.productType}</p>
               <div className = "shipButtonDiv">
-                <Toggle defaultChecked={toggleChecked} onChange={this.showModal} disabled ={toggleDisabled} />
+                <Toggle className='bobToggle' defaultChecked={toggleChecked} onChange={this.showModal} disabled ={toggleDisabled} />
                 <span className="shipText">{shippingText}</span>
               </div>
               <div>
@@ -172,7 +172,7 @@ class LoCCard extends Component {
               <p>{statusMessage}</p>
               <p>{'Product Type: ' + letter.productDetails.productType}</p>
               <div className = "shipButtonDiv">
-                <Toggle defaultChecked={toggleChecked} onChange={() => {this.receiveProduct(letter.letterId)}} disabled ={toggleDisabled} />
+                <Toggle className='aliceToggle' defaultChecked={toggleChecked} onChange={() => {this.receiveProduct(letter.letterId)}} disabled ={toggleDisabled} />
                 <span className="shipText">{shippingText}</span>
               </div>
               <button className="viewButton" onClick={() => this.handleOnClick()}>

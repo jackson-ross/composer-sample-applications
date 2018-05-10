@@ -594,7 +594,8 @@ body {
   border-color: white; }
 
 .shipText {
-  margin: auto; }
+  margin: auto;
+  margin-left: 10px; }
 
 #LoCCardBobAccepted {
   background: linear-gradient(-90deg, rgba(118, 70, 192, 0.27) 0%, rgba(190, 79, 131, 0.68) 100%); }
