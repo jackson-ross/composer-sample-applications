@@ -1,13 +1,10 @@
 .BlockChainDisplay {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  top: 16%;
-  overflow: scroll;
+  overflow-y: auto;
   display: flex;
   flex-direction: column-reverse;
-  padding-right: 5%;
-  height: 500px;
+  width: 200px;
+  height: 0px;
+  min-height: 100%;
 }
 
 .greyBlock {
