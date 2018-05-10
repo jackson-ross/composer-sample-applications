@@ -39,9 +39,12 @@ class Modal extends Component {
   getMessage() {
     let message = "";
     if (this.props.modalType === 'CREATE' || this.props.modalType === 'APPROVE') {
-      message = "By clicking 'Yes' you are agreeing to the Terms and Conditions of this Letter of Credit. The letter will now be sent to the next participant for approval."
+      message = "By clicking 'Yes' you are agreeing to the Terms and Conditions of this Letter of Credit.";
+      if (this.props.user != 'bob') {
+        message += " The letter will now be sent to the next participant for approval.";
+      }
     } else if (this.props.modalType === 'REJECT') {
-      message = "By clicking 'Yes' you are rejecting this application and the Letter of Credit will be closed. Once rejected, you will be unable to reopen this Letter of Credit."
+      message = "By clicking 'Yes' you are rejecting this application and the Letter of Credit will be closed. Once rejected, you will be unable to reopen this Letter of Credit.";
     } else if (this.props.modalType === 'PAY') {
       message = "By clicking 'Yes' you are agreeing that the applicant has received the goods in good condition, and you are willing to transfer the payment to the exporting bank.";
     } else {

@@ -375,7 +375,7 @@ class LetterOfCredit extends Component {
 
     return (
       <div class="LCcontainer">
-        <Modal show={this.state.showModal} modalType={this.state.modalType} cancelCallback={()=>{this.hideModal()}} yesCallback={this.state.modalFunction}/>
+        <Modal show={this.state.showModal} modalType={this.state.modalType} user={this.state.user} cancelCallback={()=>{this.hideModal()}} yesCallback={this.state.modalFunction}/>
         <div class="LCHeader">
           <div>
             <img class="backButton" src={backButtonIcon} alt="go back" onClick={() => {if(!this.state.disableButtons){this.handleOnClick(this.state.user)}}}/>
