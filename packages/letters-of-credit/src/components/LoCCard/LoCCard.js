@@ -55,6 +55,9 @@ class LoCCard extends Component {
     .catch(error => {
       console.log(error);
     });
+    this.setState({
+      toggleDisabled: true
+    });
   }
 
   receiveProduct(letterId) {
