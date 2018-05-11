@@ -15,7 +15,9 @@ class LoCCard extends Component {
 
 		this.state = {
       redirect: false,
-      showModal: false
+      showModal: false,
+      toggleChecked: false,
+      toggleDisabled: false
 		}
 
     this.handleOnClick = this.handleOnClick.bind(this);
@@ -53,6 +55,9 @@ class LoCCard extends Component {
     .catch(error => {
       console.log(error);
     });
+    this.setState({
+      toggleDisabled: true
+    });
   }
 
   receiveProduct(letterId) {
@@ -65,6 +70,9 @@ class LoCCard extends Component {
     })
     .catch(error => {
       console.log(error);
+    });
+    this.setState({
+      toggleDisabled: true
     });
   }
 
@@ -122,8 +130,6 @@ class LoCCard extends Component {
       );
     }
     let statusMessage = this.generateStatus(letter);
-    let toggleChecked = false;
-    let toggleDisabled = false;
     let shippingText;
     //generate accepted LoC cards
     if (user === 'bob') {
@@ -133,8 +139,8 @@ class LoCCard extends Component {
         shippingText = "Ship Order";
         if (letter.status !== 'APPROVED'){
           idStyle = "LoCCardBobAccepted";
-          toggleChecked = true;
-          toggleDisabled = true;
+          this.state.toggleChecked = true;
+          this.state.toggleDisabled = true;
           shippingText = "Order Shipped";
         }
         let hash = new Date().getTime().toString(24);
@@ -146,7 +152,7 @@ class LoCCard extends Component {
               <p>{statusMessage}</p>
               <p>{'Product Type: ' + letter.productDetails.productType}</p>
               <div className = "shipButtonDiv">
-                <Toggle className='bobToggle' defaultChecked={toggleChecked} onChange={this.showModal} disabled ={toggleDisabled} />
+                <Toggle className='bobToggle' defaultChecked={this.state.toggleChecked} onChange={this.showModal} disabled ={this.state.toggleDisabled} />
                 <span className="shipText">{shippingText}</span>
               </div>
               <div>
@@ -161,8 +167,8 @@ class LoCCard extends Component {
         // generating a hash from the timestamp
         shippingText = "Receive Order";
         if (letter.status !== 'SHIPPED') {
-          toggleChecked = true;
-          toggleDisabled = true;
+          this.state.toggleChecked = true;
+          this.state.toggleDisabled = true;
           shippingText = "Order Received";
         }
         contents = (
@@ -172,7 +178,7 @@ class LoCCard extends Component {
               <p>{statusMessage}</p>
               <p>{'Product Type: ' + letter.productDetails.productType}</p>
               <div className = "shipButtonDiv">
-                <Toggle className='aliceToggle' defaultChecked={toggleChecked} onChange={() => {this.receiveProduct(letter.letterId)}} disabled ={toggleDisabled} />
+                <Toggle className='aliceToggle' defaultChecked={this.state.toggleChecked} onChange={() => {this.receiveProduct(letter.letterId)}} disabled ={this.state.toggleDisabled} />
                 <span className="shipText">{shippingText}</span>
               </div>
               <button className="viewButton" onClick={() => this.handleOnClick()}>
