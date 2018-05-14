@@ -1,0 +1,73 @@
+.outerDiv {
+  position: relative;
+}
+
+.cardContainer {
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+
+  input {
+    width: 75%;
+  }
+
+  > ul {
+    margin: 0;
+
+    > li {
+      font-size: 10pt;
+    }
+  }
+
+  > h5 {
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+.editButton {
+  width: 130px;
+  height: 30px;
+  position: absolute;
+  bottom: -15px;
+  left: 5px;
+  border-radius: 30px;
+  background-color: #4880ff;
+  border: none;
+  color: white;
+  font-size: 10pt;
+
+  > span {
+    background-color: #2c58bd;
+    border-radius: 30px;
+    width: 50px;
+    float: left;
+    padding: 3px;
+  }
+}
+
+.disabled {
+  background: transparent;
+  box-shadow: none;
+  border: 1px solid #d1d1d1;
+}
+
+.subheadingSpan {
+  float: left;
+  clear: left;
+}
+
+.topHeading {
+  float: left;
+  clear: left;
+  color: #95989a;
+  padding-top: 5px;
+}
+
+.subheadingSpan, .topHeading {
+  font-size: 10pt;
+  padding-bottom: 5px;
+  width: unset;
+}

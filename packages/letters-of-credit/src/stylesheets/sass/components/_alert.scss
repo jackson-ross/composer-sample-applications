@@ -1,0 +1,13 @@
+.Alert {
+  width: 35%;
+  line-height: 1;
+  margin-left: 87vh;
+  margin-bottom: 1vh;
+  padding-left: 15px;
+  border: 1px solid white;
+  border-radius: 15px;
+  > p {
+    color: white;
+    font-weight: lighter;
+  }
+}
