@@ -8,8 +8,9 @@ import { connect } from "react-redux";
 import { getProductDeatils } from "../../actions/actions";
 import Config from '../../utils/config';
 import backButtonIcon from '../../resources/images/left-arrow.svg'
-import Stepper from 'react-stepper-horizontal';
+//import Stepper from 'react-stepper-horizontal';
 import Modal from '../../components/Modal/Modal.js'
+import Stepper from '../../components/Stepper/Stepper.js'
 
 class LetterOfCredit extends Component {
   constructor(props) {
@@ -384,9 +385,9 @@ class LetterOfCredit extends Component {
           <p class="username-txt">{(this.state.user.charAt(3) === 'i') ? 'Matías' : this.state.user.charAt(0).toUpperCase() + this.state.user.slice(1)}</p>
         </div>
         <div class="header">
-          <div class="stepper">
-            <Stepper steps={ [{title: 'Letter Application'}, {title: 'PB\'s Approval'}, {title: 'BoH\'s Approval'}, {title: 'Bob\'s Approval'}, {title: 'Goods Shipped'}, {title: 'Shipment Accepted'}, {title: 'Payment Made'}, {title: 'Letter Closed'}] } activeStep={activeStep} circleFontSize={12} titleFontSize={12} completeColor={"#4880ff"} activeColor={"#b3d5ff"} completeBarColor={"#4880ff"} size={24}/>
-          </div>
+
+            <Stepper steps= {['Letter Application','PB\'s Approval','BoH\'s Approval','Bob\'s Approval','Goods Shipped','Shipment Accepted','Payment Made','Letter Closed']} activeStep = {activeStep}/>
+        
         </div>
         <table className="contentTable">
           <tr>

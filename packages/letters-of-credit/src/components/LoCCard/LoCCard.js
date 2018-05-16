@@ -39,7 +39,8 @@ class LoCCard extends Component {
 
   hideModal() {
     this.setState({
-      showModal: false
+      showModal: false,
+      toggleChecked: false
     });
   }
 

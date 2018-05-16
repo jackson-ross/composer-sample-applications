@@ -1,0 +1,69 @@
+.stepContainer{
+  height: 75px;
+  width: 145px;
+}
+
+.activeStep {
+  box-sizing: border-box;
+  border:6px solid #ffffff;
+  background-color: #477fff;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  z-index: 1;
+}
+.completedStep{
+  background-color: #477fff;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+}
+.uncompletedStep{
+  box-sizing: border-box;
+  border:3px solid #e4e4e4;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+}
+
+.stepInfo{
+  height: 40px;
+  width: 150px;
+  margin: 0 auto;
+  z-index: 10;
+  text-align: center;
+}
+
+.stepInfoMessage{
+  background-color: #ffffff;
+  height: 35px;
+  width: 150px;
+  margin-bottom: 5px;
+  margin: 0 auto;
+  z-index: 10;
+  text-align: center;
+  box-shadow:0 1px 3px 0;
+}
+
+.nodeContainer{
+  display: flex;
+  align-items: center;
+}
+
+.stepConnector{
+  height: 3px;
+  background-color: #e4e4e4;
+  width: 60px;
+}
+
+.blankStepConnector{
+  width: 60px;
+}
+
+.blankStepInfo{
+  height: 40px;
+  width: 20px;
+  display: flex;
+  margin: 0 auto;
+  z-index: 10;
+}
