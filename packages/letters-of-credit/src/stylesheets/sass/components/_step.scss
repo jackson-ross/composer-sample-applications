@@ -11,12 +11,16 @@
   width: 25px;
   border-radius: 50%;
   z-index: 1;
+  box-shadow:0 2px 10px #989898;
+  z-index: 2;
 }
 .completedStep{
   background-color: #477fff;
   height: 25px;
   width: 25px;
   border-radius: 50%;
+  box-shadow:0 2px 4px #989898;
+  z-index: 2;
 }
 .uncompletedStep{
   box-sizing: border-box;
@@ -24,6 +28,8 @@
   height: 25px;
   width: 25px;
   border-radius: 50%;
+  box-shadow:0 2px 4px #989898;
+  z-index: 2;
 }
 
 .stepInfo{
@@ -54,6 +60,7 @@
   height: 3px;
   background-color: #e4e4e4;
   width: 60px;
+  z-index: 1;
 }
 
 .blankStepConnector{
